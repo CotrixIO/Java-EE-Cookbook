@@ -1,0 +1,18 @@
+[[spring-introduction]]
+== Introduction
+
+--
+This guide provides detailed information on how you should build and maintain Enterprise Java Applications.
+It provides a set of guidelines and best practices used in the industry as well as some decision rules for
+choosing the right technology to build your application.
+
+If you are just getting starting with Java, you may want start with getting started guided featured on
+start.spring.io. They offer task based tutorials to learn the various aspects of an enterprise application.
+
+.What is a JEE application
+[NOTE]
+====
+
+this is sample single
+
+====
