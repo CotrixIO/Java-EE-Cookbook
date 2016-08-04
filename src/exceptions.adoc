@@ -1,0 +1,18 @@
+[[working-with-exceptions]]
+== Working with Exceptions
+
+[source,java,indent=5]
+----
+public void exceptionWithMessage(){
+    throw new BusinessException("Something has gone wrong");
+}
+
+public void exceptionWithCodeAndMessage(){
+    throw new BusinessException(ErrorCode.FUNC_ERROR, "Something has gone wrong"); // <1>
+}
+
+public void exceptionWithCodeMessageAndVariable(){
+    throw new BusinessException(ErrorCode.FUNC_ERROR, "Something has gone wrong with data {}","my-data");
+}
+----
+<1> You can use any type of enum you want to represent the error. This case uses the ErrorCode enum
