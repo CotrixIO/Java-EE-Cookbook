@@ -1,18 +1,82 @@
-[[cookbook-exceptions]]
-== Introduction ==
+[[jee-cookbook-exceptions]]
+== Exception Handling
+Every applications needs to handle cases where normal program execution cannot continue due to some reason.
+This may be related to a number of cases such as invalid business rules, a service or database is down etc.
+The standard way to handle these special cases is by using the the exception mechanism already provided by the Java language.
+
+IMPORTANT: Custom exceptions must be *unchecked* or extend *RuntimeException*
+
+=== Business and Technical Exception
+
+
+
+
+TIP: Each exception contains a specific id used to uniquely find the exception in e.g. a logging file
+
+=== Throw BusinessException with a message
 
 [source,java,indent=5]
 ----
-public void exceptionWithMessage(){
+public void businessExceptionWithEnum(){
     throw new BusinessException("Something has gone wrong");
 }
+----
 
-public void exceptionWithCodeAndMessage(){
+=== Throw BusinessException with an error code
+
+[source,java,indent=5]
+----
+public void businessExceptionWithEnum(){
     throw new BusinessException(ErrorCode.FUNC_ERROR, "Something has gone wrong"); // <1>
-}
-
-public void exceptionWithCodeMessageAndVariable(){
-    throw new BusinessException(ErrorCode.FUNC_ERROR, "Something has gone wrong with data {}","my-data");
 }
 ----
 <1> You can use any type of enum you want to represent the error. This case uses the ErrorCode enum
+
+=== Throw BusinessException with parameters
+
+[source,java,indent=5]
+----
+public void businessExceptionWithVariables(){
+    throw new BusinessException("Something has gone wrong with data {}","my-data");
+}
+----
+
+=== Throw BusinessException with multiple messages
+
+[source,java,indent=5]
+----
+public void exceptionWithMultipleMessages(){
+    BusinessException exception = new BusinessException("Something has gone wrong");
+    exception.add(ErrorCode.FUNC_ERROR,"functional error");
+    exception.add(ErrorCode.FUNC_ERROR,"another error");
+    throw exception;
+}
+----
+
+=== Throw TechnicalException with a message
+
+[source,java,indent=5]
+----
+public void technicalExceptionWithMessage(){
+    throw new TechnicalException("technical error");
+}
+----
+
+=== Throw TechnicalException from another throwable
+
+[source,java,indent=5]
+----
+public void technicalExceptionWithThrowable(){
+    RuntimeException exception = new RuntimeException("RuntimeException");
+    throw new TechnicalException(exception);
+}
+----
+
+NOTE: Technical exceptions only accept one message compared to BusinessException that keep track of multiple messages
+
+=== All combinations
+
+All combinatinos can be found in the sample source code
+
+
+
