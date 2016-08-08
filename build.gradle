@@ -1,26 +1,17 @@
-plugins {
-    id 'org.asciidoctor.convert' version '1.5.3'
-    id 'org.kordamp.gradle.livereload' version '0.2.1'
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
+    }
 }
 
-apply plugin: 'java'
 apply plugin: 'org.asciidoctor.convert'
-apply plugin: 'org.kordamp.gradle.livereload'
-
-version = '1.0.0-SNAPSHOT'
-
-asciidoctorj {
-    version = '1.5.4'
-}
 
 asciidoctor {
-    sourceDir project.file('src')
+    sourceDir = file('src')
+    outputDir "${buildDir}/docs"
 
-    separateOutputDirs = false
-    attributes 'spring-version': project.version,
-            'revnumber': project.version, 'docinfo': ""
-}
-
-liveReload {
-    docRoot asciidoctor.outputDir.canonicalPath
 }

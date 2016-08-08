@@ -1,5 +1,5 @@
-[[working-with-exceptions]]
-== Working with Exceptions
+[[cookbook-exceptions]]
+== Introduction ==
 
 [source,java,indent=5]
 ----

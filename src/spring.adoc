@@ -1,0 +1,75 @@
+== Recipes for the Spring Framework
+
+=== Write a repository interface
+
+
+[IMPORTANT]
+====
+
+Use the naming conventions below when writing repository methods
+
+* *find(One)*: Use the _findByParameter_ syntax to name methods that will return one or more employees.
+ E.g. an EmployeeRepository may have a _findByName_ and _findByNameAndAddress_ to retrieve employees
+ based on the name or the combination of the employee name and its address.
+
+* *find(and process result)*: In some case we do some processing or have some logic E.g. the EmployeeRepository has a find method that returns a map of the departments with
+ the employees in that department. The return object is _Map<Department, List<Employee>>_.
+ In this case we name the method _findAndGroupByDepartment_
+
+* *count*: Count methods follow the same naming conventions as find methods.
+
+* *update*: Use _updateByParameter_ methods for methods that change data in the repository. E.g. the EmployeeRepository
+has the methods _updateByName_ and _updateByNameAndAddress_
+
+* *delete*: Apply the _deleteByParameter_ naming convention. E.g. the EmployeeRepository has the _deleteByName_
+and _deleteByNameAndAddress_ methods
+
+* *insert*: Inserting new data into the repository will be done using the _insert_ method
+
+====
+
+Use the example EmployeeRepository below and get an idea on how you should name the methods in your repository.
+
+[source,java,indent=5]
+----
+public interface EmployeeRepository { // <1>
+
+    Employee findOneById(Long id);
+
+    Employee findOneByName(String name);
+
+    Employee findOneByNameAndAddress(String name, Address address);
+
+    List<Employee> findByDepartment(Department department);
+
+    Long countByDepartment(Department department);
+
+    /**
+     * Finds all employees and groups them by department.
+     *
+     * @return a map that contains the department and all employees in that department
+     */
+    Map<Department, List<Employee>> findAndGroupByDepartment();
+
+    void updateByAddress(Employee employee, Address address);
+
+    void update(Employee employee);
+
+    void updateNameById(String name, Long id);
+
+    void deleteById(Long id);
+
+    Long insert(Employee employee); //<2>
+
+}
+----
+<1> Use Repository instead of DataAccessObject (Dao)
+<2> The insert method usually returns the newly generated primary key
+
+=== Write a JDBC repository
+
+=== Write a JPA repository
+
+=== Write a service
+
+=== Write a Rest controller

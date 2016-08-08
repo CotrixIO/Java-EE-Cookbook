@@ -1,5 +1,5 @@
-[[spring-introduction]]
-== Introduction
+[[cookbook-introduction]]
+== Introduction ==
 
 --
 This guide provides detailed information on how you should build and maintain Enterprise Java Applications.
@@ -9,10 +9,11 @@ choosing the right technology to build your application.
 If you are just getting starting with Java, you may want start with getting started guided featured on
 start.spring.io. They offer task based tutorials to learn the various aspects of an enterprise application.
 
-.What is a JEE application
 [NOTE]
 ====
 
-this is sample single
+This cookbook focusses on how you should build a jee applications and the guidelines you and your team should follow.
+It is not an all comprehensive document that show you how the use a specific technology.
 
 ====
+

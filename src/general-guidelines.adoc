@@ -1,0 +1,18 @@
+== General guidelines
+
+=== Interface > Implementation naming conventions
+
+IMPORTANT: Start an implementation with the same name as the interface and add the suffix *TechnologyImpl*
+
+Working with interfaces and implementation requires general guideline for choosing the names of implementations.
+De general guidelines is that the name of the implementation starts with the interface name and a technology suffix.
+Suppose we have interface name *MyRepository* and we have a JDBC implemantions, our implementation has the name
+*MyRepositoryJdbcImpl*
+
+TIP: When designing a custom framework inside your application, it is Ok to disregard this guideline
+
+== Document public methods
+
+IMPORTANT: Alle public methods must be documented using correct Javadoc
+
+When writing public methods, you must provide a valid javadoc.
