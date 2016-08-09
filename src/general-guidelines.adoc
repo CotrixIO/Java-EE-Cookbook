@@ -1,5 +1,6 @@
 == General guidelines
 
+
 === Interface > Implementation naming conventions
 
 IMPORTANT: Start an implementation with the same name as the interface and add the suffix *TechnologyImpl*

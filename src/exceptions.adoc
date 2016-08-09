@@ -1,5 +1,5 @@
-[[jee-cookbook-exceptions]]
 == Exception Handling
+
 Every applications needs to handle cases where normal program execution cannot continue due to some reason.
 This may be related to a number of cases such as invalid business rules, a service or database is down etc.
 The standard way to handle these special cases is by using the the exception mechanism already provided by the Java language.

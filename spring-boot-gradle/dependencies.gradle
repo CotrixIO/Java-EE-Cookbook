@@ -1,42 +1,10 @@
-def groovyVersion = "2.4.4"
-def spockVersion = "1.0-groovy-2.4"
-def commonsLang3Version = '3.4'
-def jacksonVersion = '2.5.3'
-def cglibnodepVersion = '3.1'
-def springfoxSwaggerVersion = '2.3.1'
-def apacheHttpClientVersion = '4.5.1'
-def db2Version = '4.19.26'
-
 ext.libs = [
         main: [
                 //spring_boot
                 "org.springframework.boot:spring-boot-starter-web",
                 "org.springframework.boot:spring-boot-starter-jdbc",
-                //spring_cloud
-                "org.springframework.cloud:spring-cloud-starter-sleuth",
-                "org.springframework.cloud:spring-cloud-starter-config",
-                "org.springframework.cloud:spring-cloud-starter-eureka",
-                //spring_retry
-                "org.springframework.retry:spring-retry",
-                "org.springframework.boot:spring-boot-starter-aop",
-                //groovy
-                "org.codehaus.groovy:groovy-all:$groovyVersion",
-                //db2
-                "com.ibm.db2:db2jcc:$db2Version",
-                //commons lang
-                "org.apache.commons:commons-lang3:$commonsLang3Version",
-                //jackson
-                "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion",
-                // http client
-                "org.apache.httpcomponents:httpclient:$apacheHttpClientVersion",
-                //springfox_swagger
-                "io.springfox:springfox-swagger2:$springfoxSwaggerVersion",
-                "io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion",
+
         ],
         test: [
-                "org.spockframework:spock-core:$spockVersion",
-                "org.spockframework:spock-spring:$spockVersion",
-                "org.springframework.boot:spring-boot-starter-test",
-                "cglib:cglib-nodep:$cglibnodepVersion"
         ]
 ]

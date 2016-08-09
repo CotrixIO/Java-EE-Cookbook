@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
     }
 
@@ -13,5 +14,16 @@ apply plugin: 'org.asciidoctor.convert'
 asciidoctor {
     sourceDir = file('src')
     outputDir "${buildDir}/docs"
+
+    attributes	'build-gradle': file('build.gradle'),
+
+            'source-highlighter' : 'coderay',
+            'imagesdir':'images',
+            'toc':'left',
+            'icons': 'font',
+            'setanchors':'true',
+            'idprefix':'',
+            'idseparator':'-',
+            'docinfo1':'true'
 
 }

@@ -1,12 +1,12 @@
-== Recipes for the Spring Framework
+== Recipes for the data layer
 
-=== Write a repository interface
+=== Write a repository
 
-
-[IMPORTANT]
+.Repository method names
+[TIP]
 ====
 
-Use the naming conventions below when writing repository methods
+Use the naming conventions below when writing repository methods:
 
 * *find(One)*: Use the _findByParameter_ syntax to name methods that will return one or more employees.
  E.g. an EmployeeRepository may have a _findByName_ and _findByNameAndAddress_ to retrieve employees
@@ -28,43 +28,21 @@ and _deleteByNameAndAddress_ methods
 
 ====
 
-Use the example EmployeeRepository below and get an idea on how you should name the methods in your repository.
+==== Steps
 
-[source,java,indent=5]
-----
-public interface EmployeeRepository { // <1>
+. Choose a *name* for the repository e.g. the _EmployeeRepository_ will handle Employee persisted data
+. Write the interface in the *repository package* e.g. _com.mycompany.module.repository_
+. Write the *implementation* of the interface in the implementation package e.g. _com.mycompany.module.repository.impl_
+.. Choose one of the *flavours* for implementing the repository e.g. a Spring JDBC repository
+.. The *implementation* will be *named* using the chosen technology flavour and the _Impl suffix e.g. An Employee JDBC repository will be called _EmployeeRepositoryJDBCImpl_
 
-    Employee findOneById(Long id);
+An example repository inteface can be found here
 
-    Employee findOneByName(String name);
+==== Flavour: JDBC Repository With Spring
 
-    Employee findOneByNameAndAddress(String name, Address address);
+==== Flavour: Jpa Repsitory
 
-    List<Employee> findByDepartment(Department department);
 
-    Long countByDepartment(Department department);
-
-    /**
-     * Finds all employees and groups them by department.
-     *
-     * @return a map that contains the department and all employees in that department
-     */
-    Map<Department, List<Employee>> findAndGroupByDepartment();
-
-    void updateByAddress(Employee employee, Address address);
-
-    void update(Employee employee);
-
-    void updateNameById(String name, Long id);
-
-    void deleteById(Long id);
-
-    Long insert(Employee employee); //<2>
-
-}
-----
-<1> Use Repository instead of DataAccessObject (Dao)
-<2> The insert method usually returns the newly generated primary key
 
 === Write a JDBC repository
 
