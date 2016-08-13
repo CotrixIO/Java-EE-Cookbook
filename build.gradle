@@ -12,12 +12,13 @@ buildscript {
 apply plugin: 'org.asciidoctor.convert'
 
 asciidoctor {
-    sourceDir = file('src')
+    sourceDir = file('src/asciidoc')
     outputDir "${buildDir}/docs"
 
     attributes	'build-gradle': file('build.gradle'),
 
-            'source-highlighter' : 'coderay',
+            'source-highlighter' : 'highlightjs',
+            'highlightjs-theme' : 'rainbow',
             'imagesdir':'images',
             'toc':'left',
             'icons': 'font',
