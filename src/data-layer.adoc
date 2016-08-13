@@ -1,4 +1,4 @@
-== Recipes for the data layer
+== Recipes for the persistence layer
 
 === Write a repository
 
@@ -36,13 +36,30 @@ and _deleteByNameAndAddress_ methods
 .. Choose one of the *flavours* for implementing the repository e.g. a Spring JDBC repository
 .. The *implementation* will be *named* using the chosen technology flavour and the _Impl suffix e.g. An Employee JDBC repository will be called _EmployeeRepositoryJDBCImpl_
 
+==== Example
+
+[source,java,indent=5]
+----
+public interface EmployeeRepository {
+
+    Employee findOneById(Long id);
+
+    Long countByDepartment(Department department);
+
+    void update(Employee employee);
+
+    void deleteById(Long id);
+
+    Long insert(Employee employee);
+
+}
+----
+
 An example repository inteface can be found here
 
 ==== Flavour: JDBC Repository With Spring
 
 ==== Flavour: Jpa Repsitory
-
-
 
 === Write a JDBC repository
 

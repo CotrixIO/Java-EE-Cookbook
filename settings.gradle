@@ -1,2 +1,3 @@
 rootProject.name = 'java-ee-cookbook'
 include ":spring-boot-gradle"
+include ":core"
