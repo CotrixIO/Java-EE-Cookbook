@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="environment" value="DEV" context="dev"/>
+    <property name="environment" value="TST" context="tst"/>
+    <property name="environment" value="ACC" context="acc"/>
+    <property name="environment" value="PRD" context="prd"/>
+
+    <changeSet id="1118203e-fedb-439b-a28a-5fdb82647794" author="3668" >
+        <comment>add german translations</comment>
+        <sqlFile encoding="utf8"
+                 path="sql/updateDefaultData.sql"
+                 relativeToChangelogFile="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="a32a1ddb-2ab4-40b7-ba1d-a5c6e952f3c0" author="3668" >
+        <comment>update translations</comment>
+        <sqlFile encoding="utf8"
+                 path="sql/updateDefaultData2.sql"
+                 relativeToChangelogFile="true"
+                 stripComments="true"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<named-query name="Employee.findByName">
+    <query>
+        SELECT emp FROM
+        Employee emp
+        WHERE emp.name=:name
+    </query>
+</named-query>

@@ -1,0 +1,12 @@
+== Create a database
+
+=== Flavour: Liquibase
+
+==== Steps
+
+. Add liquibase as a dependency
+. Create a new db.changelog folder in the resources folder
+. Add a v.0.0.1 folder with a db.changelog-.0.0.1.schema.xml
+. Add a db.changelog.grants.xml in the resources folder
+. Add a db.changelog.views.xml in the resources folder
+. Add a db.changelog.master.xml in the resources folder

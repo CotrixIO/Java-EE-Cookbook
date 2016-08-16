@@ -1,8 +1,12 @@
+def liquibaseVersion = '3.4.2'
+
 ext.libs = [
         main: [
                 //spring_boot
                 "org.springframework.boot:spring-boot-starter-web",
                 "org.springframework.boot:spring-boot-starter-jdbc",
+                "org.springframework.boot:spring-boot-starter-data-jpa",
+                "org.liquibase:liquibase-core:$liquibaseVersion",
 
         ],
         test: [

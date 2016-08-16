@@ -2,6 +2,30 @@
 
 === Write a repository interface
 
+The repository interface contains all methods to manipulate persistent data.
+It is scoped for a specific domain e.g. Employee and should be the only way to manipulate that domain data.
+Repository interfaces are placed in the _com.mycompany.module.repository_ package.
+
+. Create a new repository for a specific domain or table and add it in the _com.mycompany.module.repository_ package
++
+[source,java,indent=5]
+----
+public interface EmployeeRepository { // <1>
+
+    Employee findOneById(Long id);
+
+    Long countByDepartment(Department department);
+
+    void update(Employee employee);
+
+    void deleteById(Long id);
+
+    Long insert(Employee employee);
+
+}
+----
+<1> The repository is named using <<domain>>Repository syntax
+
 .Repository method names
 [TIP]
 ====
@@ -28,32 +52,7 @@ and _deleteByNameAndAddress_ methods
 
 ====
 
-==== Steps
-
-. Choose a *name* for the repository e.g. the _EmployeeRepository_ will handle Employee persisted data
-. Write the interface in the *repository package* e.g. _com.mycompany.module.repository_
-. Write the *implementation* of the interface in the implementation package e.g. _com.mycompany.module.repository.impl_
-.. Choose one of the *flavours* for implementing the repository e.g. a Spring JDBC repository
-.. The *implementation* will be *named* using the chosen technology flavour (see next section) e.g. An Employee JDBC repository will be called _EmployeeRepositoryJDBC_
-
-==== Example
-
-[source,java,indent=5]
-----
-public interface EmployeeRepository {
-
-    Employee findOneById(Long id);
-
-    Long countByDepartment(Department department);
-
-    void update(Employee employee);
-
-    void deleteById(Long id);
-
-    Long insert(Employee employee);
-
-}
-----
+. Implement the repository using one of the technology flavours e.g. Jdbc with Spring
 
 The full EmployeeRepository can be found on https://github.com/CotrixIO/Java-EE-Cookbook/blob/master/core/src/main/java/io/cotrix/jeecookbook/samples/EmployeeRepository.java[Github^].
 
@@ -149,7 +148,6 @@ It is preferred to use the http://docs.spring.io/spring/docs/current/javadoc-api
 
 ==== Flavour: Jpa Repsitory
 
-=== Write a JDBC repository
 
 === Write a JPA repository
 

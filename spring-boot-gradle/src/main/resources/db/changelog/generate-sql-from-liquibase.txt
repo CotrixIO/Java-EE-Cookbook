@@ -1,0 +1,5 @@
+1) assuming you downloaded and unzipped zip from liquibase website with liquibase.bat inside to c:\development\liquibase
+2) copy db2 driver jar into c:\development\liquibase\lib
+3) assuming you checked out the file-store-service project at C:\development\projects-git\file-store-service
+
+C:\development\liquibase\liquibase.bat --changeLogFile=C:\development\projects-git\file-store-service\src\main\resources\db\changelog\db.changelog-master.xml --url="jdbc:db2://zlinuxdev:50001/LNXDEV0" --username=wlsdev1 --password=wlsdevpw --defaultSchemaName=FILESTORESERVICE updateSQL
