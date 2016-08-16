@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <property name="environment" value="DEV" context="dev"/>
@@ -8,7 +9,9 @@
     <property name="environment" value="ACC" context="acc"/>
     <property name="environment" value="PRD" context="prd"/>
 
-    <changeSet id="8AAA05A8542E32E901542E392DF10004" author="3668">
+    <changeSet id="8AAA05A8542E32E901542E392DF10004"
+               author="Stijn De Mulder"
+                dbms="h2">
         <comment>Creation of the EMPLOYEE table</comment>
         <createTable tableName="EMPLOYEE"
                      schemaName="MYAPP"

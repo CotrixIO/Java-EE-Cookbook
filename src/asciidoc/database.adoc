@@ -1,12 +1,133 @@
-== Create a database
+== Initialize a database using a higher-level migration tool
 
 === Flavour: Liquibase
 
 ==== Steps
 
 . Add liquibase as a dependency
-. Create a new db.changelog folder in the resources folder
+. Create a new db./changelog folder in the /resources folder
++
+image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/liquibase-folder.png"]
+
 . Add a v.0.0.1 folder with a db.changelog-.0.0.1.schema.xml
++
+[source,xml,indent=0]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="environment" value="DEV" context="dev"/>
+    <property name="environment" value="TST" context="tst"/>
+    <property name="environment" value="ACC" context="acc"/>
+    <property name="environment" value="PRD" context="prd"/>
+
+    <changeSet id="8AAA05A8542E32E901542E392DF10004" // <1>
+               author="Stijn De Mulder"
+                dbms="h2"> // <2>
+        <comment>Creation of the EMPLOYEE table</comment>
+        <createTable tableName="EMPLOYEE"
+                     schemaName="MYAPP"
+                     tablespace="MYAPP_DATA" // <3>
+                     remarks="holds employee data">
+            <column name="EMP_ID" type="CHAR(36)" remarks="primary key (uuid)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
+----
+<1> Always use a unique changeSet id since Liquibase uses it to know if a change exists in the database
+<2> Indicate the type of database the changeSet should be used for
+<3> Don't forget to indicate the correct tablespace
+
 . Add a db.changelog.grants.xml in the resources folder
++
+[source,xml,indent=0]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="fc4e4dc2-8907-4a1d-a579-a38db9cc1819" author="3668">
+        <comment>grant users</comment>
+        <sql dbms="oracle">
+            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ENQUETE_TYPE TO ENQUETESERVICE${environment}RW;
+            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ENQUETE_TYPE_LABEL TO ENQUETESERVICE${environment}RW;
+            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ENQUETE TO ENQUETESERVICE${environment}RW;
+            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ENQUETE_STATE_LABEL TO ENQUETESERVICE${environment}RW;
+            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ENQUETE_FORM_MAPPING TO ENQUETESERVICE${environment}RW;
+            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.DISPATCH_TASK TO ENQUETESERVICE${environment}RW;
+            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.PDF_DISPATCH_DATA TO ENQUETESERVICE${environment}RW;
+            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.TRIGGER_LIST TO ENQUETESERVICE${environment}RW;
+            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ERROR_LIST TO ENQUETESERVICE${environment}RW;
+        </sql>
+    </changeSet>
+</databaseChangeLog>
+----
+
 . Add a db.changelog.views.xml in the resources folder
++
+[source,xml,indent=0]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="5d898e55-c991-424d-a88b-c7e659120acf" author="6355" runAlways="true">
+        <comment>Create view for trigger list</comment>
+        <createView viewName="VW_TRIGGER_LIST_REPORT" schemaName="ENQUETESERVICE" replaceIfExists="true">
+            SELECT
+            eq.firma_nr, eq.firma_name,
+            eq.completed_user_nr, eq.completed_user_last_name, eq.completed_user_first_name,
+            eq.seat, eq.groep, eq.owner, eqty.enquete_type_code,
+            eq.u_tms, trig.OLD_BEGIN_DATE, trig.OLD_END_DATE, trig.C_TMS, trig.BEGIN_DATE, trig.END_DATE, trig.OLD_VALUE, trig.NEW_VALUE, trig.OLD_KBO_REGISTRATION_DATE, trig.NEW_KBO_REGISTRATION_DATE
+            FROM enqueteservice.TRIGGER_LIST trig
+            JOIN enqueteservice.enquete eq ON trig.enquete_id = eq.enquete_id
+            JOIN enqueteservice.enquete_type eqty ON eq.enquete_type_id = eqty.enquete_type_id
+        </createView>
+    </changeSet>
+
+</databaseChangeLog>
+----
+
 . Add a db.changelog.master.xml in the resources folder
++
+[source,xml,indent=0]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <include file="v0.0.1/db.changelog-0.0.1.schema.xml" relativeToChangelogFile="true"/>
+
+    <!-- shouldn't have been here, but has to stay now -->
+    <changeSet id="28122dc3-23a0-4929-af30-ab510a54da19" author="3668">
+        <comment>Inladen default data</comment>
+        <sqlFile encoding="utf8"
+                 path="v0.0.1/sql/defaultData.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <include file="v0.0.2/db.changelog-0.0.2.schema.xml" relativeToChangelogFile="true"/>
+
+    <!-- always saveOrUpdate views & grants at the end-->
+    <include file="db.db.changelog.views.xml" relativeToChangelogFile="true"/>
+    <include file="db.db.changelog.grants.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>
+----
