@@ -1,9 +1,9 @@
-package io.cotrix.jeecookbook.samples;
+package io.cotrix.jeecookbook.springboot.repository;
 
 
-import io.cotrix.jeecookbook.samples.spring.Address;
-import io.cotrix.jeecookbook.samples.spring.Department;
-import io.cotrix.jeecookbook.samples.spring.Employee;
+import io.cotrix.jeecookbook.springboot.domain.Address;
+import io.cotrix.jeecookbook.springboot.domain.Department;
+import io.cotrix.jeecookbook.springboot.domain.Employee;
 
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
 == Recipes for the persistence layer
 
-=== Write a repository
+=== Write a repository interface
 
 .Repository method names
 [TIP]
@@ -34,7 +34,7 @@ and _deleteByNameAndAddress_ methods
 . Write the interface in the *repository package* e.g. _com.mycompany.module.repository_
 . Write the *implementation* of the interface in the implementation package e.g. _com.mycompany.module.repository.impl_
 .. Choose one of the *flavours* for implementing the repository e.g. a Spring JDBC repository
-.. The *implementation* will be *named* using the chosen technology flavour and the _Impl suffix e.g. An Employee JDBC repository will be called _EmployeeRepositoryJDBCImpl_
+.. The *implementation* will be *named* using the chosen technology flavour (see next section) e.g. An Employee JDBC repository will be called _EmployeeRepositoryJDBC_
 
 ==== Example
 
@@ -55,9 +55,97 @@ public interface EmployeeRepository {
 }
 ----
 
-An example repository inteface can be found here
+The full EmployeeRepository can be found on https://github.com/CotrixIO/Java-EE-Cookbook/blob/master/core/src/main/java/io/cotrix/jeecookbook/samples/EmployeeRepository.java[Github^].
 
-==== Flavour: JDBC Repository With Spring
+=== Write a repository implementation
+
+==== Flavour: Jdbc repository with Spring
+
+===== Steps
+
+. *Create a .sql* file and place it in the sql folder withing resources folder
++
+image:sql-file.png["Sql file in resources folder",width=200, link="images/sql-file.png"]
+
+. *Write your queries* in the file
++
+[source,sql,indent=0]
+----
+findEmployeeById=SELECT employee.NAME, employee.ID \ // <1>
+          FROM EMPLOYEE employee \
+          WHERE employee.id= :id
+findEmployeeByNameAndId=SELECT employee.NAME, employee.ID \ <2>
+          FROM EMPLOYEE employee \
+          WHERE employee.id= :id AND employee.name=:name
+----
+<1> Name your queries e.g. findEmployeeById
+<2> Write multiple queries in one file
+
+. Create a http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/RowMapper.html[RowMapper^] in the _com.mycompany.module.repository.impl.mapper_ package
++
+[source,java,indent=0]
+----
+public class EmployeeRowMapper implements RowMapper<Employee> {
+
+    @Override
+    public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Employee employee = new Employee();
+        employee.setId(rs.getLong("ID")); // <1>
+        employee.setName(rs.getString("NAME"));
+        return employee;
+    }
+
+}
+----
+<1> Retrieve values from the ResultSet using column names instead of index values.
+
+. Create the repository implementation in the _com.mycompany.module.repository.impl_ package
++
+[source,java,indent=0]
+----
+@Repository // <1>
+@PropertySource("sql/employee.sql") // <2>
+public class EmployeeRepositoryJdbc implements EmployeeRepository {
+
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
+
+    @Value("${findEmployeeById}") // <3>
+    private String findEmployeeByIdSql;
+
+    @Value("${findEmployeeByNameAndId}")
+    private String findEmployeeByNameAndIdSql;
+
+    @Override
+    public Employee findOneById(Long id) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("id", id); // <4>
+        return jdbcTemplate.queryForObject(findEmployeeByIdSql, parameters,
+         new EmployeeRowMapper()); <5>
+    }
+
+    @Override
+    public Employee findOneById(Long id, String name) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("id", id);
+        parameters.put("name", name);
+        return jdbcTemplate.queryForObject(findEmployeeByNameAndIdSql, parameters,
+             new EmployeeRowMapper());
+    }
+
+}
+----
+<1> Mark the repository with the http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/stereotype/Repository.html[@Repository^] annotation so Spring creates a repository bean
+<2> Load the sql queries as properties using the http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/PropertySource.html[@PropertySource^] annotation
+<3> Use the http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Value.html[@Value^] annotation to load the correct sql query
+<4> Pass named parameters (in a map)
+<5> Implement the method using the methods from the jdbc template
+
+.Use NamedParameterJdbcTemplate instead of JdbcTemplate
+[TIP]
+====
+It is preferred to use the http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/namedparam/NamedParameterJdbcTemplate.html[NamedParameterJdbcTemplate] over the standard http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html[JdbcTemplate] because you are able to name SQL parameters instead of using ?.
+====
 
 ==== Flavour: Jpa Repsitory
 

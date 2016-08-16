@@ -5,8 +5,7 @@ Will you introduce different layers?
 What technologies will you use?
 In this section you'll find the most commonly used architectures to build EE applications.
 
-
-[INFO]
+[NOTE]
 ====
 The application architecture defines a way on how you will structure your application implement the necessary functionality.
 A typical architecture defines the set of used technologies, transaction management (if any), important patterns like the https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller[MVC Pattern] and much more

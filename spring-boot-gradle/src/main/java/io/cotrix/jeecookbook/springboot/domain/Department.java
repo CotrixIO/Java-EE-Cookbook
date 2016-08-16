@@ -1,4 +1,4 @@
-package io.cotrix.jeecookbook.samples.spring;
+package io.cotrix.jeecookbook.springboot.domain;
 
 /**
  * Created by sjdmulde on 06/08/16.
