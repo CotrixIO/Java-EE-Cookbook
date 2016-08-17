@@ -8,20 +8,8 @@
 
     <include file="v0.0.1/db.changelog-0.0.1.schema.xml" relativeToChangelogFile="true"/>
 
-    <!-- shouldn't have been here, but has to stay now -->
-    <changeSet id="28122dc3-23a0-4929-af30-ab510a54da19" author="3668">
-        <comment>Inladen default data</comment>
-        <sqlFile encoding="utf8"
-                 path="v0.0.1/sql/defaultData.sql"
-                 relativeToChangelogFile="true"
-                 splitStatements="true"
-                 stripComments="true"/>
-    </changeSet>
-
-    <include file="v0.0.2/db.changelog-0.0.2.schema.xml" relativeToChangelogFile="true"/>
-
     <!-- always saveOrUpdate views & grants at the end-->
-    <include file="db.db.changelog.views.xml" relativeToChangelogFile="true"/>
-    <include file="db.db.changelog.grants.xml" relativeToChangelogFile="true"/>
+    <include file="db.changelog.views.xml" relativeToChangelogFile="true"/>
+    <include file="db.changelog.grants.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

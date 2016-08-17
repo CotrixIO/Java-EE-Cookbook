@@ -1,4 +1,6 @@
 def liquibaseVersion = '3.4.2'
+def groovyVersion = "2.4.4"
+def spockVersion = "1.0-groovy-2.4"
 
 ext.libs = [
         main: [
@@ -10,5 +12,10 @@ ext.libs = [
 
         ],
         test: [
+                "org.spockframework:spock-core:$spockVersion",
+                "org.spockframework:spock-spring:$spockVersion",
+                "org.springframework.boot:spring-boot-starter-test",
+                "org.codehaus.groovy:groovy-all:$groovyVersion",
+                'com.h2database:h2'
         ]
 ]

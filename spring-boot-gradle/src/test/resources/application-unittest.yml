@@ -1,3 +1,22 @@
-server:
-  sessionTimeout: 1800
-  contextPath: /genservices/${spring.application.name}
+spring:
+  jpa:
+    databasePlatform: org.hibernate.dialect.H2Dialect
+  datasource:
+     name: inmemory
+     platform: h2
+     url: jdbc:h2:mem:mydb;INIT=CREATE SCHEMA IF NOT EXISTS MYAPP
+     driverClassName: org.h2.Driver
+     jmxEnabled: false
+     username: sa
+     password:
+
+h2:
+  tcp:
+    enabled: true
+
+liquibase:
+  defaultSchema: MYAPP
+  change-log: classpath:/db/changelog/db.changelog-master.xml
+
+scheduling:
+  overdueCron: 0 0 0 1 * * # (second minute hour day month weekday)

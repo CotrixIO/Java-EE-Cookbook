@@ -6,47 +6,4 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="5d898e55-c991-424d-a88b-c7e659120acf" author="6355" runAlways="true">
-        <comment>Create view for trigger list</comment>
-        <createView viewName="VW_TRIGGER_LIST_REPORT" schemaName="ENQUETESERVICE" replaceIfExists="true">
-            SELECT
-            eq.firma_nr, eq.firma_name,
-            eq.completed_user_nr, eq.completed_user_last_name, eq.completed_user_first_name,
-            eq.seat, eq.groep, eq.owner, eqty.enquete_type_code,
-            eq.u_tms, trig.OLD_BEGIN_DATE, trig.OLD_END_DATE, trig.C_TMS, trig.BEGIN_DATE, trig.END_DATE, trig.OLD_VALUE, trig.NEW_VALUE, trig.OLD_KBO_REGISTRATION_DATE, trig.NEW_KBO_REGISTRATION_DATE
-            FROM enqueteservice.TRIGGER_LIST trig
-            JOIN enqueteservice.enquete eq ON trig.enquete_id = eq.enquete_id
-            JOIN enqueteservice.enquete_type eqty ON eq.enquete_type_id = eqty.enquete_type_id
-        </createView>
-    </changeSet>
-
-
-    <changeSet id="b642db20-591f-4281-9ba0-aab62d91fc47" author="6355" runAlways="true">
-        <comment>Create view for error list</comment>
-        <createView viewName="VW_ERROR_LIST_REPORT" schemaName="ENQUETESERVICE" replaceIfExists="true">
-            SELECT
-            eq.firma_nr, eq.firma_name,
-            eq.completed_user_nr, eq.completed_user_last_name, eq.completed_user_first_name,
-            eq.seat, eq.groep, eq.owner, eqty.enquete_type_code,
-            eq.u_tms, err.new_value, err.end_date, err.C_TMS
-            FROM enqueteservice.error_list err
-            JOIN enqueteservice.enquete eq ON err.enquete_id = eq.enquete_id
-            JOIN enqueteservice.enquete_type eqty ON eq.enquete_type_id = eqty.enquete_type_id
-        </createView>
-    </changeSet>
-
-    <changeSet id="3507b87a-985e-4483-beb0-20bd76939ae5" author="6355" runAlways="true">
-        <comment>Update view for error list add error codes</comment>
-        <createView viewName="VW_ERROR_LIST_REPORT" schemaName="ENQUETESERVICE" replaceIfExists="true">
-            SELECT
-            eq.firma_nr, eq.firma_name,
-            eq.completed_user_nr, eq.completed_user_last_name, eq.completed_user_first_name,
-            eq.seat, eq.groep, eq.owner, eqty.enquete_type_code,
-            eq.u_tms, err.new_value, err.end_date, err.C_TMS, err.ERROR_MESSAGE, err.ERROR_CODE, err.ERROR_DETAILS
-            FROM enqueteservice.error_list err
-            JOIN enqueteservice.enquete eq ON err.enquete_id = eq.enquete_id
-            JOIN enqueteservice.enquete_type eqty ON eq.enquete_type_id = eqty.enquete_type_id
-        </createView>
-    </changeSet>
-
 </databaseChangeLog>
