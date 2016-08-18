@@ -1,4 +1,4 @@
-== Recipes for the persistence layer
+== Persistence layer
 
 === Write a repository interface
 
@@ -57,7 +57,7 @@ and _deleteByNameAndAddress_ methods
 The full EmployeeRepository can be found on https://github.com/CotrixIO/Java-EE-Cookbook/blob/master/core/src/main/java/io/cotrix/jeecookbook/samples/EmployeeRepository.java[Github^].
 
 
-=== Write a Jdbc repository with Spring
+=== Write a Jdbc repository using Spring
 
 ==== Steps
 
@@ -147,8 +147,30 @@ It is preferred to use the http://docs.spring.io/spring/docs/current/javadoc-api
 
 === Write a JPA repository
 
+==== Steps
 
+.Write a new JPA implementation of the repository interface e.g. EmployeeRepositoryJPA and place it in the _com.mycompany.project.module.repository.impl_ package
++
+[source,java,indent=0]
+----
+@Repository == <1>
+public class EmployeeRepositoryJPA implements EmployeeRepository{
 
-=== Write a service
+    private EntityManager entityManager; // <2>
 
-=== Write a Rest controller
+    @Override
+    public Employee findOneById(Long id) {
+        return entityManager.find(Employee.class, id);
+    }
+
+    @Override
+    public Employee findOneByName(String name) {
+        TypedQuery<Employee> query = entityManager.createNamedQuery("Employee.findByName", Employee.class);
+        query.setParameter("name",name);
+        return query.getSingleResult();
+    }
+
+}
+----
+<1> Mark the repository with the http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/stereotype/Repository.html[@Repository^] annotation so Spring creates a repository bean
+<2> The EntityManager is the default JPA interface used for interacting with the database using JPA

@@ -1,10 +1,65 @@
-== Initialize a database using a higher-level migration tool
+== Project Setup
 
-=== Flavour: Liquibase
+=== Setup a blank project
+
+=== Setup Spring boot
+
+==== Steps
+
+. Add Spring boot dependencies
+. Create an Application class to initialize Spring boot
++
+[source,java,indent=0]
+----
+@SpringBootApplication // <1>
+public class Application {
+
+    public static void main(String[] args) { // <2>
+        SpringApplication.run(Application.class, args);
+    }
+
+}
+----
+<1> Annotate the Application class with the http://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/SpringBootApplication.html[@SpringBootApplication^] annotation
+<2> Spring Boot is just a simple class with a main method
+
+. Add application properties in the resources folder
++
+image:spring-boot-properties.png["Spring Boot application properties",width=200, link="images/spring-boot-properties.png"]
++
+Create an application.yml, application-dev.yml, bootstrap.yml
+
+. Fill in the application name in the application.yml file
+[source,yaml,indent=0]
+----
+spring:
+  application:
+    name: spring-boot-gradle
+----
+
+. Fill in the necessary properties in the application-dev.yml which will be used to the development (local) environment
++
+[source,yaml,indent=0]
+----
+server:
+  port: 6316
+  contextPath: /${spring.application.name}
+  session:
+    timeout: 1800
+----
+
+
+=== Setup Liquibase
 
 ==== Steps
 
 . Add liquibase as a dependency
++
+[source,groovy,indent=0]
+----
+"org.liquibase:liquibase-core:$liquibaseVersion",
+----
+
 . Create a new db./changelog folder in the /resources folder
 +
 image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/liquibase-folder.png"]
@@ -131,3 +186,44 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
 
 </databaseChangeLog>
 ----
+
+=== Setup JPA (Java Persistence Architecture)
+
+==== Setup JPA using Spring boot
+
+Spring boot offers an easy and way to setup Java Persistence Architecture simply by adding the necessary dependency
+
+===== Steps
+
+. Add the dependency to org.springframework.boot:spring-boot-starter-data-jpa
++
+[source,groovy,indent=0]
+----
+"org.springframework.boot:spring-boot-starter-data-jpa"
+----
+
+. Create a orm.xml file in the META-INF directory
++
+image:orm-setup.png["Setup orm.xml",width=150, link="images/orm-setup.png"]
+
+. Writy any named queries in the orm.xml
++
+[source,xml,indent=0]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+                 version="2.0">
+
+    <named-query name="Employee.findByName">
+        <query><![CDATA[
+            SELECT emp FROM Employee emp
+            WHERE emp.name=:name
+            ]]>
+        </query>
+    </named-query>
+
+</entity-mappings>
+----
+
