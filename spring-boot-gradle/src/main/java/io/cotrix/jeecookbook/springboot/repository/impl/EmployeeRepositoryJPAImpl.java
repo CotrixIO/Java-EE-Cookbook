@@ -1,41 +1,31 @@
 package io.cotrix.jeecookbook.springboot.repository.impl;
 
-
 import io.cotrix.jeecookbook.springboot.domain.Address;
 import io.cotrix.jeecookbook.springboot.domain.Department;
 import io.cotrix.jeecookbook.springboot.domain.Employee;
 import io.cotrix.jeecookbook.springboot.repository.EmployeeRepository;
-import io.cotrix.jeecookbook.springboot.repository.mapper.EmployeeRowMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Map;
 
 @Repository
-@PropertySource("sql/employee.sql")
-public class EmployeeRepositoryJdbc implements EmployeeRepository{
+public class EmployeeRepositoryJPAImpl implements EmployeeRepository{
 
-    @Autowired
-    private NamedParameterJdbcTemplate jdbcTemplate;
-
-    @Value("${findEmployeeById}")
-    private String findEmployeeByIdSql;
+    private EntityManager entityManager;
 
     @Override
     public Employee findOneById(Long id) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("employeeId", id);
-        return jdbcTemplate.queryForObject(findEmployeeByIdSql, parameters, new EmployeeRowMapper());
+        return entityManager.find(Employee.class, id);
     }
 
     @Override
     public Employee findOneByName(String name) {
-        return null;
+        TypedQuery<Employee> query = entityManager.createNamedQuery("Employee.findByName", Employee.class);
+        query.setParameter("name",name);
+        return query.getSingleResult();
     }
 
     @Override

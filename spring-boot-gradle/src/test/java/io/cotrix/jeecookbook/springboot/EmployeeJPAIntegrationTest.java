@@ -1,7 +1,6 @@
 package io.cotrix.jeecookbook.springboot;
 
-import io.cotrix.jeecookbook.springboot.domain.Employee;
-import io.cotrix.jeecookbook.springboot.repository.impl.EmployeeRepositoryJPA;
+import io.cotrix.jeecookbook.springboot.repository.impl.EmployeeRepositoryJPAImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +15,11 @@ import spock.lang.Specification;
 public class EmployeeJPAIntegrationTest extends Specification {
 
     @Autowired
-    private EmployeeRepositoryJPA employeeRepository;
+    private EmployeeRepositoryJPAImpl employeeRepository;
 
     @Test
     public void testBlabla(){
 
-    }
-
-    public void  setup(){
-        Employee employee = new Employee();
-        employeeRepository.insert(employee);
     }
 
 }

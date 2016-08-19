@@ -1,6 +1,7 @@
 def liquibaseVersion = '3.4.2'
 def groovyVersion = "2.4.4"
 def spockVersion = "1.0-groovy-2.4"
+def commonsLangVersion = "3.4"
 
 ext.libs = [
         main: [
@@ -8,6 +9,7 @@ ext.libs = [
                 "org.springframework.boot:spring-boot-starter-web",
                 "org.springframework.boot:spring-boot-starter-jdbc",
                 "org.springframework.boot:spring-boot-starter-data-jpa",
+                "org.apache.commons:commons-lang3:$commonsLangVersion",
                 "org.liquibase:liquibase-core:$liquibaseVersion",
 
         ],

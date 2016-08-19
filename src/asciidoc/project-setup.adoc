@@ -2,12 +2,113 @@
 
 === Setup a blank project
 
-=== Setup Spring boot
+==== Steps
+
+. Create folder with the name of the project
+. Add the necessary folders
++
+image:project-setup-folders.png["Project setup create folders",width=200, link="images/project-setup-folders.png"]
+.. *src/main/java*
+.. *src/main/resources*
+.. *src/test/java*
+.. *src/test/resources*
+. Add build.gradle
+. Add dependencies.gradle
+. Add settings.gradle
+. Add version.properties
+
+=== Setup Spring Boot
+
+Spring Boot offers a way quickly create production ready Spring applications. Taken from the Spring documentation :
+"Spring Boot favors convention over configuration and is designed to get you up and running as quickly as possible."
+
+More information can be found at http://projects.spring.io/spring-boot/.
+
+Spring Boot also offers a website http://start.spring.io/ to quickly start creating a new Spring Boot project.
+
+[TIP]
+====
+Spring Boot uses pre build starter packages that provide the necessary configuration for a given technology.
+So if you want to use Spring Boot in combination with Jdbc, all you have to do is all the spring-boot-starter-jdbc starter package.
+
+A list of all the availabe Spring Boot starter packages can be found at https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters
+====
+
+If you follow the next steps, you'll be able to setup a Spring Boot project from scratch.
 
 ==== Steps
 
-. Add Spring boot dependencies
-. Create an Application class to initialize Spring boot
+. Execute the steps from "Setup a blank project" first.
+. Add Spring Boot dependencies
++
+====
+[source,xml,indent=0,subs="verbatim,attributes",role="primary"]
+.Maven
+----
+Todo
+----
+[source,groovy,indent=0,subs="verbatim,attributes",role="secondary"]
+.Gradle
+----
+
+ext.libs = [
+        main: [ // <1>
+                "org.springframework.boot:spring-boot-starter-web", <2>
+        ],
+        test: [ // <3>
+                "org.springframework.boot:spring-boot-starter-test", <4>
+        ]
+]
+----
+<1> The main dependencies will be used at compile time
+<2> Use the web starter package if you want to create a web application or rest service
+<3> The test depencencies will only be used during test execution
+<4> The spring-boot-starter-test adds all the necessary configuration and code to quickly create Spring Boot tests
+====
+. Gradle: Fill in the build.gradle file
+[source,groovy,indent=0]
+----
+buildscript {
+    ext {
+        springBootVersion = '1.4.0.RELEASE' // <1>
+    }
+    repositories {
+        mavenCentral() <2>
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") <3>
+    }
+}
+
+apply plugin: 'spring-boot' <4>
+apply plugin: 'war'
+apply plugin: 'idea'
+apply from: './dependencies.gradle' <5>
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies { <6>
+    libs.main.each({
+        compile it
+    })
+    libs.test.each({
+        testCompile it
+    })
+}
+----
+<1> Globally specify the Spring Boot version that must be used
+<2> Connect to maven central when executing the build script
+<3> Making spring boot available in gradle e.g. the bootRun task
+<4> Apply the necessary plugins for spring boot
+<5> Include the dependencies.gradle file that contains the list of compile and test dependencies
+<6> Compile and testCompile the dependencies
+
+. Create an Application class to initialize Spring Boot
 +
 [source,java,indent=0]
 ----
@@ -48,8 +149,10 @@ server:
     timeout: 1800
 ----
 
-
 === Setup Liquibase
+
+Liquibase is a great tool for creating and maintaining a relational SQL database. More information can be found
+
 
 ==== Steps
 
@@ -189,9 +292,9 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
 
 === Setup JPA (Java Persistence Architecture)
 
-==== Setup JPA using Spring boot
+==== Setup JPA using Spring Boot
 
-Spring boot offers an easy and way to setup Java Persistence Architecture simply by adding the necessary dependency
+Spring Boot offers an easy and way to setup Java Persistence Architecture simply by adding the necessary dependency
 
 ===== Steps
 
