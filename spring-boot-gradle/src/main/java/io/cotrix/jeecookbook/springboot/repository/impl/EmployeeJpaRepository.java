@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class EmployeeRepositoryJPAImpl implements EmployeeRepository{
+public class EmployeeJpaRepository implements EmployeeRepository{
 
     private EntityManager entityManager;
 

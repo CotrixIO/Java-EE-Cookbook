@@ -30,3 +30,7 @@ dependencies {
         testCompile it
     })
 }
+
+dependencies {
+    compile project(':core')
+}

@@ -2,16 +2,20 @@
 
 === Setup a blank project
 
+
+
 ==== Steps
 
 . Create folder with the name of the project
 . Add the necessary folders
 +
-image:project-setup-folders.png["Project setup create folders",width=200, link="images/project-setup-folders.png"]
-.. *src/main/java*
-.. *src/main/resources*
-.. *src/test/java*
-.. *src/test/resources*
+.Project folders
+image:project-setup-folders.png["Project setup create folders",width=150, link="images/project-setup-folders.png"]
+
+.. *src/main/java* - This folder will contain all your production Java code
+.. *src/main/resources* Use this folder to place any recoursec (e.g images) for use in production
+.. *src/test/java* Any testing code goes in this folder
+.. *src/test/resources* Place all resources related to the tests in this folder
 . Add build.gradle
 . Add dependencies.gradle
 . Add settings.gradle
@@ -65,9 +69,18 @@ ext.libs = [
 <3> The test depencencies will only be used during test execution
 <4> The spring-boot-starter-test adds all the necessary configuration and code to quickly create Spring Boot tests
 ====
-. Gradle: Fill in the build.gradle file
-[source,groovy,indent=0]
+. Finish the build configuration
++
+====
+[source,xml,indent=0,subs="verbatim,attributes",role="primary"]
+.Maven
 ----
+Todo
+----
+.Gradle
+[source,groovy,indent=0,subs="verbatim,attributes",role="secondary"]
+----
+
 buildscript {
     ext {
         springBootVersion = '1.4.0.RELEASE' // <1>
@@ -107,6 +120,7 @@ dependencies { <6>
 <4> Apply the necessary plugins for spring boot
 <5> Include the dependencies.gradle file that contains the list of compile and test dependencies
 <6> Compile and testCompile the dependencies
+====
 
 . Create an Application class to initialize Spring Boot
 +

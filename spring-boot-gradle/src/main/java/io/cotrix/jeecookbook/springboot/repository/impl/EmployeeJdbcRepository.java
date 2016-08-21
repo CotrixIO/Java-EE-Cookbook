@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Repository
 @PropertySource("sql/employee.sql")
-public class EmployeeRepositoryJdbcImpl implements EmployeeRepository{
+public class EmployeeJdbcRepository implements EmployeeRepository{
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
