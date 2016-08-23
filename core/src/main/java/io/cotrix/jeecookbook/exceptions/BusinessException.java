@@ -1,6 +1,8 @@
 package io.cotrix.jeecookbook.exceptions;
 
 
+import io.cotrix.jeecookbook.message.Message;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ public class BusinessException extends RuntimeException{
 
     private LocalDateTime timestamp;
 
-    private List<ExceptionMessage> exceptions = new ArrayList<>();
+    private List<Message> exceptions = new ArrayList<>();
 
     public BusinessException(Enum<?> code, String message){
         init();
@@ -39,15 +41,15 @@ public class BusinessException extends RuntimeException{
     }
 
     public void add(Enum<?> code, String message, Object ... args){
-        exceptions.add(new ExceptionMessage(code, message, args));
+        exceptions.add(new Message(code, message, args));
     }
 
     public void add(String message, Object ... args){
-        exceptions.add(new ExceptionMessage(message, args));
+        exceptions.add(new Message(message, args));
     }
 
     public void add(String message){
-        exceptions.add(new ExceptionMessage(message));
+        exceptions.add(new Message(message));
     }
 
     private void init(){

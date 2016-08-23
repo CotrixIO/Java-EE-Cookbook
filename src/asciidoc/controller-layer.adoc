@@ -1,7 +1,9 @@
 == Controller layer
 
-=== Write a controller
+=== Return
+
+=== Write a Spring Rest Controller
 
 === Steps
 
-. Write a controller
+. Write a controller in the package _com.company.module.controller_

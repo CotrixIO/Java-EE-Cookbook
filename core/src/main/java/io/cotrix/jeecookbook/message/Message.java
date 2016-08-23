@@ -1,27 +1,27 @@
-package io.cotrix.jeecookbook.exceptions;
+package io.cotrix.jeecookbook.message;
 
-class ExceptionMessage {
+public class Message {
 
     private String message;
 
     private Enum<?> code;
 
-    ExceptionMessage(Enum<?> code, String message) {
+    public Message(Enum<?> code, String message) {
         this.message = message;
         this.code = code;
     }
 
-    ExceptionMessage(Enum<?> code, String message, Object ... args) {
+    public Message(Enum<?> code, String message, Object ... args) {
         this.message = buildMessage(message, args);
         this.code = code;
     }
 
-    ExceptionMessage(String message, Object ... args) {
+    public Message(String message, Object ... args) {
         this.message = buildMessage(message, args);
         this.code = code;
     }
 
-    public ExceptionMessage(String message) {
+    public Message(String message) {
         this.message = message;
     }
 
@@ -34,7 +34,7 @@ class ExceptionMessage {
 
     @Override
     public String toString() {
-        return "ExceptionMessage{" +
+        return "Message{" +
                 "message='" + message + '\'' +
                 ", code=" + code +
                 '}';

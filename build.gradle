@@ -28,3 +28,9 @@ asciidoctor {
             'docinfo1':'true'
 
 }
+
+project(':spring-boot-gradle') {
+    dependencies {
+        compile project(':core')
+    }
+}
