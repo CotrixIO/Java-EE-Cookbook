@@ -149,7 +149,7 @@ It is preferred to use the http://docs.spring.io/spring/docs/current/javadoc-api
 
 ==== Steps
 
-.Write a new JPA implementation of the repository interface e.g. EmployeeRepositoryJPA and place it in the _com.mycompany.project.module.repository.impl_ package
+. Write a new JPA implementation of the repository interface e.g. EmployeeRepositoryJPA and place it in the _com.mycompany.project.module.repository.impl_ package
 +
 [source,java,indent=0]
 ----

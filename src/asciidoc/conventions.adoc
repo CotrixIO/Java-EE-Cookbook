@@ -1,0 +1,64 @@
+== Conventions
+
+=== Application environment names
+
+A typica enterprise Java application goes trough a number of stages before it reaches production.
+Each stage has a specific purpuse and generally the stages are isolated from each other.
+The next section describes the stages typically available:
+
+. *Development (DEV)*: This is where you are making the next version of the application.
+This is most likely on your local machine (unless you have a cloud programming environment)
+. *Build (BUILD)*: Seperate environment for building your application
+. *Test (TST)*: In the Test environment you can (as a developer) test your changes before they go to the next step.
+This environment will resemble acceptance and production and it is the real test of how your coding changes will work in production.
+. *Accept (ACC)*: The accept environment has to goal of validating if code changes are Ok to move to production.
+Where in test you as a developer do the testing, in Accept someone e.g. business owner will perform and approve the changes.
+. *Production (PRD)*: This is the only place where your application is used for real.
+
+=== When write JavaDoc?
+
+[TIP]
+=====
+Try to choose method names that are readable and provide just information you need.
+Keep method names as short as possible.
+=====
+
+Although in the ideal world, every method should have a extensive JavaDoc.
+However in real life it is time consuming to write a trivial JavaDoc for a method called _findEmployee_.
+Any developer who reads that method knows what it does.
+It is also time consuming to correctly keep JavaDoc up to date.
+If the _findEmployee_ method has an extra parameter, you have to update the JavaDoc.
+
+
+Therefore the general guideline is *not* to write any JavaDoc unless
+
+. you are writing a framework e.g. a query builder or task manager
+. You need to clarify the way a method works and it cannot be derived solely from the method name
+
+=== Naming conventions
+
+==== Repository Vs Data Access Object (DAO)
+
+Objects that access a data repository will be extended with _Repository_ instead of _DAO_.
+
+==== Naming an implementation
+
+Suppose we have an _EmployeeRepository_ interface.
+If you write a Jdbc repository, you will name it _EmployeeJdbcRepository.
+
+[TIP]
+====
+Sometimes there is only one available implementation you can think of at that moment.
+It is the so called _Default_ implementation.
+In this case you name it using the _Default_ keyword e.g. an _EmployeeService_ has the _EmployeeDefaultService_ implementation.
+====
+
+[NOTE]
+====
+Choosing a correct naming scheme for an implementation is alwasy tricky.
+The following options were regarded for a specific reason (in case we have an EmployeeRepository):
+
+. *EmployeeRepositoryJpaImpl*: The _Impl_ keyword makes it unnecessary long.
+. *JpaEmployeeRepository*: The _Jpa_ keyword belongs to the repository.
+In this case it seems we are making a JpaEmployee.
+====

@@ -2,28 +2,42 @@
 
 === Setup a blank project
 
-
-
 ==== Steps
 
-. Create folder with the name of the project
-. Add the necessary folders
+. *Create root project folder* with the name of the project
+. *Add* the *project folder structure*
 +
 .Project folders
 image:project-setup-folders.png["Project setup create folders",width=150, link="images/project-setup-folders.png"]
 
-.. *src/main/java* - This folder will contain all your production Java code
-.. *src/main/resources* Use this folder to place any recoursec (e.g images) for use in production
-.. *src/test/java* Any testing code goes in this folder
-.. *src/test/resources* Place all resources related to the tests in this folder
-. Add build.gradle
-. Add dependencies.gradle
-. Add settings.gradle
-. Add version.properties
+.. *src/main/java*: This folder will contain all your production Java code
+.. *src/main/resources*: Use this folder to place any recoursec (e.g images) for use in production
+.. *src/test/java*: Any testing code goes in this folder
+.. *src/test/resources*: Place all resources related to the tests in this folder
+. *Create empty build files withing the root folder* which you'll fill in later depending on the chosen technology
++
+====
+[source,xml,indent=0,subs="verbatim,attributes",role="primary"]
+.Maven
+----
+Todo
+----
+[indent=0,subs="verbatim,attributes",role="secondary"]
+.Gradle
+----
+- build.gradle
+- dependencies.gradle
+- settings.gradle
+- version.properties
 
-=== Setup Spring Boot
+====
+Congratulations!
+You now have a blank project!
+To completely finish the setup, follow one of the next guides e.g. setup a Sprong Boot project.
 
-Spring Boot offers a way quickly create production ready Spring applications. Taken from the Spring documentation :
+=== Setup a Spring Boot project
+
+Spring Boot offers a way quickly create production ready Spring applications.
 "Spring Boot favors convention over configuration and is designed to get you up and running as quickly as possible."
 
 More information can be found at http://projects.spring.io/spring-boot/.
@@ -33,7 +47,7 @@ Spring Boot also offers a website http://start.spring.io/ to quickly start creat
 [TIP]
 ====
 Spring Boot uses pre build starter packages that provide the necessary configuration for a given technology.
-So if you want to use Spring Boot in combination with Jdbc, all you have to do is all the spring-boot-starter-jdbc starter package.
+E.g. if you want to use Spring Boot in combination with Jdbc, all you have to do is all the spring-boot-starter-jdbc starter package as a dependency in your project.
 
 A list of all the availabe Spring Boot starter packages can be found at https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters
 ====
@@ -42,8 +56,9 @@ If you follow the next steps, you'll be able to setup a Spring Boot project from
 
 ==== Steps
 
-. Execute the steps from "Setup a blank project" first.
-. Add Spring Boot dependencies
+. *Execute* the *steps* from "Setup a blank project" first.
+. *Add Spring Boot dependencies*
+.. Gradle: use the _dependencies.gradle_ file
 +
 ====
 [source,xml,indent=0,subs="verbatim,attributes",role="primary"]
@@ -69,7 +84,8 @@ ext.libs = [
 <3> The test depencencies will only be used during test execution
 <4> The spring-boot-starter-test adds all the necessary configuration and code to quickly create Spring Boot tests
 ====
-. Finish the build configuration
+. *Finish* the *build configuration*
+.. Gradle: use the _build.gradle_ file
 +
 ====
 [source,xml,indent=0,subs="verbatim,attributes",role="primary"]
@@ -122,7 +138,7 @@ dependencies { <6>
 <6> Compile and testCompile the dependencies
 ====
 
-. Create an Application class to initialize Spring Boot
+. *Create an Application class* to initialize Spring Boot
 +
 [source,java,indent=0]
 ----
@@ -138,13 +154,14 @@ public class Application {
 <1> Annotate the Application class with the http://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/SpringBootApplication.html[@SpringBootApplication^] annotation
 <2> Spring Boot is just a simple class with a main method
 
-. Add application properties in the resources folder
+. *Add application properties* in the resources folder
+.. Create an application.yml, application-dev.yml, bootstrap.yml
 +
 image:spring-boot-properties.png["Spring Boot application properties",width=200, link="images/spring-boot-properties.png"]
-+
-Create an application.yml, application-dev.yml, bootstrap.yml
 
-. Fill in the application name in the application.yml file
+
+. *Set the application name* in the application.yml file
++
 [source,yaml,indent=0]
 ----
 spring:
@@ -152,36 +169,62 @@ spring:
     name: spring-boot-gradle
 ----
 
-. Fill in the necessary properties in the application-dev.yml which will be used to the development (local) environment
+. *Configure the properties* in the _application-dev.yml_ which will be used to the development (local) environment
 +
 [source,yaml,indent=0]
 ----
 server:
-  port: 6316
-  contextPath: /${spring.application.name}
+  port: 8080 // <1>
+  contextPath: /${spring.application.name} // <2>
   session:
     timeout: 1800
 ----
+<1> Specify a specifc port number for the spring web container
+<2> The context path for the web application is the same as the name of the spring application
+
+. *Launch the application*
++
+====
+[source,command line,indent=0,subs="verbatim,attributes",role="primary"]
+.Maven
+----
+Todo
+----
+[source,command line,indent=0,subs="verbatim,attributes",role="secondary"]
+.Gradle
+----
+root project> gradlew bootRun
+----
+====
 
 === Setup Liquibase
 
-Liquibase is a great tool for creating and maintaining a relational SQL database. More information can be found
+Liquibase is a great tool for creating and maintaining a relational SQL database.
+More information can be found at http://www.liquibase.org/
 
 
 ==== Steps
 
-. Add liquibase as a dependency
-+
-[source,groovy,indent=0]
+. *Add* liquibase as a *dependency*
+.. Gradle: in the _dependencies.gradle_ file
+====
+[source,command line,indent=0,subs="verbatim,attributes",role="primary"]
+.Maven
 ----
-"org.liquibase:liquibase-core:$liquibaseVersion",
+Todo
 ----
+[source,groovy,indent=0,subs="verbatim,attributes",role="secondary"]
+.Gradle
+----
+"org.liquibase:liquibase-core:$liquibaseVersion"
+----
+====
 
-. Create a new db./changelog folder in the /resources folder
+. *Create* a new *db./changelog folder* in the /resources folder
 +
 image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/liquibase-folder.png"]
 
-. Add a v.0.0.1 folder with a db.changelog-.0.0.1.schema.xml
+. *Add* a *v.0.0.1* folder *with* a *db.changelog-.0.0.1.schema.xml*
 +
 [source,xml,indent=0]
 ----

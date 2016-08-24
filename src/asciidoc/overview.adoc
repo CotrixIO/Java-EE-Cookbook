@@ -1,18 +1,37 @@
 == Introduction
 
+The primary goal of this cookbook is to provide you, a developer,  with a *unified* way of building enterprise Java applications.
+You will notice an increase in productivity and code quality when you follow the recipes in this cookbook.
+If you work in a team, and each team member follows the rules in this cookbook, then you'll be able to understand each other code more quickly.
 
-This guide provides detailed information on how you should build and maintain Enterprise Java Applications.
-It provides a set of guidelines and best practices used in the industry as well as some decision rules for
-choosing the right technology to build your application.
+Since a book about coding standards is not very practical, all the guidelines you'll find are wrapped inside useful, day to day coding recipes e.g. _Write a repository_
 
-If you are just getting starting with Java, you may want start with getting started guided featured on
-start.spring.io. They offer task based tutorials to learn the various aspects of an enterprise application.
-
+=== Technology used in this book
 
 [NOTE]
 ====
 
-This cookbook focusses on how you should build a jee applications and the guidelines you and your team should follow.
-It is not an all comprehensive document that show you how the use a specific technology.
+This cookbook focusses on how you should build a enterprise java applications and the guidelines you and your team should follow.
+It is not an all comprehensive document that explains the possibilities of a given technology
 
 ====
+
+Java offers a vast ecosystem of technologies you can use to build enterprise Java applications.
+It is not possible to cover each an every technology in the cookbook.
+The technologies currenly provided are:
+
+. Build systems
+.. https://gradle.org[Gradle^]
+.. https://maven.apache.org[Maven^]
+. Containers
+.. http://projects.spring.io/spring-boot[Spring Boot^]
+. Rest documenation
+.. http://swagger.io[Swagger^]
+. Database migration tools
+.. http://www.liquibase.org[Liquibase^]
+
+
+
+
+
+

@@ -6,25 +6,25 @@ The standard way to handle these special cases is by using the the exception mec
 
 IMPORTANT: Custom exceptions must be *unchecked* or extend *RuntimeException*
 
-=== Business and Technical Exception
-
-
+=== Business and Technical Exceptions
 
 
 TIP: Each exception contains a specific id used to uniquely find the exception in e.g. a logging file
 
-=== Throw BusinessException with a message
+=== Throw an exception
 
-[source,java,indent=5]
+==== Throw BusinessException with a message
+
+[source,java,indent=0]
 ----
 public void businessExceptionWithEnum(){
     throw new BusinessException("Something has gone wrong");
 }
 ----
 
-=== Throw BusinessException with an error code
+==== Throw BusinessException with an error code
 
-[source,java,indent=5]
+[source,java,indent=0]
 ----
 public void businessExceptionWithEnum(){
     throw new BusinessException(ErrorCode.FUNC_ERROR, "Something has gone wrong"); // <1>
@@ -32,18 +32,18 @@ public void businessExceptionWithEnum(){
 ----
 <1> You can use any type of enum you want to represent the error. This case uses the ErrorCode enum
 
-=== Throw BusinessException with parameters
+==== Throw BusinessException with parameters
 
-[source,java,indent=5]
+[source,java,indent=0]
 ----
 public void businessExceptionWithVariables(){
     throw new BusinessException("Something has gone wrong with data {}","my-data");
 }
 ----
 
-=== Throw BusinessException with multiple messages
+==== Throw BusinessException with multiple messages
 
-[source,java,indent=5]
+[source,java,indent=0]
 ----
 public void exceptionWithMultipleMessages(){
     BusinessException exception = new BusinessException("Something has gone wrong");
@@ -53,18 +53,18 @@ public void exceptionWithMultipleMessages(){
 }
 ----
 
-=== Throw TechnicalException with a message
+==== Throw TechnicalException with a message
 
-[source,java,indent=5]
+[source,java,indent=0]
 ----
 public void technicalExceptionWithMessage(){
     throw new TechnicalException("technical error");
 }
 ----
 
-=== Throw TechnicalException from another throwable
+==== Throw TechnicalException from another throwable
 
-[source,java,indent=5]
+[source,java,indent=0]
 ----
 public void technicalExceptionWithThrowable(){
     RuntimeException exception = new RuntimeException("RuntimeException");
@@ -74,7 +74,7 @@ public void technicalExceptionWithThrowable(){
 
 NOTE: Technical exceptions only accept one message compared to BusinessException that keep track of multiple messages
 
-=== All combinations
+==== All combinations
 
 All combinatinos can be found in the sample source code
 
