@@ -8,7 +8,7 @@ Repository interfaces are placed in the _com.mycompany.module.repository_ packag
 
 . Create a new repository for a specific domain or table and add it in the _com.mycompany.module.repository_ package
 +
-[source,java,indent=5]
+[source,java,indent=0]
 ----
 public interface EmployeeRepository { // <1>
 

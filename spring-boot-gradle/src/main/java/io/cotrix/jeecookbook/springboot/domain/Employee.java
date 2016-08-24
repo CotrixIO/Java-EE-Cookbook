@@ -1,8 +1,13 @@
 package io.cotrix.jeecookbook.springboot.domain;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "EMPLOYEE", schema = "MYAPP", uniqueConstraints = {@UniqueConstraint(columnNames = {"EMPLOYEE_ID"})})
 public class Employee {
 
+    @Id
+    @Column(name = "EMPLOYEE_ID", unique = true, nullable = false)
     private Long id;
 
     private String name;

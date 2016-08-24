@@ -4,6 +4,7 @@ import io.cotrix.jeecookbook.springboot.domain.Address;
 import io.cotrix.jeecookbook.springboot.domain.Department;
 import io.cotrix.jeecookbook.springboot.domain.Employee;
 import io.cotrix.jeecookbook.springboot.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ import java.util.Map;
 @Repository
 public class EmployeeJpaRepository implements EmployeeRepository{
 
+    @Autowired
     private EntityManager entityManager;
 
     @Override
@@ -70,6 +72,7 @@ public class EmployeeJpaRepository implements EmployeeRepository{
 
     @Override
     public Long insert(Employee employee) {
-        return null;
+        entityManager.persist(employee);
+        return new Long(0);
     }
 }

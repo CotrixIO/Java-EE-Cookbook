@@ -23,6 +23,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':core')
     libs.main.each({
         compile it
     })

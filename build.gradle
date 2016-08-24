@@ -29,8 +29,9 @@ asciidoctor {
 
 }
 
-project(':spring-boot-gradle') {
-    dependencies {
-        compile project(':core')
+subprojects {
+    apply plugin: "java"
+    repositories {
+        mavenCentral()
     }
 }
