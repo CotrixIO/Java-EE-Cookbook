@@ -1,8 +1,6 @@
-== Project Setup
+== Recipe: Setup a new project
 
-=== Setup a blank project
-
-==== Steps
+=== Steps
 
 . *Create root project folder* with the name of the project
 . *Add* the *project folder structure*
@@ -11,10 +9,10 @@
 image:project-setup-folders.png["Project setup create folders",width=150, link="images/project-setup-folders.png"]
 
 .. *src/main/java*: This folder will contain all your production Java code
-.. *src/main/resources*: Use this folder to place any recoursec (e.g images) for use in production
+.. *src/main/resources*: Use this folder to place any resources (e.g images) for use in production
 .. *src/test/java*: Any testing code goes in this folder
 .. *src/test/resources*: Place all resources related to the tests in this folder
-. *Create empty build files withing the root folder* which you'll fill in later depending on the chosen technology
+. *Create empty build files within the root folder* which you'll fill in later depending on the chosen technology
 +
 ====
 [source,xml,indent=0,subs="verbatim,attributes",role="primary"]
@@ -33,11 +31,11 @@ Todo
 ====
 Congratulations!
 You now have a blank project!
-To completely finish the setup, follow one of the next guides e.g. setup a Sprong Boot project.
+To completely finish the setup, choose one of the flavours to complete the project setup e.g. setup a Sprong Boot project.
 
-=== Setup a Spring Boot project
+=== Flavour: Setup Spring Boot
 
-Spring Boot offers a way quickly create production ready Spring applications.
+Spring Boot offers a way to quickly create production ready Spring applications.
 "Spring Boot favors convention over configuration and is designed to get you up and running as quickly as possible."
 
 More information can be found at http://projects.spring.io/spring-boot/.
@@ -47,7 +45,7 @@ Spring Boot also offers a website http://start.spring.io/ to quickly start creat
 [TIP]
 ====
 Spring Boot uses pre build starter packages that provide the necessary configuration for a given technology.
-E.g. if you want to use Spring Boot in combination with Jdbc, all you have to do is all the spring-boot-starter-jdbc starter package as a dependency in your project.
+E.g. if you want to use Spring Boot in combination with Jdbc, all you have to do is add all the spring-boot-starter-jdbc starter package as a dependency in your project.
 
 A list of all the availabe Spring Boot starter packages can be found at https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters
 ====
@@ -102,17 +100,17 @@ buildscript {
         springBootVersion = '1.4.0.RELEASE' // <1>
     }
     repositories {
-        mavenCentral() <2>
+        mavenCentral() // <2>
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") <3>
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") // <3>
     }
 }
 
-apply plugin: 'spring-boot' <4>
+apply plugin: 'spring-boot' // <4>
 apply plugin: 'war'
 apply plugin: 'idea'
-apply from: './dependencies.gradle' <5>
+apply from: './dependencies.gradle' // <5>
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -121,7 +119,7 @@ repositories {
     mavenCentral()
 }
 
-dependencies { <6>
+dependencies { // <6>
     libs.main.each({
         compile it
     })
@@ -152,7 +150,7 @@ public class Application {
 }
 ----
 <1> Annotate the Application class with the http://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/SpringBootApplication.html[@SpringBootApplication^] annotation
-<2> Spring Boot is just a simple class with a main method
+<2> A Spring Boot application is just a simple class with a main method
 
 . *Add application properties* in the resources folder
 .. Create an application.yml, application-dev.yml, bootstrap.yml
@@ -179,8 +177,8 @@ server:
   session:
     timeout: 1800
 ----
-<1> Specify a specifc port number for the spring web container
-<2> The context path for the web application is the same as the name of the spring application
+<1> Specify a specific port number for the Spring web container
+<2> The context path for the web application is in this case the same as the name of the Spring application
 
 . *Launch the application*
 +
@@ -197,28 +195,12 @@ root project> gradlew bootRun
 ----
 ====
 
-=== Setup Liquibase
+=== Recipe: Setup Liquibase
 
 Liquibase is a great tool for creating and maintaining a relational SQL database.
 More information can be found at http://www.liquibase.org/
 
-
 ==== Steps
-
-. *Add* liquibase as a *dependency*
-.. Gradle: in the _dependencies.gradle_ file
-====
-[source,command line,indent=0,subs="verbatim,attributes",role="primary"]
-.Maven
-----
-Todo
-----
-[source,groovy,indent=0,subs="verbatim,attributes",role="secondary"]
-.Gradle
-----
-"org.liquibase:liquibase-core:$liquibaseVersion"
-----
-====
 
 . *Create* a new *db./changelog folder* in the /resources folder
 +
@@ -234,18 +216,18 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <property name="environment" value="DEV" context="dev"/>
+    <property name="environment" value="DEV" context="dev"/> // <1>
     <property name="environment" value="TST" context="tst"/>
     <property name="environment" value="ACC" context="acc"/>
     <property name="environment" value="PRD" context="prd"/>
 
-    <changeSet id="8AAA05A8542E32E901542E392DF10004" // <1>
+    <changeSet id="8AAA05A8542E32E901542E392DF10004" // <2>
                author="Stijn De Mulder"
-                dbms="h2"> // <2>
+                dbms="h2"> // <3>
         <comment>Creation of the EMPLOYEE table</comment>
         <createTable tableName="EMPLOYEE"
                      schemaName="MYAPP"
-                     tablespace="MYAPP_DATA" // <3>
+                     tablespace="MYAPP_DATA" // <4>
                      remarks="holds employee data">
             <column name="EMP_ID" type="CHAR(36)" remarks="primary key (uuid)">
                 <constraints nullable="false"/>
@@ -255,9 +237,10 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
 
 </databaseChangeLog>
 ----
-<1> Always use a unique changeSet id since Liquibase uses it to know if a change exists in the database
-<2> Indicate the type of database the changeSet should be used for
-<3> Don't forget to indicate the correct tablespace
+<1> Optionally you can specify environment properties for use later on
+<2> Always use a unique changeSet id since Liquibase uses it to know if a change exists in the database
+<3> Indicate the type of database the changeSet should be used for
+<4> Don't forget to indicate the correct tablespace
 
 . Add a db.changelog.grants.xml in the resources folder
 +
@@ -270,22 +253,21 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet id="fc4e4dc2-8907-4a1d-a579-a38db9cc1819" author="3668">
+
+    <changeSet id="fc4e4dc2-8907-4a1d-a579-a38db9cc1819" author="Stijn De Mulder">
         <comment>grant users</comment>
-        <sql dbms="oracle">
-            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ENQUETE_TYPE TO ENQUETESERVICE${environment}RW;
-            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ENQUETE_TYPE_LABEL TO ENQUETESERVICE${environment}RW;
-            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ENQUETE TO ENQUETESERVICE${environment}RW;
-            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ENQUETE_STATE_LABEL TO ENQUETESERVICE${environment}RW;
-            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ENQUETE_FORM_MAPPING TO ENQUETESERVICE${environment}RW;
-            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.DISPATCH_TASK TO ENQUETESERVICE${environment}RW;
-            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.PDF_DISPATCH_DATA TO ENQUETESERVICE${environment}RW;
-            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.TRIGGER_LIST TO ENQUETESERVICE${environment}RW;
-            GRANT SELECT, UPDATE, INSERT, DELETE ON ENQUETESERVICE.ERROR_LIST TO ENQUETESERVICE${environment}RW;
+        <sql dbms="h2">
+            GRANT SELECT, UPDATE, INSERT, DELETE ON MYAPP.ENQUETE_TYPE TO EMPLOYEEAPPUSER{environment}; // <1>
         </sql>
     </changeSet>
 </databaseChangeLog>
 ----
+<1> Apply the necessary grants to a specific user.
+
+[NOTE]
+====
+You can use the _environment_ property to add grants to a user in the current environment. e.g. the EMPLOYEEAPPUSER*PRD* for the production environment
+====
 
 . Add a db.changelog.views.xml in the resources folder
 +
@@ -298,17 +280,12 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="5d898e55-c991-424d-a88b-c7e659120acf" author="6355" runAlways="true">
+    <changeSet id="5d898e55-c991-424d-a88b-c7e659120acf" author="Stijn De Mulder" runAlways="true">
         <comment>Create view for trigger list</comment>
-        <createView viewName="VW_TRIGGER_LIST_REPORT" schemaName="ENQUETESERVICE" replaceIfExists="true">
+        <createView viewName="VW_EMPLOYEE_NAME" schemaName="MYAPP" replaceIfExists="true">
             SELECT
-            eq.firma_nr, eq.firma_name,
-            eq.completed_user_nr, eq.completed_user_last_name, eq.completed_user_first_name,
-            eq.seat, eq.groep, eq.owner, eqty.enquete_type_code,
-            eq.u_tms, trig.OLD_BEGIN_DATE, trig.OLD_END_DATE, trig.C_TMS, trig.BEGIN_DATE, trig.END_DATE, trig.OLD_VALUE, trig.NEW_VALUE, trig.OLD_KBO_REGISTRATION_DATE, trig.NEW_KBO_REGISTRATION_DATE
-            FROM enqueteservice.TRIGGER_LIST trig
-            JOIN enqueteservice.enquete eq ON trig.enquete_id = eq.enquete_id
-            JOIN enqueteservice.enquete_type eqty ON eq.enquete_type_id = eqty.enquete_type_id
+            emp.NAME
+            FROM EMPLOYEE emp
         </createView>
     </changeSet>
 
@@ -328,17 +305,7 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
 
     <include file="v0.0.1/db.changelog-0.0.1.schema.xml" relativeToChangelogFile="true"/>
 
-    <!-- shouldn't have been here, but has to stay now -->
-    <changeSet id="28122dc3-23a0-4929-af30-ab510a54da19" author="3668">
-        <comment>Inladen default data</comment>
-        <sqlFile encoding="utf8"
-                 path="v0.0.1/sql/defaultData.sql"
-                 relativeToChangelogFile="true"
-                 splitStatements="true"
-                 stripComments="true"/>
-    </changeSet>
-
-    <include file="v0.0.2/db.changelog-0.0.2.schema.xml" relativeToChangelogFile="true"/>
+    <include file="v0.0.2/db.changelog-0.0.2.schema.xml" relativeToChangelogFile="true"/> // <1>
 
     <!-- always saveOrUpdate views & grants at the end-->
     <include file="db.db.changelog.views.xml" relativeToChangelogFile="true"/>
@@ -346,21 +313,39 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
 
 </databaseChangeLog>
 ----
+<1> Multiple versions of your applications will be bundled in multiple xml files for liquibase.
 
-=== Setup JPA (Java Persistence Architecture)
+==== Flavour: Setup Liquibase in Spring Boot
 
-==== Setup JPA using Spring Boot
-
-Spring Boot offers an easy and way to setup Java Persistence Architecture simply by adding the necessary dependency
+All you have is add the necessary liquibase dependency and Spring Boot will do the rest.
 
 ===== Steps
 
-. Add the dependency to org.springframework.boot:spring-boot-starter-data-jpa
-+
-[source,groovy,indent=0]
+. *Add* liquibase as a *dependency*
+.. Gradle: in the _dependencies.gradle_ file
+====
+[source,command line,indent=0,subs="verbatim,attributes",role="primary"]
+.Maven
 ----
-"org.springframework.boot:spring-boot-starter-data-jpa"
+Todo
 ----
+[source,groovy,indent=0,subs="verbatim,attributes",role="secondary"]
+.Gradle
+----
+def liquibaseVersion = '3.4.2' // <1>
+
+"org.liquibase:liquibase-core:$liquibaseVersion" // <2>
+----
+<1> Choose the liquibase version you want for your project
+<2> Add the necessary *main* dependency
+====
+
+=== Recipe: Setup JPA (Java Persistence Architecture)
+
+The Java Persistence API (JPA) is a Java application programming interface specification that describes the management of relational data in applications using Java Platform, Standard Edition and Java Platform, Enterprise Edition.
+Follow the next steps to start the JPA setup for your project.
+
+==== Steps
 
 . Create a orm.xml file in the META-INF directory
 +
@@ -387,3 +372,27 @@ image:orm-setup.png["Setup orm.xml",width=150, link="images/orm-setup.png"]
 </entity-mappings>
 ----
 
+==== Flavour: Setup JPA using Spring Boot
+
+Spring Boot offers an easy and way to setup Java Persistence Architecture simply by adding the necessary dependency
+
+===== Steps
+
+. Add the dependency to org.springframework.boot:spring-boot-starter-data-jpa
++
+====
+[source,xml,indent=0,subs="verbatim,attributes",role="primary"]
+.Maven
+----
+Todo
+----
+[source,groovy, indent=0,subs="verbatim,attributes",role="secondary"]
+.Gradle
+----
+
+"org.springframework.boot:spring-boot-starter-data-jpa" // <1>
+
+----
+<1> No version is required for Spring Boot
+
+====

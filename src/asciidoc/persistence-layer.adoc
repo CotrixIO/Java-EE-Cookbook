@@ -1,30 +1,10 @@
 == Persistence layer
 
-=== Write a repository interface
+=== Recipe: Write a repository interface
 
 The repository interface contains all methods to manipulate persistent data.
 It is scoped for a specific domain e.g. Employee and should be the only way to manipulate that domain data.
 Repository interfaces are placed in the _com.mycompany.module.repository_ package.
-
-. Create a new repository for a specific domain or table and add it in the _com.mycompany.module.repository_ package
-+
-[source,java,indent=0]
-----
-public interface EmployeeRepository { // <1>
-
-    Employee findOneById(Long id);
-
-    Long countByDepartment(Department department);
-
-    void update(Employee employee);
-
-    void deleteById(Long id);
-
-    Long insert(Employee employee);
-
-}
-----
-<1> The repository is named using <<domain>>Repository syntax
 
 .Repository method names
 [TIP]
@@ -52,16 +32,40 @@ and _deleteByNameAndAddress_ methods
 
 ====
 
+==== Steps
+
+. Create a new repository for a specific domain or table and add it in the _com.mycompany.module.repository_ package
++
+[source,java,indent=5]
+----
+public interface EmployeeRepository { // <1>
+
+    Employee findOneById(Long id);
+
+    Long countByDepartment(Department department);
+
+    void update(Employee employee);
+
+    void deleteById(Long id);
+
+    Long insert(Employee employee);
+
+}
+----
+<1> The repository is named using <<domain>>Repository syntax
+
+
+
 . Implement the repository using one of the technology flavours e.g. Jdbc with Spring
 
 The full EmployeeRepository can be found on https://github.com/CotrixIO/Java-EE-Cookbook/blob/master/core/src/main/java/io/cotrix/jeecookbook/samples/EmployeeRepository.java[Github^].
 
 
-=== Write a Jdbc repository using Spring
+=== Flavour: Write a Jdbc repository using Spring
 
 ==== Steps
 
-. *Create a .sql* file and place it in the sql folder withing resources folder
+. *Create a .sql* file and place it in the sql folder within resources folder
 +
 image:sql-file.png["Sql file in resources folder",width=200, link="images/sql-file.png"]
 
@@ -145,7 +149,7 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 It is preferred to use the http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/namedparam/NamedParameterJdbcTemplate.html[NamedParameterJdbcTemplate] over the standard http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html[JdbcTemplate] because you are able to name SQL parameters instead of using ?.
 ====
 
-=== Write a JPA repository
+=== Flavour: Write a JPA repository
 
 ==== Steps
 
@@ -153,7 +157,7 @@ It is preferred to use the http://docs.spring.io/spring/docs/current/javadoc-api
 +
 [source,java,indent=0]
 ----
-@Repository == <1>
+@Repository  <1>
 public class EmployeeRepositoryJPA implements EmployeeRepository{
 
     private EntityManager entityManager; // <2>

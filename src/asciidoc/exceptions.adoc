@@ -11,9 +11,9 @@ IMPORTANT: Custom exceptions must be *unchecked* or extend *RuntimeException*
 
 TIP: Each exception contains a specific id used to uniquely find the exception in e.g. a logging file
 
-=== Throw an exception
+=== Recipe: Throw an exception
 
-==== Throw BusinessException with a message
+In its basic form, the exception contains a message. You can throw an exception using the following code:
 
 [source,java,indent=0]
 ----
@@ -22,8 +22,9 @@ public void businessExceptionWithEnum(){
 }
 ----
 
-==== Throw BusinessException with an error code
+The next examples show you possiblities on how you can throw exception by for example combining an enum with a message.
 
+.Throw BusinessException with an error code
 [source,java,indent=0]
 ----
 public void businessExceptionWithEnum(){
@@ -32,8 +33,7 @@ public void businessExceptionWithEnum(){
 ----
 <1> You can use any type of enum you want to represent the error. This case uses the ErrorCode enum
 
-==== Throw BusinessException with parameters
-
+.Throw BusinessException with parameters
 [source,java,indent=0]
 ----
 public void businessExceptionWithVariables(){
@@ -41,8 +41,7 @@ public void businessExceptionWithVariables(){
 }
 ----
 
-==== Throw BusinessException with multiple messages
-
+.Throw BusinessException with multiple messages
 [source,java,indent=0]
 ----
 public void exceptionWithMultipleMessages(){
@@ -53,8 +52,7 @@ public void exceptionWithMultipleMessages(){
 }
 ----
 
-==== Throw TechnicalException with a message
-
+.Throw TechnicalException with a message
 [source,java,indent=0]
 ----
 public void technicalExceptionWithMessage(){
@@ -62,8 +60,7 @@ public void technicalExceptionWithMessage(){
 }
 ----
 
-==== Throw TechnicalException from another throwable
-
+.Throw TechnicalException from another throwable
 [source,java,indent=0]
 ----
 public void technicalExceptionWithThrowable(){

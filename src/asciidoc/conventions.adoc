@@ -15,7 +15,7 @@ This environment will resemble acceptance and production and it is the real test
 Where in test you as a developer do the testing, in Accept someone e.g. business owner will perform and approve the changes.
 . *Production (PRD)*: This is the only place where your application is used for real.
 
-=== When write JavaDoc?
+=== When should you write Javadocc?
 
 [TIP]
 =====

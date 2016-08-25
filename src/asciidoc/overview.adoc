@@ -2,22 +2,36 @@
 
 The primary goal of this cookbook is to provide you, a developer,  with a *unified* way of building enterprise Java applications.
 You will notice an increase in productivity and code quality when you follow the recipes in this cookbook.
-If you work in a team, and each team member follows the rules in this cookbook, then you'll be able to understand each other code more quickly.
+If you work in a team, and each team member follows the rules in this cookbook, then you'll be able to understand eachothers code more quickly.
 
 Since a book about coding standards is not very practical, all the guidelines you'll find are wrapped inside useful, day to day coding recipes e.g. _Write a repository_
 
-=== Technology used in this book
+=== Recipe's and flavours
 
 [NOTE]
 ====
 
-This cookbook focusses on how you should build a enterprise java applications and the guidelines you and your team should follow.
-It is not an all comprehensive document that explains the possibilities of a given technology
+A cookbook contains a set of recipe's to cook different mails.
+This cookbook helps you make enterprise java applications and thus contains a set of recipe's e.g. setup logging.
+Since building these kinds of applications can be done using multiple technologies, we add flavours that primary help you with a specific technology e.g. setup logging with flavour Spring Boot.
+This mean the section will contain information on how you can setup logging when you use Spring Boot.
 
 ====
 
+
+=== Technologies used in this book
+
+[NOTE]
+====
+
+This cookbook focuses on how you should build a enterprise java applications and the guidelines you and your team should follow.
+You won't learn how a technology works and what you can do with it.
+
+====
+
+
 Java offers a vast ecosystem of technologies you can use to build enterprise Java applications.
-It is not possible to cover each an every technology in the cookbook.
+It is not possible to cover each and every technology in the cookbook.
 The technologies currenly provided are:
 
 . Build systems

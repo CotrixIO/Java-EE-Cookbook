@@ -1,6 +1,6 @@
 == Service layer
 
-=== Write a service
+=== Recipe: Write a service
 
 ==== Steps
 
@@ -16,12 +16,19 @@ public interface EmployeeService {
 ----
 <1> This example uses the CQRS approach that creates and employee using a specific employee command
 
+
+
+=== Recipe: Write a service using Spring Framework or Spring Boot
+
+==== Steps
+
 . Write a service implementation in the package _com.mycompany.module.service.impl_
 .. Name the service using the specific implementation.
 For default implementations use the keyword Default e.g Employee*Default*Service
 +
 [source,java,indent=0]
 ----
+
 @Service // <1>
 public class EmployeeDefaultService implements EmployeeService {
 
