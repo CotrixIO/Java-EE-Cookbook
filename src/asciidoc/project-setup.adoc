@@ -396,3 +396,85 @@ Todo
 <1> No version is required for Spring Boot
 
 ====
+
+== Recipe: Setup logging with Logback
+
+http://logback.qos.ch[Logback^] is the successor of the popular log4j project and generally provided all required logging functionalities.
+The logback project also implements the http://www.slf4j.org[SLF4J] façade that enables logging using an API instead of a specific implementation.
+
+When Logback starts, it looks for a file called logback.groovy or logback.xml:
+
+. Logback tries to find a file called logback.groovy in the classpath
+. If no such file is found, logback tries to find a file called logback-test.xml in the classpath.
+. If no such file is found, it checks for the file logback.xml in the classpath..
+
+=== Steps
+
+. Add a logback.xml or logback.groovy in the _src/main/resources_ folder of the module
++
+====
+[source,xml,indent=0,subs="verbatim,attributes",role="primary"]
+.logback.xml
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"> // <1>
+            <!-- deny all events with a level below INFO, that is TRACE and DEBUG -->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                  <level>DEBUG</level>  // <2>
+            </filter>
+
+            <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+            <encoder>
+                  <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"> // <3>
+        <file>C:\DEVELOPMENT\logs\${application-name}\${module-name}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:\DEVELOPMENT\logs\${application-name}\${module-name}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread %X{sessionId} %X{username} %X{requestId}] %-5level - %msg [%class{20}:%method:%line]%n</pattern>
+        </layout>
+    </appender>
+
+
+
+    <logger name="com.mycompany.module" level="INFO" /> // <4>
+    <logger name="org.springframework" level="INFO" /> // <5>
+
+    <root level="DEBUG"> // <6>
+        <appender-ref ref="FILE" /> // <7>
+	    <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
+----
+<1> STDOUT will log to the console and is used best for development purposes
+[source,groovy, indent=0,subs="verbatim,attributes",role="secondary"]
+.logback.groovy
+----
+
+"org.springframework.boot:spring-boot-starter-data-jpa" // <1>
+
+----
+<1> No version is required for Spring Boot
+
+====
+
+
+[NOTE]
+====
+
+A logback.xml or logback.groovy file is required for each deployable module.
+If you have a project with two web modules, a logback file is required for *each* module.
+
+====
+
+==== Flavour:
+
+==== Flavour: Logback with Spring Boot

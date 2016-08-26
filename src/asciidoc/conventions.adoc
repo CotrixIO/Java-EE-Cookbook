@@ -44,7 +44,7 @@ Objects that access a data repository will be extended with _Repository_ instead
 ==== Naming an implementation
 
 Suppose we have an _EmployeeRepository_ interface.
-If you write a Jdbc repository, you will name it _EmployeeJdbcRepository.
+If you write a Jdbc repository, you will name it _EmployeeJdbcRepository_.
 
 [TIP]
 ====
@@ -62,3 +62,7 @@ The following options were regarded for a specific reason (in case we have an Em
 . *JpaEmployeeRepository*: The _Jpa_ keyword belongs to the repository.
 In this case it seems we are making a JpaEmployee.
 ====
+
+=== Encoding
+
+
