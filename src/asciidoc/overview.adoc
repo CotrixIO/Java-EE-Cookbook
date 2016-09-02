@@ -8,13 +8,11 @@ Since a book about coding standards is not very practical, all the guidelines yo
 
 === Recipe's and flavours
 
-[NOTE]
+[IMPORTANT]
 ====
 
-A cookbook contains a set of recipe's to cook different mails.
-This cookbook helps you make enterprise java applications and thus contains a set of recipe's e.g. setup logging.
-Since building these kinds of applications can be done using multiple technologies, we add flavours that primary help you with a specific technology e.g. setup logging with flavour Spring Boot.
-This mean the section will contain information on how you can setup logging when you use Spring Boot.
+If you are interested in learning how to use a specific technology, you should still use the technology's documentation.
+In this cookbook you'll only find best practices and setup guides.
 
 ====
 

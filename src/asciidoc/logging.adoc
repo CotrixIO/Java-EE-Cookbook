@@ -10,6 +10,7 @@ private static final Logger logger = LoggerFactory.getLogger(*MyClass.class*);
 ----
 
 . Choose the appropreate logging level
++
 ====
 *ERROR* – something terribly wrong had happened, that must be investigated immediately. No system can tolerate items logged on this level. Example: NPE, database unavailable, mission critical use case cannot be continued.
 *WARN* – the process might be continued, but take extra caution. Actually I always wanted to have two levels here: one for obvious problems where work-around exists (for example: “Current data unavailable, using cached values”) and second (name it: ATTENTION) for potential problems and suggestions. Example: “Application running in development mode” or “Administration console is not secured with a password”. The application can tolerate warning messages, but they should always be justified and examined.
@@ -18,14 +19,15 @@ private static final Logger logger = LoggerFactory.getLogger(*MyClass.class*);
 *TRACE* – Very detailed information, intended only for development. You might keep trace messages for a short period of time after deployment on production environment, but treat these log statements as temporary, that should or might be turned-off eventually. The distinction between DEBUG and TRACE is the most difficult, but if you put logging statement and remove it after the feature has been developed and tested, it should probably be on TRACE level.
 ====
 
+. Log the appropreate log message
++Example:
+ [source,java,indent=0]
+ ----
+ logger.debug("Created employee {} with id {}", employee, id);
+ ----
+ ====
 
 [TIP]
 ====
 Use brackets (_{}_) inside your messages to efficiently pass variables in your logging.
 
-Example:
-[source,java,indent=0]
-----
-logger.debug("Created employee {} with id {}", employee, id);
-----
-====

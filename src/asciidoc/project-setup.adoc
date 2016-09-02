@@ -195,7 +195,62 @@ root project> gradlew bootRun
 ----
 ====
 
+=== Recipe: Setup a DataSource
+
+A https://docs.oracle.com/javase/7/docs/api/javax/sql/DataSource.html[DataSource^] is the preferred way of
+connection to a database in Java. Setting up a DataSource really depends on the technology you use, so in the next section you'll find the different flavours of the actual setup.
+
+=== Flavour: Setup a database in Spring Boot
+
+Spring Boot wil automatically setup a DataSource when it finds a jdbc dependency and the right config properties.
+
+==== Steps
+
+. Add the necessary spring-boot-starter-jdbc dependency as a main dependency
++
+====
+[source,command line,indent=0,subs="verbatim,attributes",role="primary"]
+.Maven
+----
+Todo
+----
+[source,command line,indent=0,subs="verbatim,attributes",role="secondary"]
+.Gradle
+----
+"org.springframework.boot:spring-boot-starter-jdbc" // <1>
+----
+<1> No version is required
+====
+
+. Specify the right properties in the application-{environment}.yml file
++
+====
+[source,yml,indent=0]
+----
+spring:
+  datasource:
+     name: inmemory
+     platform: h2
+     url: jdbc:h2:mem:mydb;INIT=CREATE SCHEMA IF NOT EXISTS MYAPP
+     driverClassName: org.h2.Driver
+     jmxEnabled: false
+     username: sa
+     password:
+----
+====
+[IMPORTANT]
+====
+Make sure you also specify the datasource config in the application-unittest.yml file if you want to use a different datasource in the test environment
+====
+
+Spring Boot will automatically create the DataSource for you based on the given properties.
+
 === Recipe: Setup Liquibase
+
+[IMPORTANT]
+====
+Liquibase relies on a DataSource before you can use it. So make sure you have followed the Setup a DataSource section.
+====
 
 Liquibase is a great tool for creating and maintaining a relational SQL database.
 More information can be found at http://www.liquibase.org/
