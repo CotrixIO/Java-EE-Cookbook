@@ -500,7 +500,7 @@ $(addBlockSwitches);
 <li><a href="#conventions">Conventions</a>
 <ul class="sectlevel2">
 <li><a href="#application-environment-names">Application environment names</a></li>
-<li><a href="#when-should-you-write-javadocc">When should you write Javadocc?</a></li>
+<li><a href="#when-should-you-write-javadoc">When should you write Javadoc?</a></li>
 <li><a href="#naming-conventions">Naming conventions</a></li>
 <li><a href="#encoding">Encoding</a></li>
 </ul>
@@ -515,9 +515,9 @@ $(addBlockSwitches);
 <div class="sect2">
 <h3 id="application-environment-names">Application environment names</h3>
 <div class="paragraph">
-<p>A typica enterprise Java application goes trough a number of stages before it reaches production.
-Each stage has a specific purpuse and generally the stages are isolated from each other.
-The next section describes the stages typically available:</p>
+<p>A typical enterprise Java application goes through a number of stages before it reaches production.
+Each stage has a specific purpose and generally the stages are isolated from each other.
+The next section describes the stages most commonly available:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -526,10 +526,12 @@ The next section describes the stages typically available:</p>
 This is most likely on your local machine (unless you have a cloud programming environment)</p>
 </li>
 <li>
-<p><strong>Build (BUILD)</strong>: Seperate environment for building your application</p>
+<p><strong>Build (BUILD)</strong>: Seperate environment for building your application e.g. Jenking or Bamboo</p>
 </li>
 <li>
-<p><strong>Test (TST)</strong>: In the Test environment you can (as a developer) test your changes before they go to the next step.
+<p><strong>Test (TST)</strong>: The Test environment is the first place where you and other people can see if all the code changes work together and no technical exceptions occur.
+It gives you a first feeling of what production will behave or look like.
+The basic functionalities will be tested here (by you or the test team). Early bugs will be spotted here.
 This environment will resemble acceptance and production and it is the real test of how your coding changes will work in production.</p>
 </li>
 <li>
@@ -543,7 +545,7 @@ Where in test you as a developer do the testing, in Accept someone e.g. business
 </div>
 </div>
 <div class="sect2">
-<h3 id="when-should-you-write-javadocc">When should you write Javadocc?</h3>
+<h3 id="when-should-you-write-javadoc">When should you write Javadoc?</h3>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -552,17 +554,16 @@ Where in test you as a developer do the testing, in Accept someone e.g. business
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Try to choose method names that are readable and provide just information you need.
-Keep method names as short as possible.</p>
+<p>Try to choose method names that are readable and concise.
+Keep method names as short as possible without loosing the method&#8217;s responsibility.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Although in the ideal world, every method should have a extensive JavaDoc.
-However in real life it is time consuming to write a trivial JavaDoc for a method called <em>findEmployee</em>.
-Any developer who reads that method knows what it does.
+<p>In real life it is time consuming to write a trivial JavaDoc for a method called <em>findEmployee</em>.
+Any developer who reads the name of that method knows what it does.
 It is also time consuming to correctly keep JavaDoc up to date.
 If the <em>findEmployee</em> method has an extra parameter, you have to update the JavaDoc.</p>
 </div>
@@ -572,7 +573,7 @@ If the <em>findEmployee</em> method has an extra parameter, you have to update t
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>you are writing a framework e.g. a query builder or task manager</p>
+<p>You are writing a framework e.g. a query builder or task manager</p>
 </li>
 <li>
 <p>You need to clarify the way a method works and it cannot be derived solely from the method name</p>
@@ -592,7 +593,7 @@ If the <em>findEmployee</em> method has an extra parameter, you have to update t
 <h4 id="naming-an-implementation">Naming an implementation</h4>
 <div class="paragraph">
 <p>Suppose we have an <em>EmployeeRepository</em> interface.
-If you write a Jdbc repository, you will name it <em>EmployeeJdbcRepository</em>.</p>
+If you write a Jdbc repository, you will name it <em>EmployeeJdbcRepository</em></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -603,7 +604,7 @@ If you write a Jdbc repository, you will name it <em>EmployeeJdbcRepository</em>
 <td class="content">
 <div class="paragraph">
 <p>Sometimes there is only one available implementation you can think of at that moment.
-It is the so called <em>Default</em> implementation.
+This is the so called <em>Default</em> implementation.
 In this case you name it using the <em>Default</em> keyword e.g. an <em>EmployeeService</em> has the <em>EmployeeDefaultService</em> implementation.</p>
 </div>
 </td>
@@ -619,7 +620,7 @@ In this case you name it using the <em>Default</em> keyword e.g. an <em>Employee
 <td class="content">
 <div class="paragraph">
 <p>Choosing a correct naming scheme for an implementation is alwasy tricky.
-The following options were regarded for a specific reason (in case we have an EmployeeRepository):</p>
+The following options were disregarded for a specific reason (in case we have an EmployeeRepository):</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -640,14 +641,16 @@ In this case it seems we are making a JpaEmployee.</p>
 </div>
 <div class="sect2">
 <h3 id="encoding">Encoding</h3>
-
+<div class="paragraph">
+<p>UTF-8 or higher (UTF-16) should be used as the base encoding. Stay away from windows (iso-&#8230;&#8203;) or macOs encoding.</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-04 20:12:06 +02:00
+Last updated 2016-09-04 23:56:02 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css">

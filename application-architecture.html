@@ -500,9 +500,9 @@ $(addBlockSwitches);
 <li><a href="#application-architecture">Application Architecture</a>
 <ul class="sectlevel2">
 <li><a href="#application-layers">Application layers</a></li>
-<li><a href="#flavour-command-query-responsibility-segregation-architecture-cqrs">Flavour: Command Query Responsibility Segregation Architecture (CQRS)</a></li>
-<li><a href="#flavour-domain-driven-architecture-dd">Flavour: Domain Driven Architecture (DD)</a></li>
-<li><a href="#flavour-full-jpa-or-jdbc-architecture">Flavour Full JPA or JDBC Architecture</a></li>
+<li><a href="#command-query-responsibility-segregation-architecture-cqrs">Command Query Responsibility Segregation Architecture (CQRS)</a></li>
+<li><a href="#domain-driven-architecture-dd">Domain Driven Architecture (DD)</a></li>
+<li><a href="#a-minimal-jdbc-or-jpa-architecture">A minimal JDBC or JPA Architecture</a></li>
 </ul>
 </li>
 </ul>
@@ -526,7 +526,7 @@ In this section you&#8217;ll find the most commonly used architectures to build 
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The application architecture defines a way on how you will structure your application implement the necessary functionality.
+<p>The application architecture defines a way on how you will structure your application to implement the necessary functionality.
 A typical architecture defines the set of used technologies, transaction management (if any), important patterns like the <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC Pattern</a> and much more</p>
 </div>
 </td>
@@ -536,13 +536,13 @@ A typical architecture defines the set of used technologies, transaction managem
 <div class="sect2">
 <h3 id="application-layers">Application layers</h3>
 <div class="paragraph">
-<p>A typical applicatin e.g. a web application that connects to a database has these layers:</p>
+<p>A typical application e.g. a web application that connects to a database has these layers:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p><strong>View layer</strong>: This layer visualizes the data in an attractive and user friendly way.
-It is the place where users can interact with the applications e.g. click on buttons, fill in data in forms etc.</p>
+It is the place where users can interact with the application e.g. click on buttons, fill in data in forms etc.</p>
 </li>
 <li>
 <p><strong>Controller layer</strong>: The controller layer will recieve user actions and handle any navigation.</p>
@@ -552,7 +552,7 @@ It is the place where users can interact with the applications e.g. click on but
 E.g. to create a user, you must first check if the user doesn&#8217;t already exist.</p>
 </li>
 <li>
-<p><strong>Persistence layer</strong>: This is de <em>gateway</em> to the actually persisted data.
+<p><strong>Persistence layer</strong>: This is de <em>gateway</em> to the persisted data.
 Typically this is a database or a file system.</p>
 </li>
 </ul>
@@ -566,9 +566,10 @@ Typically this is a database or a file system.</p>
 <td class="content">
 <div class="title">Write down your own architecture</div>
 <div class="paragraph">
-<p>This section introduces some of the commonly used architecture flavours.
-Since these examples probably won&#8217;t be an exact fit, you can create your own by taking on of the examples and change the layers and/or technologies.
-When you work in a team, its important that everyone understands and uses the same architecture.</p>
+<p>This section introduces some of the commonly used architectural flavours.
+Since these examples probably won&#8217;t be an exact fit, you can create your own by taking one of the examples and change the layers and/or technologies.
+When you work in a team, its important that everyone understands and uses the same architecture.
+I would advise you to make your own architecture drawing and see if it fits one the pre-defined ones in this cookbook.</p>
 </div>
 </td>
 </tr>
@@ -576,7 +577,7 @@ When you work in a team, its important that everyone understands and uses the sa
 </div>
 </div>
 <div class="sect2">
-<h3 id="flavour-command-query-responsibility-segregation-architecture-cqrs">Flavour: Command Query Responsibility Segregation Architecture (CQRS)</h3>
+<h3 id="command-query-responsibility-segregation-architecture-cqrs">Command Query Responsibility Segregation Architecture (CQRS)</h3>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="images/cqrs.png"><img src="images/cqrs.png" alt="Application Architecture with CQRS" width="700"></a></span></p>
 </div>
@@ -589,100 +590,149 @@ The application architecture works like this:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>The first layer is the <strong>view layer</strong> and uses <strong>technologies</strong> like JSP, xhtml, thymeleaf etc.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<p>The first layer is the <strong>view layer</strong>  uses <strong>technologies</strong> like JSP, xhtml, thymeleaf etc.</p>
+</li>
 <li>
 <p>The view layer uses ViewDTO models specifically programmed for the that view</p>
 </li>
-</ol>
-</div>
+<li>
+<p>The <strong>controller</strong> will be able to receive objects from the view as input params e.g. a save or update method.
+The <strong>controller</strong> will also map specific objects from the <strong>service</strong> layer if necessary.
+ E.g. the service might return an object that is perfectly suitable for handling in the view</p>
 </li>
 <li>
-<p>The <strong>controller</strong> will be able to receive objects from the view as input params e.g. a save or update method.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>The <strong>controller</strong> will also map specific objects from the <strong>service</strong> layer if necessary.
-E.g. the service might return an object that is perfectly suitable for handling in the view</p>
-</li>
-</ol>
-</div>
+<p>The <strong>repository</strong> acts a a <strong>gateway</strong> to the <strong>persisted data</strong> in the database.
+It typically performs Create Read Update Delete functionalities.
+A repisitory will typically works with JPA or JDBC.
+JPA is the preferred technology since it abstract the direct access to database.</p>
 </li>
 <li>
-<p>The <strong>service</strong> layer itself is seperated into <strong>query</strong> services and <strong>write</strong> or <strong>command</strong> services</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<p>The <strong>CommandService</strong> takes different command objects as input to perform a data change e.g. the UpdateEmployeeCommand will change the data of an employee.
+The service usually returns no or a limited set of data.
+The most logical return object is the generated primary key when an object was created.</p>
+</li>
 <li>
 <p>The <strong>QueryService</strong> directly retrieves objects from the persistence e.g. the database and transforms it using a Row mapper to a Data Transfer Object (short DTO).
 It takes a <strong>QueryCommand</strong> or simple input parameters to retrieve the data.</p>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
+</li>
 <li>
-<p>Accessing data from the database is done using <strong>JDBC</strong></p>
+<p>Accessing data from the database is done using <strong>JDBC</strong> and typically a row mapper to convert from rows to objects.</p>
 </li>
 </ol>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Benefits</strong> of using this patterns are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The application is optimized for reading and writing.
+This will result in highly performant application by default.
+ Reading is done via JDBC, so very lightweight and only the data required is retrieved (this is something you can&#8217;t do with JPA).</p>
 </li>
 <li>
-<p>The <strong>CommandService</strong> takes different command objects as input to perform a data change.
-E.g. the UpdateEmployeeCommand will change the data of an employee.</p>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
-<li>
-<p>The service usually returns no or a limited set of data.
-The most logical return object is the generated primary key when an object was created.</p>
+<p>Writing is done using JPA which the benefits of re-use objects and the lack of writing custom SQL logic.
+Changing the database is easier using JPA since you don&#8217;t have to re-write all the sql comamnds.</p>
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p><strong>Cons</strong> are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Query services are nothing more than optimized repositories</p>
+</li>
+<li>
+<p>There is no re-use of JPA entities for reading, so this will lead to duplicate code.</p>
 </li>
 </ol>
 </div>
-</li>
-</ol>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="flavour-domain-driven-architecture-dd">Flavour: Domain Driven Architecture (DD)</h3>
+<h3 id="domain-driven-architecture-dd">Domain Driven Architecture (DD)</h3>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="images/dd.png"><img src="images/dd.png" alt="Application Architecture Domain Driven" width="700"></a></span></p>
 </div>
 <div class="paragraph">
 <p>This architecture assumes that the persisted entities will be managed using a <strong>Create, Read, Update, Delete</strong> pattern.
-E.g. when you&#8217;re working with an <em>Employee</em>, you&#8217;ll have an <em>EmployeeService</em> that has the methods <em>create(Employee), update(Employee), find(Employee), delete(Employee).
-However when you want to retrieve the department name with the names of the employees in it, you&#8217;ll have to call services from the _EmployeeService</em> plus the DepartmentService_ and merge the data yourself in the controller.
-If you were only department names and employee names, you&#8217;d be retrieving too much information e.g. departments with all their data and employees with all the data.</p>
+E.g. when you&#8217;re working with an <em>Employee</em>, you&#8217;ll have an <em>EmployeeService</em> that has the methods <em>create(Employee)</em>, <em>update(Employee)</em>, <em>find(Employee)</em>, <em>delete(Employee)</em>.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>The first two layers are similar to the CQRS architecture</p>
+<p>The first layer is the <strong>view layer</strong>  uses <strong>technologies</strong> like JSP, xhtml, thymeleaf etc.</p>
 </li>
 <li>
-<p>The architecture has <strong>DomainServices</strong> focussed on providing functionality for one entity in the domain e.g. Employee</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>These services can accept input commands like with CQRS or more likely domain objects.</p>
+<p>The view layer uses ViewDTO models specifically programmed for the that view</p>
 </li>
 <li>
-<p>The domain objects are <strong>Plain Old Java Objects</strong>. They are not linked to any specific technology like JPA.</p>
+<p>The architecture has <strong>DomainServices</strong> focused on providing functionality for one entity in the domain e.g. Employee
+These services can accept input commands like with CQRS or more likely domain objects.
+The domain objects are <strong>Plain Old Java Objects</strong>. They are not linked to any specific technology like JPA.
+The service has the choice of working with JPA or JDBC.</p>
 </li>
 <li>
-<p>The service has the choice of working with JPA or JDBC.
-When working with JPA, the domain objects are transformed into JPA entities using a mapper.</p>
+<p>A <strong>Domain to JPA object mapper</strong> is used to convert Java Objects in JPA objects and vica versa.</p>
+</li>
+<li>
+<p>The domain services can choose to work with <strong>JPA or JDBC repositories</strong>.</p>
+</li>
+<li>
+<p>The domain services can choose to work with <strong>JPA or JDBC repositories</strong>.</p>
 </li>
 </ol>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Benefits</strong> of using this patterns are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Excellent for applications that use the CRUD pattern</p>
 </li>
 <li>
-<p>The persistence layer is similar to the one described in the CQRS architecture</p>
+<p>Promotes re-use of exisitng domain services</p>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p><strong>Cons</strong> are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Changes are you&#8217;ll need more complex data when your application grows.
+Combining multiple domain service calls into one object is an expensive operation.s</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="flavour-full-jpa-or-jdbc-architecture">Flavour Full JPA or JDBC Architecture</h3>
+<h3 id="a-minimal-jdbc-or-jpa-architecture">A minimal JDBC or JPA Architecture</h3>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="images/jpa.png"><img src="images/jpa.png" alt="Application Architecture full JPA or JDBC" width="700"></a></span></p>
 </div>
@@ -693,15 +743,15 @@ Whilst this is the easiest architecture, it is also the least flexible. The prob
 In this case you are forced to make another call to the database or in the worst case adapt your model.</p>
 </div>
 <div class="sect3">
-<h4 id="where-do-transactions-start">Where do transactions start?</h4>
+<h4 id="database-transactions-start-at-the-service-level">Database transactions start at the service level</h4>
 <div class="paragraph">
 <p>Any architecture requires you to think about transaction management.
-Transactions allow a number of actions to be grouped on one logical unit of work.
+Transactions allow a number of actions to be grouped into one logical unit of work.
 If one action in the transactions fails, all other actions must be reverted.</p>
 </div>
 <div class="paragraph">
 <p>Transaction mangement really is important when working with SQL databases.
-In all the provided architectures, the transaction starts when entering a service and commits or rollbacks when leaving the service.</p>
+In all the provided architectures, the transaction starts when entering a service and it commits or rollbacks when leaving the service.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -711,8 +761,10 @@ In all the provided architectures, the transaction starts when entering a servic
 </td>
 <td class="content">
 <div class="paragraph">
-<p>When you work with the <a href="https://en.wikipedia.org/wiki/Java_Persistence_API">Java Persistence Archicture</a> e.g. hibernate or eclipselink, you&#8217;ll have access to the entity manager during the transaction.
-Any <a href="https://docs.jboss.org/hibernate/orm/3.5/api/org/hibernate/LazyInitializationException.html">LazyInitializationException</a>s will not occur inside the service layer.</p>
+<p>Working with JPA requires that you always have an active transactions to retrieve data from the database.
+When you retrieve and <em>Employee</em> and you want to get the departments of that employee via the <em>getDepartments()</em> method, JPA will use the entitymanager and the current transaction to execute a new sql query to fetch the departments.
+When you don&#8217;t have a transaction you&#8217;ll get a ttps://docs.jboss.org/hibernate/orm/3.5/api/org/hibernate/LazyInitializationException.html[LazyInitializationException].
+Therefor it is important to keep your JPA objects withing the service and return normal, non JPA, objects outside the service.</p>
 </div>
 </td>
 </tr>
@@ -725,7 +777,7 @@ Any <a href="https://docs.jboss.org/hibernate/orm/3.5/api/org/hibernate/LazyInit
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-04 20:12:06 +02:00
+Last updated 2016-09-04 23:20:46 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css">

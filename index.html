@@ -504,53 +504,45 @@ $(addBlockSwitches);
 <li><a href="#technologies-used-in-this-book">Technologies used in this book</a></li>
 </ul>
 </li>
-<li><a href="#recipe-setup-a-new-project">Recipe: Setup a new project</a>
+<li><a href="#setup-a-new-project">Setup a new project</a>
 <ul class="sectlevel2">
-<li><a href="#steps">Steps</a></li>
-<li><a href="#flavour-setup-spring-boot">Flavour: Setup Spring Boot</a></li>
-<li><a href="#recipe-setup-a-datasource">Recipe: Setup a DataSource</a></li>
-<li><a href="#flavour-setup-a-database-in-spring-boot">Flavour: Setup a database in Spring Boot</a></li>
-<li><a href="#recipe-setup-liquibase">Recipe: Setup Liquibase</a></li>
-<li><a href="#recipe-setup-jpa-java-persistence-architecture">Recipe: Setup JPA (Java Persistence Architecture)</a></li>
+<li><a href="#setup-a-blank-project">Setup a blank project</a></li>
+<li><a href="#setup-a-spring-boot-project">Setup a Spring Boot project</a></li>
 </ul>
 </li>
-<li><a href="#recipe-setup-logging-with-logback">Recipe: Setup logging with Logback</a>
+<li><a href="#setup-a-datasource">Setup a DataSource</a>
 <ul class="sectlevel2">
-<li><a href="#steps-8">Steps</a></li>
+<li><a href="#setup-a-datasource-using-spring-boot">Setup a DataSource using Spring Boot</a></li>
+</ul>
+</li>
+<li><a href="#setup-liquibase">Setup Liquibase</a>
+<ul class="sectlevel2">
+<li><a href="#general-liquibase-setup">General Liquibase setup</a></li>
+</ul>
+</li>
+<li><a href="#setup-jpa-java-persistence-architecture">Setup JPA (Java Persistence Architecture)</a>
+<ul class="sectlevel2">
+<li><a href="#general-jpa-setup">General JPA setup</a></li>
+<li><a href="#setup-jpa-using-spring-boot">Setup JPA using Spring Boot</a></li>
+</ul>
+</li>
+<li><a href="#setup-logback-logging">Setup Logback logging</a>
+<ul class="sectlevel2">
+<li><a href="#general-logback-setup">General Logback setup</a></li>
 </ul>
 </li>
 <li><a href="#application-architecture">Application Architecture</a>
 <ul class="sectlevel2">
 <li><a href="#application-layers">Application layers</a></li>
-<li><a href="#flavour-command-query-responsibility-segregation-architecture-cqrs">Flavour: Command Query Responsibility Segregation Architecture (CQRS)</a></li>
-<li><a href="#flavour-domain-driven-architecture-dd">Flavour: Domain Driven Architecture (DD)</a></li>
-<li><a href="#flavour-full-jpa-or-jdbc-architecture">Flavour Full JPA or JDBC Architecture</a></li>
+<li><a href="#command-query-responsibility-segregation-architecture-cqrs">Command Query Responsibility Segregation Architecture (CQRS)</a></li>
+<li><a href="#domain-driven-architecture-dd">Domain Driven Architecture (DD)</a></li>
+<li><a href="#a-minimal-jdbc-or-jpa-architecture">A minimal JDBC or JPA Architecture</a></li>
 </ul>
 </li>
 <li><a href="#exception-handling">Exception Handling</a>
 <ul class="sectlevel2">
 <li><a href="#business-and-technical-exceptions">Business and Technical Exceptions</a></li>
-<li><a href="#recipe-throw-an-exception">Recipe: Throw an exception</a></li>
-</ul>
-</li>
-<li><a href="#persistence-layer">Persistence layer</a>
-<ul class="sectlevel2">
-<li><a href="#recipe-write-a-repository-interface">Recipe: Write a repository interface</a></li>
-<li><a href="#flavour-write-a-jdbc-repository-using-spring">Flavour: Write a Jdbc repository using Spring</a></li>
-<li><a href="#flavour-write-a-jpa-repository">Flavour: Write a JPA repository</a></li>
-</ul>
-</li>
-<li><a href="#service-layer">Service layer</a>
-<ul class="sectlevel2">
-<li><a href="#recipe-write-a-service">Recipe: Write a service</a></li>
-<li><a href="#recipe-write-a-service-using-spring-framework-or-spring-boot">Recipe: Write a service using Spring Framework or Spring Boot</a></li>
-</ul>
-</li>
-<li><a href="#controller-layer">Controller layer</a>
-<ul class="sectlevel2">
-<li><a href="#return">Return</a></li>
-<li><a href="#write-a-spring-rest-controller">Write a Spring Rest Controller</a></li>
-<li><a href="#steps-14">Steps</a></li>
+<li><a href="#throw-an-exception">Throw an exception</a></li>
 </ul>
 </li>
 <li><a href="#conventions">Conventions</a>
@@ -559,6 +551,19 @@ $(addBlockSwitches);
 <li><a href="#when-should-you-write-javadoc">When should you write Javadoc?</a></li>
 <li><a href="#naming-conventions">Naming conventions</a></li>
 <li><a href="#encoding">Encoding</a></li>
+</ul>
+</li>
+<li><a href="#persistence-layer">Persistence layer</a>
+<ul class="sectlevel2">
+<li><a href="#write-a-repository-interface">Write a repository interface</a></li>
+<li><a href="#write-a-jdbc-repository-using-spring">Write a Jdbc repository using Spring</a></li>
+<li><a href="#write-a-jpa-repository">Write a JPA repository</a></li>
+</ul>
+</li>
+<li><a href="#service-layer">Service layer</a>
+<ul class="sectlevel2">
+<li><a href="#write-a-service-interface">Write a service interface</a></li>
+<li><a href="#write-a-service-using-spring">Write a service using Spring</a></li>
 </ul>
 </li>
 </ul>
@@ -578,16 +583,20 @@ If you work in a team, and each team member follows the rules in this cookbook, 
 </div>
 <div class="sect2">
 <h3 id="recipe-s-and-flavours">Recipe&#8217;s and flavours</h3>
-<div class="admonitionblock important">
+<div class="paragraph">
+<p>The cookbook is written with a basic set of recipes in mind e.g. <em>Setup a DataSource</em> or <em>Write a service</em>.
+For each recipe we add different flavours e.g. <em>Setup a DataSource</em> using Spring Boot.
+This allows the cookbook to grow and add different technologies without compromising the main goal: writing enterprise application in an easy an unified way.</p>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If you are interested in learning how to use a specific technology, you should still use the technology&#8217;s documentation.
-In this cookbook you&#8217;ll only find best practices and setup guides.</p>
+<p>When you read this cookbook, only pick the technologies you use on a day to day basis.</p>
 </div>
 </td>
 </tr>
@@ -677,10 +686,12 @@ The technologies currenly provided are:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="recipe-setup-a-new-project">Recipe: Setup a new project</h2>
+<h2 id="setup-a-new-project">Setup a new project</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="steps">Steps</h3>
+<h3 id="setup-a-blank-project">Setup a blank project</h3>
+<div class="sect3">
+<h4 id="steps">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -733,14 +744,15 @@ The technologies currenly provided are:</p>
 <div class="paragraph">
 <p>Congratulations!
 You now have a blank project!
-To completely finish the setup, choose one of the flavours to complete the project setup e.g. setup a Sprong Boot project.</p>
+To completely finish the setup, choose one of the flavours to complete the project setup e.g. setup a Spring Boot project.</p>
 </div>
 </li>
 </ol>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="flavour-setup-spring-boot">Flavour: Setup Spring Boot</h3>
+<h3 id="setup-a-spring-boot-project">Setup a Spring Boot project</h3>
 <div class="paragraph">
 <p>Spring Boot offers a way to quickly create production ready Spring applications.
 "Spring Boot favors convention over configuration and is designed to get you up and running as quickly as possible."</p>
@@ -982,7 +994,7 @@ public class Application {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Specify a specific port number for the Spring web container</td>
+<td>Specify a specific port number for the Spring web container. The application will start at <a href="http://localhost:8080/spring.application.name" class="bare">http://localhost:8080/spring.application.name</a></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1014,15 +1026,17 @@ public class Application {
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="recipe-setup-a-datasource">Recipe: Setup a DataSource</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="setup-a-datasource">Setup a DataSource</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>A <a href="https://docs.oracle.com/javase/7/docs/api/javax/sql/DataSource.html" target="_blank">DataSource</a> is the preferred way of
 connection to a database in Java. Setting up a DataSource really depends on the technology you use, so in the next section you&#8217;ll find the different flavours of the actual setup.</p>
 </div>
-</div>
 <div class="sect2">
-<h3 id="flavour-setup-a-database-in-spring-boot">Flavour: Setup a database in Spring Boot</h3>
+<h3 id="setup-a-datasource-using-spring-boot">Setup a DataSource using Spring Boot</h3>
 <div class="paragraph">
 <p>Spring Boot wil automatically setup a DataSource when it finds a jdbc dependency and the right config properties.</p>
 </div>
@@ -1091,8 +1105,11 @@ connection to a database in Java. Setting up a DataSource really depends on the 
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="recipe-setup-liquibase">Recipe: Setup Liquibase</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="setup-liquibase">Setup Liquibase</h2>
+<div class="sectionbody">
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1111,12 +1128,14 @@ connection to a database in Java. Setting up a DataSource really depends on the 
 <p>Liquibase is a great tool for creating and maintaining a relational SQL database.
 More information can be found at <a href="http://www.liquibase.org/" class="bare">http://www.liquibase.org/</a></p>
 </div>
+<div class="sect2">
+<h3 id="general-liquibase-setup">General Liquibase setup</h3>
 <div class="sect3">
 <h4 id="steps-4">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Create</strong> a new <strong>db./changelog folder</strong> in the /resources folder</p>
+<p><strong>Create</strong> a new <strong>db/changelog folder</strong> in the /resources folder</p>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="images/liquibase-folder.png"><img src="images/liquibase-folder.png" alt="Liquibase resources folder" width="350"></a></span></p>
 </div>
@@ -1136,7 +1155,7 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
     &lt;property name="environment" value="ACC" context="acc"/&gt;
     &lt;property name="environment" value="PRD" context="prd"/&gt;
 
-    &lt;changeSet id="8AAA05A8542E32E901542E392DF10004" <i class="conum" data-value="2"></i><b>(2)</b>
+    &lt;changeSet id="4a0675bf-4bc8-4686-abe3-ca4d6882904c" <i class="conum" data-value="2"></i><b>(2)</b>
                author="Stijn De Mulder"
                 dbms="h2"&gt; <i class="conum" data-value="3"></i><b>(3)</b>
         &lt;comment&gt;Creation of the EMPLOYEE table&lt;/comment&gt;
@@ -1161,11 +1180,11 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Always use a unique changeSet id since Liquibase uses it to know if a change exists in the database</td>
+<td>Always use a unique changeSet id since Liquibase uses it to know if a change exists in the database. You can use <a href="https://www.uuidgenerator.net/version4" class="bare">https://www.uuidgenerator.net/version4</a> as a handy tool to generate a unique uuid</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Indicate the type of database the changeSet should be used for</td>
+<td>Indicate the type of database the changeSet should be used for e.g. h2, oracle</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -1189,7 +1208,7 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
     &lt;changeSet id="fc4e4dc2-8907-4a1d-a579-a38db9cc1819" author="Stijn De Mulder"&gt;
         &lt;comment&gt;grant users&lt;/comment&gt;
         &lt;sql dbms="h2"&gt;
-            GRANT SELECT, UPDATE, INSERT, DELETE ON MYAPP.ENQUETE_TYPE TO EMPLOYEEAPPUSER{environment}; <i class="conum" data-value="1"></i><b>(1)</b>
+            GRANT SELECT, UPDATE, INSERT, DELETE ON MYAPP.EMPLOYEE TO EMPLOYEEAPPUSER{environment}; <i class="conum" data-value="1"></i><b>(1)</b>
         &lt;/sql&gt;
     &lt;/changeSet&gt;
 &lt;/databaseChangeLog&gt;</code></pre>
@@ -1214,7 +1233,7 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 </td>
 <td class="content">
 <div class="paragraph">
-<p>You can use the <em>environment</em> property to add grants to a user in the current environment. e.g. the EMPLOYEEAPPUSER*PRD* for the production environment</p>
+<p>You can use the <em>environment</em> property to add grants to a user in the current environment. e.g. the EMPLOYEEAPPUSER <strong>PRD</strong> for the production environment</p>
 </div>
 </td>
 </tr>
@@ -1223,7 +1242,7 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a db.changelog.views.xml in the resources folder</p>
+<p>Add a db.changelog.views.xml in the resources folder even if you don&#8217;t have views, it is still a handy placeholder so you can easily add views later</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -1262,8 +1281,8 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
     &lt;include file="v0.0.2/db.changelog-0.0.2.schema.xml" relativeToChangelogFile="true"/&gt; <i class="conum" data-value="1"></i><b>(1)</b>
 
     &lt;!-- always saveOrUpdate views &amp; grants at the end--&gt;
-    &lt;include file="db.db.changelog.views.xml" relativeToChangelogFile="true"/&gt;
-    &lt;include file="db.db.changelog.grants.xml" relativeToChangelogFile="true"/&gt;
+    &lt;include file="db.changelog.views.xml" relativeToChangelogFile="true"/&gt;
+    &lt;include file="db.changelog.grants.xml" relativeToChangelogFile="true"/&gt; <i class="conum" data-value="2"></i><b>(2)</b>
 
 &lt;/databaseChangeLog&gt;</code></pre>
 </div>
@@ -1274,6 +1293,10 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>Multiple versions of your applications will be bundled in multiple xml files for liquibase.</td>
 </tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>relativeToChangelogFile says the grants file or the view file must be located using a path that originates from the current file path</td>
+</tr>
 </table>
 </div>
 </li>
@@ -1281,9 +1304,9 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 </div>
 </div>
 <div class="sect3">
-<h4 id="flavour-setup-liquibase-in-spring-boot">Flavour: Setup Liquibase in Spring Boot</h4>
+<h4 id="setup-liquibase-using-spring-boot">Setup Liquibase using Spring Boot</h4>
 <div class="paragraph">
-<p>All you have is add the necessary liquibase dependency and Spring Boot will do the rest.</p>
+<p>All you have to do is add the necessary liquibase dependency and Spring Boot will do the rest.</p>
 </div>
 <div class="sect4">
 <h5 id="steps-5">Steps</h5>
@@ -1334,16 +1357,69 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="recipe-setup-jpa-java-persistence-architecture">Recipe: Setup JPA (Java Persistence Architecture)</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="setup-jpa-java-persistence-architecture">Setup JPA (Java Persistence Architecture)</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The Java Persistence API (JPA) is a Java application programming interface specification that describes the management of relational data in applications using Java Platform, Standard Edition and Java Platform, Enterprise Edition.
 Follow the next steps to start the JPA setup for your project.</p>
 </div>
+<div class="sect2">
+<h3 id="general-jpa-setup">General JPA setup</h3>
 <div class="sect3">
 <h4 id="steps-6">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
+<li>
+<p>Add a JPA object in the package <em>com.mycompany.app.module.domain</em></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">@Entity
+@Table(name = "EMPLOYEE", schema = "MYAPP", uniqueConstraints = {@UniqueConstraint(columnNames = {"EMPLOYEE_ID"})})
+public class Employee {
+
+    @Id
+    @Column(name = "EMPLOYEE_ID", unique = true, nullable = false)
+    private Long id;
+
+    private String name;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Adding domain objects will require certain JPA dependencies on the classpath.
+You can add them using Gradle or Maven. Specific details are found in the next sections e.g. JPA with Spring Boot</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
 <li>
 <p>Create a orm.xml file in the META-INF directory</p>
 <div class="paragraph">
@@ -1375,13 +1451,14 @@ Follow the next steps to start the JPA setup for your project.</p>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="flavour-setup-jpa-using-spring-boot">Flavour: Setup JPA using Spring Boot</h4>
+</div>
+<div class="sect2">
+<h3 id="setup-jpa-using-spring-boot">Setup JPA using Spring Boot</h3>
 <div class="paragraph">
 <p>Spring Boot offers an easy and way to setup Java Persistence Architecture simply by adding the necessary dependency</p>
 </div>
-<div class="sect4">
-<h5 id="steps-7">Steps</h5>
+<div class="sect3">
+<h4 id="steps-7">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1417,10 +1494,11 @@ Follow the next steps to start the JPA setup for your project.</p>
 </div>
 </div>
 </div>
-</div>
 <div class="sect1">
-<h2 id="recipe-setup-logging-with-logback">Recipe: Setup logging with Logback</h2>
+<h2 id="setup-logback-logging">Setup Logback logging</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="general-logback-setup">General Logback setup</h3>
 <div class="paragraph">
 <p><a href="http://logback.qos.ch" target="_blank">Logback</a> is the successor of the popular log4j project and generally provided all required logging functionalities.
 The logback project also implements the <a href="http://www.slf4j.org">SLF4J</a> façade that enables logging using an API instead of a specific implementation.</p>
@@ -1441,8 +1519,8 @@ The logback project also implements the <a href="http://www.slf4j.org">SLF4J</a>
 </li>
 </ol>
 </div>
-<div class="sect2">
-<h3 id="steps-8">Steps</h3>
+<div class="sect3">
+<h4 id="steps-8">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1501,16 +1579,8 @@ The logback project also implements the <a href="http://www.slf4j.org">SLF4J</a>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>"org.springframework.boot:spring-boot-starter-data-jpa" <i class="conum" data-value="1"></i><b>(1)</b></pre>
+<pre></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>No version is required for Spring Boot</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
@@ -1532,13 +1602,6 @@ If you have a project with two web modules, a logback file is required for <stro
 </tr>
 </table>
 </div>
-<div class="sect3">
-<h4 id="flavour">Flavour:</h4>
-
-</div>
-<div class="sect3">
-<h4 id="flavour-logback-with-spring-boot">Flavour: Logback with Spring Boot</h4>
-
 </div>
 </div>
 </div>
@@ -1560,7 +1623,7 @@ In this section you&#8217;ll find the most commonly used architectures to build 
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The application architecture defines a way on how you will structure your application implement the necessary functionality.
+<p>The application architecture defines a way on how you will structure your application to implement the necessary functionality.
 A typical architecture defines the set of used technologies, transaction management (if any), important patterns like the <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC Pattern</a> and much more</p>
 </div>
 </td>
@@ -1570,13 +1633,13 @@ A typical architecture defines the set of used technologies, transaction managem
 <div class="sect2">
 <h3 id="application-layers">Application layers</h3>
 <div class="paragraph">
-<p>A typical applicatin e.g. a web application that connects to a database has these layers:</p>
+<p>A typical application e.g. a web application that connects to a database has these layers:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p><strong>View layer</strong>: This layer visualizes the data in an attractive and user friendly way.
-It is the place where users can interact with the applications e.g. click on buttons, fill in data in forms etc.</p>
+It is the place where users can interact with the application e.g. click on buttons, fill in data in forms etc.</p>
 </li>
 <li>
 <p><strong>Controller layer</strong>: The controller layer will recieve user actions and handle any navigation.</p>
@@ -1586,7 +1649,7 @@ It is the place where users can interact with the applications e.g. click on but
 E.g. to create a user, you must first check if the user doesn&#8217;t already exist.</p>
 </li>
 <li>
-<p><strong>Persistence layer</strong>: This is de <em>gateway</em> to the actually persisted data.
+<p><strong>Persistence layer</strong>: This is de <em>gateway</em> to the persisted data.
 Typically this is a database or a file system.</p>
 </li>
 </ul>
@@ -1600,9 +1663,10 @@ Typically this is a database or a file system.</p>
 <td class="content">
 <div class="title">Write down your own architecture</div>
 <div class="paragraph">
-<p>This section introduces some of the commonly used architecture flavours.
-Since these examples probably won&#8217;t be an exact fit, you can create your own by taking on of the examples and change the layers and/or technologies.
-When you work in a team, its important that everyone understands and uses the same architecture.</p>
+<p>This section introduces some of the commonly used architectural flavours.
+Since these examples probably won&#8217;t be an exact fit, you can create your own by taking one of the examples and change the layers and/or technologies.
+When you work in a team, its important that everyone understands and uses the same architecture.
+I would advise you to make your own architecture drawing and see if it fits one the pre-defined ones in this cookbook.</p>
 </div>
 </td>
 </tr>
@@ -1610,7 +1674,7 @@ When you work in a team, its important that everyone understands and uses the sa
 </div>
 </div>
 <div class="sect2">
-<h3 id="flavour-command-query-responsibility-segregation-architecture-cqrs">Flavour: Command Query Responsibility Segregation Architecture (CQRS)</h3>
+<h3 id="command-query-responsibility-segregation-architecture-cqrs">Command Query Responsibility Segregation Architecture (CQRS)</h3>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="images/cqrs.png"><img src="images/cqrs.png" alt="Application Architecture with CQRS" width="700"></a></span></p>
 </div>
@@ -1623,100 +1687,149 @@ The application architecture works like this:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>The first layer is the <strong>view layer</strong> and uses <strong>technologies</strong> like JSP, xhtml, thymeleaf etc.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<p>The first layer is the <strong>view layer</strong>  uses <strong>technologies</strong> like JSP, xhtml, thymeleaf etc.</p>
+</li>
 <li>
 <p>The view layer uses ViewDTO models specifically programmed for the that view</p>
 </li>
-</ol>
-</div>
+<li>
+<p>The <strong>controller</strong> will be able to receive objects from the view as input params e.g. a save or update method.
+The <strong>controller</strong> will also map specific objects from the <strong>service</strong> layer if necessary.
+ E.g. the service might return an object that is perfectly suitable for handling in the view</p>
 </li>
 <li>
-<p>The <strong>controller</strong> will be able to receive objects from the view as input params e.g. a save or update method.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>The <strong>controller</strong> will also map specific objects from the <strong>service</strong> layer if necessary.
-E.g. the service might return an object that is perfectly suitable for handling in the view</p>
-</li>
-</ol>
-</div>
+<p>The <strong>repository</strong> acts a a <strong>gateway</strong> to the <strong>persisted data</strong> in the database.
+It typically performs Create Read Update Delete functionalities.
+A repisitory will typically works with JPA or JDBC.
+JPA is the preferred technology since it abstract the direct access to database.</p>
 </li>
 <li>
-<p>The <strong>service</strong> layer itself is seperated into <strong>query</strong> services and <strong>write</strong> or <strong>command</strong> services</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<p>The <strong>CommandService</strong> takes different command objects as input to perform a data change e.g. the UpdateEmployeeCommand will change the data of an employee.
+The service usually returns no or a limited set of data.
+The most logical return object is the generated primary key when an object was created.</p>
+</li>
 <li>
 <p>The <strong>QueryService</strong> directly retrieves objects from the persistence e.g. the database and transforms it using a Row mapper to a Data Transfer Object (short DTO).
 It takes a <strong>QueryCommand</strong> or simple input parameters to retrieve the data.</p>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
+</li>
 <li>
-<p>Accessing data from the database is done using <strong>JDBC</strong></p>
+<p>Accessing data from the database is done using <strong>JDBC</strong> and typically a row mapper to convert from rows to objects.</p>
 </li>
 </ol>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Benefits</strong> of using this patterns are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The application is optimized for reading and writing.
+This will result in highly performant application by default.
+ Reading is done via JDBC, so very lightweight and only the data required is retrieved (this is something you can&#8217;t do with JPA).</p>
 </li>
 <li>
-<p>The <strong>CommandService</strong> takes different command objects as input to perform a data change.
-E.g. the UpdateEmployeeCommand will change the data of an employee.</p>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
-<li>
-<p>The service usually returns no or a limited set of data.
-The most logical return object is the generated primary key when an object was created.</p>
+<p>Writing is done using JPA which the benefits of re-use objects and the lack of writing custom SQL logic.
+Changing the database is easier using JPA since you don&#8217;t have to re-write all the sql comamnds.</p>
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p><strong>Cons</strong> are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Query services are nothing more than optimized repositories</p>
+</li>
+<li>
+<p>There is no re-use of JPA entities for reading, so this will lead to duplicate code.</p>
 </li>
 </ol>
 </div>
-</li>
-</ol>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="flavour-domain-driven-architecture-dd">Flavour: Domain Driven Architecture (DD)</h3>
+<h3 id="domain-driven-architecture-dd">Domain Driven Architecture (DD)</h3>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="images/dd.png"><img src="images/dd.png" alt="Application Architecture Domain Driven" width="700"></a></span></p>
 </div>
 <div class="paragraph">
 <p>This architecture assumes that the persisted entities will be managed using a <strong>Create, Read, Update, Delete</strong> pattern.
-E.g. when you&#8217;re working with an <em>Employee</em>, you&#8217;ll have an <em>EmployeeService</em> that has the methods <em>create(Employee), update(Employee), find(Employee), delete(Employee).
-However when you want to retrieve the department name with the names of the employees in it, you&#8217;ll have to call services from the _EmployeeService</em> plus the DepartmentService_ and merge the data yourself in the controller.
-If you were only department names and employee names, you&#8217;d be retrieving too much information e.g. departments with all their data and employees with all the data.</p>
+E.g. when you&#8217;re working with an <em>Employee</em>, you&#8217;ll have an <em>EmployeeService</em> that has the methods <em>create(Employee)</em>, <em>update(Employee)</em>, <em>find(Employee)</em>, <em>delete(Employee)</em>.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>The first two layers are similar to the CQRS architecture</p>
+<p>The first layer is the <strong>view layer</strong>  uses <strong>technologies</strong> like JSP, xhtml, thymeleaf etc.</p>
 </li>
 <li>
-<p>The architecture has <strong>DomainServices</strong> focussed on providing functionality for one entity in the domain e.g. Employee</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>These services can accept input commands like with CQRS or more likely domain objects.</p>
+<p>The view layer uses ViewDTO models specifically programmed for the that view</p>
 </li>
 <li>
-<p>The domain objects are <strong>Plain Old Java Objects</strong>. They are not linked to any specific technology like JPA.</p>
+<p>The architecture has <strong>DomainServices</strong> focused on providing functionality for one entity in the domain e.g. Employee
+These services can accept input commands like with CQRS or more likely domain objects.
+The domain objects are <strong>Plain Old Java Objects</strong>. They are not linked to any specific technology like JPA.
+The service has the choice of working with JPA or JDBC.</p>
 </li>
 <li>
-<p>The service has the choice of working with JPA or JDBC.
-When working with JPA, the domain objects are transformed into JPA entities using a mapper.</p>
+<p>A <strong>Domain to JPA object mapper</strong> is used to convert Java Objects in JPA objects and vica versa.</p>
+</li>
+<li>
+<p>The domain services can choose to work with <strong>JPA or JDBC repositories</strong>.</p>
+</li>
+<li>
+<p>The domain services can choose to work with <strong>JPA or JDBC repositories</strong>.</p>
 </li>
 </ol>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Benefits</strong> of using this patterns are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Excellent for applications that use the CRUD pattern</p>
 </li>
 <li>
-<p>The persistence layer is similar to the one described in the CQRS architecture</p>
+<p>Promotes re-use of exisitng domain services</p>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p><strong>Cons</strong> are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Changes are you&#8217;ll need more complex data when your application grows.
+Combining multiple domain service calls into one object is an expensive operation.s</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="flavour-full-jpa-or-jdbc-architecture">Flavour Full JPA or JDBC Architecture</h3>
+<h3 id="a-minimal-jdbc-or-jpa-architecture">A minimal JDBC or JPA Architecture</h3>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="images/jpa.png"><img src="images/jpa.png" alt="Application Architecture full JPA or JDBC" width="700"></a></span></p>
 </div>
@@ -1727,15 +1840,15 @@ Whilst this is the easiest architecture, it is also the least flexible. The prob
 In this case you are forced to make another call to the database or in the worst case adapt your model.</p>
 </div>
 <div class="sect3">
-<h4 id="where-do-transactions-start">Where do transactions start?</h4>
+<h4 id="database-transactions-start-at-the-service-level">Database transactions start at the service level</h4>
 <div class="paragraph">
 <p>Any architecture requires you to think about transaction management.
-Transactions allow a number of actions to be grouped on one logical unit of work.
+Transactions allow a number of actions to be grouped into one logical unit of work.
 If one action in the transactions fails, all other actions must be reverted.</p>
 </div>
 <div class="paragraph">
 <p>Transaction mangement really is important when working with SQL databases.
-In all the provided architectures, the transaction starts when entering a service and commits or rollbacks when leaving the service.</p>
+In all the provided architectures, the transaction starts when entering a service and it commits or rollbacks when leaving the service.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1745,8 +1858,10 @@ In all the provided architectures, the transaction starts when entering a servic
 </td>
 <td class="content">
 <div class="paragraph">
-<p>When you work with the <a href="https://en.wikipedia.org/wiki/Java_Persistence_API">Java Persistence Archicture</a> e.g. hibernate or eclipselink, you&#8217;ll have access to the entity manager during the transaction.
-Any <a href="https://docs.jboss.org/hibernate/orm/3.5/api/org/hibernate/LazyInitializationException.html">LazyInitializationException</a>s will not occur inside the service layer.</p>
+<p>Working with JPA requires that you always have an active transactions to retrieve data from the database.
+When you retrieve and <em>Employee</em> and you want to get the departments of that employee via the <em>getDepartments()</em> method, JPA will use the entitymanager and the current transaction to execute a new sql query to fetch the departments.
+When you don&#8217;t have a transaction you&#8217;ll get a ttps://docs.jboss.org/hibernate/orm/3.5/api/org/hibernate/LazyInitializationException.html[LazyInitializationException].
+Therefor it is important to keep your JPA objects withing the service and return normal, non JPA, objects outside the service.</p>
 </div>
 </td>
 </tr>
@@ -1761,38 +1876,35 @@ Any <a href="https://docs.jboss.org/hibernate/orm/3.5/api/org/hibernate/LazyInit
 <div class="sectionbody">
 <div class="paragraph">
 <p>Every applications needs to handle cases where normal program execution cannot continue due to some reason.
-This may be related to a number of cases such as invalid business rules, a service or database is down etc.
+This may be related to invalid business rules, a service or database is down etc.
 The standard way to handle these special cases is by using the the exception mechanism already provided by the Java language.</p>
 </div>
-<div class="admonitionblock important">
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Custom exceptions must be <strong>unchecked</strong> or extend <strong>RuntimeException</strong>
+<div class="paragraph">
+<p>The Java language allows <strong>unchecked</strong> or <strong>checked</strong> exceptions.
+The exception handling in cookbook assumes all exceptions are <strong>unchecked</strong> because of the easy of writing code.
+Using <strong>checked</strong> exceptions will force you to always write a try - catch block which leads to unnecessary clutter.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
 <div class="sect2">
 <h3 id="business-and-technical-exceptions">Business and Technical Exceptions</h3>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Each exception contains a specific id used to uniquely find the exception in e.g. a logging file
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>This cookbook uses custom made exceptions.
+They are free to use in your projects.
+You can find the source on the Github project.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="recipe-throw-an-exception">Recipe: Throw an exception</h3>
+<h3 id="throw-an-exception">Throw an exception</h3>
 <div class="paragraph">
 <p>In its basic form, the exception contains a message. You can throw an exception using the following code:</p>
 </div>
@@ -1803,8 +1915,20 @@ Each exception contains a specific id used to uniquely find the exception in e.g
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Each exception contains a specific id used to uniquely find the error details in e.g. a logging file or the database
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>The next examples show you possiblities on how you can throw exception by for example combining an enum with a message.</p>
+<p>The following examples illustrate the different options you have in throwing exceptions:</p>
 </div>
 <div class="listingblock">
 <div class="title">Throw BusinessException with an error code</div>
@@ -1870,11 +1994,159 @@ Technical exceptions only accept one message compared to BusinessException that 
 </tr>
 </table>
 </div>
-<div class="sect3">
-<h4 id="all-combinations">All combinations</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>All combinatinos can be found in the sample source code</p>
+<p><strong>Never loose</strong> the <strong>original exception</strong>.
+If you throw a new exception based on an old one, make sure you pass the old one in the constructor as a parameter to keep track of the full stacktrace.
+ You&#8217;ll thank me later.</p>
 </div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conventions">Conventions</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="application-environment-names">Application environment names</h3>
+<div class="paragraph">
+<p>A typical enterprise Java application goes through a number of stages before it reaches production.
+Each stage has a specific purpose and generally the stages are isolated from each other.
+The next section describes the stages most commonly available:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Development (DEV)</strong>: This is where you are making the next version of the application.
+This is most likely on your local machine (unless you have a cloud programming environment)</p>
+</li>
+<li>
+<p><strong>Build (BUILD)</strong>: Seperate environment for building your application e.g. Jenking or Bamboo</p>
+</li>
+<li>
+<p><strong>Test (TST)</strong>: The Test environment is the first place where you and other people can see if all the code changes work together and no technical exceptions occur.
+It gives you a first feeling of what production will behave or look like.
+The basic functionalities will be tested here (by you or the test team). Early bugs will be spotted here.
+This environment will resemble acceptance and production and it is the real test of how your coding changes will work in production.</p>
+</li>
+<li>
+<p><strong>Accept (ACC)</strong>: The accept environment has to goal of validating if code changes are Ok to move to production.
+Where in test you as a developer do the testing, in Accept someone e.g. business owner will perform and approve the changes.</p>
+</li>
+<li>
+<p><strong>Production (PRD)</strong>: This is the only place where your application is used for real.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="when-should-you-write-javadoc">When should you write Javadoc?</h3>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Try to choose method names that are readable and concise.
+Keep method names as short as possible without loosing the method&#8217;s responsibility.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In real life it is time consuming to write a trivial JavaDoc for a method called <em>findEmployee</em>.
+Any developer who reads the name of that method knows what it does.
+It is also time consuming to correctly keep JavaDoc up to date.
+If the <em>findEmployee</em> method has an extra parameter, you have to update the JavaDoc.</p>
+</div>
+<div class="paragraph">
+<p>Therefore the general guideline is <strong>not</strong> to write any JavaDoc unless</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>You are writing a framework e.g. a query builder or task manager</p>
+</li>
+<li>
+<p>You need to clarify the way a method works and it cannot be derived solely from the method name</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="naming-conventions">Naming conventions</h3>
+<div class="sect3">
+<h4 id="repository-vs-data-access-object-dao">Repository Vs Data Access Object (DAO)</h4>
+<div class="paragraph">
+<p>Objects that access a data repository will be extended with <em>Repository</em> instead of <em>DAO</em>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="naming-an-implementation">Naming an implementation</h4>
+<div class="paragraph">
+<p>Suppose we have an <em>EmployeeRepository</em> interface.
+If you write a Jdbc repository, you will name it <em>EmployeeJdbcRepository</em></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Sometimes there is only one available implementation you can think of at that moment.
+This is the so called <em>Default</em> implementation.
+In this case you name it using the <em>Default</em> keyword e.g. an <em>EmployeeService</em> has the <em>EmployeeDefaultService</em> implementation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Choosing a correct naming scheme for an implementation is alwasy tricky.
+The following options were disregarded for a specific reason (in case we have an EmployeeRepository):</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>EmployeeRepositoryJpaImpl</strong>: The <em>Impl</em> keyword makes it unnecessary long.</p>
+</li>
+<li>
+<p><strong>JpaEmployeeRepository</strong>: The <em>Jpa</em> keyword belongs to the repository.
+In this case it seems we are making a JpaEmployee.</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="encoding">Encoding</h3>
+<div class="paragraph">
+<p>UTF-8 or higher (UTF-16) should be used as the base encoding. Stay away from windows (iso-&#8230;&#8203;) or macOs encoding.</p>
 </div>
 </div>
 </div>
@@ -1883,7 +2155,23 @@ Technical exceptions only accept one message compared to BusinessException that 
 <h2 id="persistence-layer">Persistence layer</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="recipe-write-a-repository-interface">Recipe: Write a repository interface</h3>
+<h3 id="write-a-repository-interface">Write a repository interface</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This section talks about repositories described in the Application Architecture section.
+A repository will be centered around one persitent entity.
+Usually a repository will be mapped to a JPA entity or a plain Java domain object.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The repository interface contains all methods to manipulate persistent data.
 It is scoped for a specific domain e.g. Employee and should be the only way to manipulate that domain data.
@@ -1905,18 +2193,19 @@ Repository interfaces are placed in the <em>com.mycompany.module.repository</em>
 <li>
 <p><strong>find(One)</strong>: Use the <em>findByParameter</em> syntax to name methods that will return one or more employees.
 E.g. an EmployeeRepository may have a <em>findByName</em> and <em>findByNameAndAddress</em> to retrieve employees
-based on the name or the combination of the employee name and its address.</p>
+based on the name or the combination of the employee name and his address.</p>
 </li>
 <li>
 <p><strong>find(and process result)</strong>: In some case we do some processing or have some logic E.g. the EmployeeRepository has a find method that returns a map of the departments with
-the employees in that department. The return object is <em>Map&lt;Department, List&lt;Employee&gt;&gt;</em>.
+the employees in that department.
+The returned object is <em>Map&lt;Department, List&lt;Employee&gt;&gt;</em>.
 In this case we name the method <em>findAndGroupByDepartment</em></p>
 </li>
 <li>
-<p><strong>count</strong>: Count methods follow the same naming conventions as find methods.</p>
+<p><strong>count</strong>: Count methods follow the same naming conventions as find methods. Examples are countByName, countAll</p>
 </li>
 <li>
-<p><strong>update</strong>: Use <em>updateByParameter</em> methods for methods that change data in the repository. E.g. the EmployeeRepository
+<p><strong>update</strong>: Use <em>updateByParameter</em> methods for operations that change data in the repository. E.g. the EmployeeRepository
 has the methods <em>updateByName</em> and <em>updateByNameAndAddress</em></p>
 </li>
 <li>
@@ -1975,19 +2264,19 @@ and <em>deleteByNameAndAddress</em> methods</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="flavour-write-a-jdbc-repository-using-spring">Flavour: Write a Jdbc repository using Spring</h3>
+<h3 id="write-a-jdbc-repository-using-spring">Write a Jdbc repository using Spring</h3>
 <div class="sect3">
 <h4 id="steps-10">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Create a .sql</strong> file and place it in the sql folder within resources folder</p>
+<p><strong>Create a .sql</strong> file and place it in the sql folder within the resources folder</p>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="images/sql-file.png"><img src="images/sql-file.png" alt="Sql file in resources folder" width="200"></a></span></p>
 </div>
 </li>
 <li>
-<p><strong>Write your queries</strong> in the file</p>
+<p><strong>Write your queries</strong> in the file to use them later on as parameters for the Jdbc queries.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-sql" data-lang="sql">findEmployeeById=SELECT employee.NAME, employee.ID \ <i class="conum" data-value="1"></i><b>(1)</b>
@@ -2006,7 +2295,7 @@ findEmployeeByNameAndId=SELECT employee.NAME, employee.ID \ <i class="conum" dat
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Write multiple queries in one file</td>
+<td>Write multiple queries in one file corresponding to one domain object</td>
 </tr>
 </table>
 </div>
@@ -2110,7 +2399,8 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 <td class="content">
 <div class="title">Use NamedParameterJdbcTemplate instead of JdbcTemplate</div>
 <div class="paragraph">
-<p>It is preferred to use the <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/namedparam/NamedParameterJdbcTemplate.html">NamedParameterJdbcTemplate</a> over the standard <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html">JdbcTemplate</a> because you are able to name SQL parameters instead of using ?.</p>
+<p>It is preferred to use the <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/namedparam/NamedParameterJdbcTemplate.html">NamedParameterJdbcTemplate</a> over the standard <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html">JdbcTemplate</a> because you are able to name SQL parameters instead of using ?.
+This way of working is less ambiguous and error prone.</p>
 </div>
 </td>
 </tr>
@@ -2119,18 +2409,19 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 </div>
 </div>
 <div class="sect2">
-<h3 id="flavour-write-a-jpa-repository">Flavour: Write a JPA repository</h3>
+<h3 id="write-a-jpa-repository">Write a JPA repository</h3>
 <div class="sect3">
 <h4 id="steps-11">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Write a new JPA implementation of the repository interface e.g. EmployeeRepositoryJPA and place it in the <em>com.mycompany.project.module.repository.impl</em> package</p>
+<p>Write a new JPA implementation of the repository interface e.g. EmployeeJPARepository and place it in the <em>com.mycompany.project.module.repository.impl</em> package</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">@Repository  <i class="conum" data-value="1"></i><b>(1)</b>
 public class EmployeeRepositoryJPA implements EmployeeRepository{
 
+    @Autowired
     private EntityManager entityManager; <i class="conum" data-value="2"></i><b>(2)</b>
 
     @Override
@@ -2170,8 +2461,22 @@ public class EmployeeRepositoryJPA implements EmployeeRepository{
 <div class="sect1">
 <h2 id="service-layer">Service layer</h2>
 <div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The services in this section match with the services defined in the application architecture section.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
-<h3 id="recipe-write-a-service">Recipe: Write a service</h3>
+<h3 id="write-a-service-interface">Write a service interface</h3>
 <div class="sect3">
 <h4 id="steps-12">Steps</h4>
 <div class="olist arabic">
@@ -2191,7 +2496,7 @@ public class EmployeeRepositoryJPA implements EmployeeRepository{
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This example uses the CQRS approach that creates and employee using a specific employee command</td>
+<td>This example uses the CQRS approach that creates an employee using a specific employee command</td>
 </tr>
 </table>
 </div>
@@ -2201,7 +2506,7 @@ public class EmployeeRepositoryJPA implements EmployeeRepository{
 </div>
 </div>
 <div class="sect2">
-<h3 id="recipe-write-a-service-using-spring-framework-or-spring-boot">Recipe: Write a service using Spring Framework or Spring Boot</h3>
+<h3 id="write-a-service-using-spring">Write a service using Spring</h3>
 <div class="sect3">
 <h4 id="steps-13">Steps</h4>
 <div class="olist arabic">
@@ -2212,7 +2517,7 @@ public class EmployeeRepositoryJPA implements EmployeeRepository{
 <ol class="loweralpha" type="a">
 <li>
 <p>Name the service using the specific implementation.
-For default implementations use the keyword Default e.g Employee*Default*Service</p>
+For default implementations use the keyword Default e.g Employee <strong>Default</strong> Service</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">@Service <i class="conum" data-value="1"></i><b>(1)</b>
@@ -2230,7 +2535,7 @@ public class EmployeeDefaultService implements EmployeeService {
         Employee employee = new Employee();
         employee.setName(command.getName());
         Long employeeId =  employeeRepository.insert(employee);
-        logger.info("Create employee with primary key {} for command {}",employeeId, command); <i class="conum" data-value="6"></i><b>(6)</b>
+        logger.info("Create an employee with primary key {} for command {}",employeeId, command); <i class="conum" data-value="6"></i><b>(6)</b>
         return employeeId;
     }
 
@@ -2240,7 +2545,7 @@ public class EmployeeDefaultService implements EmployeeService {
         }
 
         if (StringUtils.isNotEmpty(command.getName())) {
-            throw new BusinessException(EmployeeServiceError.EMPLOYEE_NAME_MADATORY,
+            throw new BusinessException(EmployeeServiceError.EMPLOYEE_NAME_MANDATORY,
                     "No employee name was given for create employee command {}",command);
         }
 
@@ -2268,7 +2573,7 @@ public class EmployeeDefaultService implements EmployeeService {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html">@Autowired</a> private repositories and use <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Qualifier.html">@Qualifier</a> when multiple implementations exists and you need to specify a specific one</td>
+<td>Use <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html">@Autowired</a> for private repositories and use <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Qualifier.html">@Qualifier</a> when multiple implementations exists and you need to specify a specific one</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -2290,168 +2595,10 @@ public class EmployeeDefaultService implements EmployeeService {
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="controller-layer">Controller layer</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="return">Return</h3>
-
-</div>
-<div class="sect2">
-<h3 id="write-a-spring-rest-controller">Write a Spring Rest Controller</h3>
-
-</div>
-<div class="sect2">
-<h3 id="steps-14">Steps</h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Write a controller in the package <em>com.company.module.controller</em></p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="conventions">Conventions</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="application-environment-names">Application environment names</h3>
-<div class="paragraph">
-<p>A typica enterprise Java application goes trough a number of stages before it reaches production.
-Each stage has a specific purpuse and generally the stages are isolated from each other.
-The next section describes the stages typically available:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Development (DEV)</strong>: This is where you are making the next version of the application.
-This is most likely on your local machine (unless you have a cloud programming environment)</p>
-</li>
-<li>
-<p><strong>Build (BUILD)</strong>: Seperate environment for building your application</p>
-</li>
-<li>
-<p><strong>Test (TST)</strong>: In the Test environment you can (as a developer) test your changes before they go to the next step.
-This environment will resemble acceptance and production and it is the real test of how your coding changes will work in production.</p>
-</li>
-<li>
-<p><strong>Accept (ACC)</strong>: The accept environment has to goal of validating if code changes are Ok to move to production.
-Where in test you as a developer do the testing, in Accept someone e.g. business owner will perform and approve the changes.</p>
-</li>
-<li>
-<p><strong>Production (PRD)</strong>: This is the only place where your application is used for real.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="when-should-you-write-javadoc">When should you write Javadoc?</h3>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Try to choose method names that are readable and provide just information you need.
-Keep method names as short as possible.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Although in the ideal world, every method should have a extensive JavaDoc.
-However in real life it is time consuming to write a trivial JavaDoc for a method called <em>findEmployee</em>.
-Any developer who reads that method knows what it does.
-It is also time consuming to correctly keep JavaDoc up to date.
-If the <em>findEmployee</em> method has an extra parameter, you have to update the JavaDoc.</p>
-</div>
-<div class="paragraph">
-<p>Therefore the general guideline is <strong>not</strong> to write any JavaDoc unless</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>you are writing a framework e.g. a query builder or task manager</p>
-</li>
-<li>
-<p>You need to clarify the way a method works and it cannot be derived solely from the method name</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="naming-conventions">Naming conventions</h3>
-<div class="sect3">
-<h4 id="repository-vs-data-access-object-dao">Repository Vs Data Access Object (DAO)</h4>
-<div class="paragraph">
-<p>Objects that access a data repository will be extended with <em>Repository</em> instead of <em>DAO</em>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="naming-an-implementation">Naming an implementation</h4>
-<div class="paragraph">
-<p>Suppose we have an <em>EmployeeRepository</em> interface.
-If you write a Jdbc repository, you will name it <em>EmployeeJdbcRepository</em>.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Sometimes there is only one available implementation you can think of at that moment.
-It is the so called <em>Default</em> implementation.
-In this case you name it using the <em>Default</em> keyword e.g. an <em>EmployeeService</em> has the <em>EmployeeDefaultService</em> implementation.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Choosing a correct naming scheme for an implementation is alwasy tricky.
-The following options were regarded for a specific reason (in case we have an EmployeeRepository):</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>EmployeeRepositoryJpaImpl</strong>: The <em>Impl</em> keyword makes it unnecessary long.</p>
-</li>
-<li>
-<p><strong>JpaEmployeeRepository</strong>: The <em>Jpa</em> keyword belongs to the repository.
-In this case it seems we are making a JpaEmployee.</p>
-</li>
-</ol>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="encoding">Encoding</h3>
-
-</div>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-22 18:31:30 +02:00
+Last updated 2016-09-04 23:42:07 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css">

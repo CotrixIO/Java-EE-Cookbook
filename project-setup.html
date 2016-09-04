@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3">
-<title>Recipe: Setup a new project</title>
+<title>Setup a new project</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -497,19 +497,31 @@ $(addBlockSwitches);
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#recipe-setup-a-new-project">Recipe: Setup a new project</a>
+<li><a href="#setup-a-new-project">Setup a new project</a>
 <ul class="sectlevel2">
-<li><a href="#steps">Steps</a></li>
-<li><a href="#flavour-setup-spring-boot">Flavour: Setup Spring Boot</a></li>
-<li><a href="#recipe-setup-a-datasource">Recipe: Setup a DataSource</a></li>
-<li><a href="#flavour-setup-a-database-in-spring-boot">Flavour: Setup a database in Spring Boot</a></li>
-<li><a href="#recipe-setup-liquibase">Recipe: Setup Liquibase</a></li>
-<li><a href="#recipe-setup-jpa-java-persistence-architecture">Recipe: Setup JPA (Java Persistence Architecture)</a></li>
+<li><a href="#setup-a-blank-project">Setup a blank project</a></li>
+<li><a href="#setup-a-spring-boot-project">Setup a Spring Boot project</a></li>
 </ul>
 </li>
-<li><a href="#recipe-setup-logging-with-logback">Recipe: Setup logging with Logback</a>
+<li><a href="#setup-a-datasource">Setup a DataSource</a>
 <ul class="sectlevel2">
-<li><a href="#steps-8">Steps</a></li>
+<li><a href="#setup-a-datasource-using-spring-boot">Setup a DataSource using Spring Boot</a></li>
+</ul>
+</li>
+<li><a href="#setup-liquibase">Setup Liquibase</a>
+<ul class="sectlevel2">
+<li><a href="#general-liquibase-setup">General Liquibase setup</a></li>
+</ul>
+</li>
+<li><a href="#setup-jpa-java-persistence-architecture">Setup JPA (Java Persistence Architecture)</a>
+<ul class="sectlevel2">
+<li><a href="#general-jpa-setup">General JPA setup</a></li>
+<li><a href="#setup-jpa-using-spring-boot">Setup JPA using Spring Boot</a></li>
+</ul>
+</li>
+<li><a href="#setup-logback-logging">Setup Logback logging</a>
+<ul class="sectlevel2">
+<li><a href="#general-logback-setup">General Logback setup</a></li>
 </ul>
 </li>
 </ul>
@@ -517,10 +529,12 @@ $(addBlockSwitches);
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="recipe-setup-a-new-project">Recipe: Setup a new project</h2>
+<h2 id="setup-a-new-project">Setup a new project</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="steps">Steps</h3>
+<h3 id="setup-a-blank-project">Setup a blank project</h3>
+<div class="sect3">
+<h4 id="steps">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -573,14 +587,15 @@ $(addBlockSwitches);
 <div class="paragraph">
 <p>Congratulations!
 You now have a blank project!
-To completely finish the setup, choose one of the flavours to complete the project setup e.g. setup a Sprong Boot project.</p>
+To completely finish the setup, choose one of the flavours to complete the project setup e.g. setup a Spring Boot project.</p>
 </div>
 </li>
 </ol>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="flavour-setup-spring-boot">Flavour: Setup Spring Boot</h3>
+<h3 id="setup-a-spring-boot-project">Setup a Spring Boot project</h3>
 <div class="paragraph">
 <p>Spring Boot offers a way to quickly create production ready Spring applications.
 "Spring Boot favors convention over configuration and is designed to get you up and running as quickly as possible."</p>
@@ -822,7 +837,7 @@ public class Application {
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Specify a specific port number for the Spring web container</td>
+<td>Specify a specific port number for the Spring web container. The application will start at <a href="http://localhost:8080/spring.application.name" class="bare">http://localhost:8080/spring.application.name</a></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -854,15 +869,17 @@ public class Application {
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="recipe-setup-a-datasource">Recipe: Setup a DataSource</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="setup-a-datasource">Setup a DataSource</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>A <a href="https://docs.oracle.com/javase/7/docs/api/javax/sql/DataSource.html" target="_blank">DataSource</a> is the preferred way of
 connection to a database in Java. Setting up a DataSource really depends on the technology you use, so in the next section you&#8217;ll find the different flavours of the actual setup.</p>
 </div>
-</div>
 <div class="sect2">
-<h3 id="flavour-setup-a-database-in-spring-boot">Flavour: Setup a database in Spring Boot</h3>
+<h3 id="setup-a-datasource-using-spring-boot">Setup a DataSource using Spring Boot</h3>
 <div class="paragraph">
 <p>Spring Boot wil automatically setup a DataSource when it finds a jdbc dependency and the right config properties.</p>
 </div>
@@ -931,8 +948,11 @@ connection to a database in Java. Setting up a DataSource really depends on the 
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="recipe-setup-liquibase">Recipe: Setup Liquibase</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="setup-liquibase">Setup Liquibase</h2>
+<div class="sectionbody">
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -951,12 +971,14 @@ connection to a database in Java. Setting up a DataSource really depends on the 
 <p>Liquibase is a great tool for creating and maintaining a relational SQL database.
 More information can be found at <a href="http://www.liquibase.org/" class="bare">http://www.liquibase.org/</a></p>
 </div>
+<div class="sect2">
+<h3 id="general-liquibase-setup">General Liquibase setup</h3>
 <div class="sect3">
 <h4 id="steps-4">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Create</strong> a new <strong>db./changelog folder</strong> in the /resources folder</p>
+<p><strong>Create</strong> a new <strong>db/changelog folder</strong> in the /resources folder</p>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="images/liquibase-folder.png"><img src="images/liquibase-folder.png" alt="Liquibase resources folder" width="350"></a></span></p>
 </div>
@@ -976,7 +998,7 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
     &lt;property name="environment" value="ACC" context="acc"/&gt;
     &lt;property name="environment" value="PRD" context="prd"/&gt;
 
-    &lt;changeSet id="8AAA05A8542E32E901542E392DF10004" <i class="conum" data-value="2"></i><b>(2)</b>
+    &lt;changeSet id="4a0675bf-4bc8-4686-abe3-ca4d6882904c" <i class="conum" data-value="2"></i><b>(2)</b>
                author="Stijn De Mulder"
                 dbms="h2"&gt; <i class="conum" data-value="3"></i><b>(3)</b>
         &lt;comment&gt;Creation of the EMPLOYEE table&lt;/comment&gt;
@@ -1001,11 +1023,11 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Always use a unique changeSet id since Liquibase uses it to know if a change exists in the database</td>
+<td>Always use a unique changeSet id since Liquibase uses it to know if a change exists in the database. You can use <a href="https://www.uuidgenerator.net/version4" class="bare">https://www.uuidgenerator.net/version4</a> as a handy tool to generate a unique uuid</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Indicate the type of database the changeSet should be used for</td>
+<td>Indicate the type of database the changeSet should be used for e.g. h2, oracle</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -1029,7 +1051,7 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
     &lt;changeSet id="fc4e4dc2-8907-4a1d-a579-a38db9cc1819" author="Stijn De Mulder"&gt;
         &lt;comment&gt;grant users&lt;/comment&gt;
         &lt;sql dbms="h2"&gt;
-            GRANT SELECT, UPDATE, INSERT, DELETE ON MYAPP.ENQUETE_TYPE TO EMPLOYEEAPPUSER{environment}; <i class="conum" data-value="1"></i><b>(1)</b>
+            GRANT SELECT, UPDATE, INSERT, DELETE ON MYAPP.EMPLOYEE TO EMPLOYEEAPPUSER{environment}; <i class="conum" data-value="1"></i><b>(1)</b>
         &lt;/sql&gt;
     &lt;/changeSet&gt;
 &lt;/databaseChangeLog&gt;</code></pre>
@@ -1054,7 +1076,7 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 </td>
 <td class="content">
 <div class="paragraph">
-<p>You can use the <em>environment</em> property to add grants to a user in the current environment. e.g. the EMPLOYEEAPPUSER*PRD* for the production environment</p>
+<p>You can use the <em>environment</em> property to add grants to a user in the current environment. e.g. the EMPLOYEEAPPUSER <strong>PRD</strong> for the production environment</p>
 </div>
 </td>
 </tr>
@@ -1063,7 +1085,7 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a db.changelog.views.xml in the resources folder</p>
+<p>Add a db.changelog.views.xml in the resources folder even if you don&#8217;t have views, it is still a handy placeholder so you can easily add views later</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -1102,8 +1124,8 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
     &lt;include file="v0.0.2/db.changelog-0.0.2.schema.xml" relativeToChangelogFile="true"/&gt; <i class="conum" data-value="1"></i><b>(1)</b>
 
     &lt;!-- always saveOrUpdate views &amp; grants at the end--&gt;
-    &lt;include file="db.db.changelog.views.xml" relativeToChangelogFile="true"/&gt;
-    &lt;include file="db.db.changelog.grants.xml" relativeToChangelogFile="true"/&gt;
+    &lt;include file="db.changelog.views.xml" relativeToChangelogFile="true"/&gt;
+    &lt;include file="db.changelog.grants.xml" relativeToChangelogFile="true"/&gt; <i class="conum" data-value="2"></i><b>(2)</b>
 
 &lt;/databaseChangeLog&gt;</code></pre>
 </div>
@@ -1114,6 +1136,10 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>Multiple versions of your applications will be bundled in multiple xml files for liquibase.</td>
 </tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>relativeToChangelogFile says the grants file or the view file must be located using a path that originates from the current file path</td>
+</tr>
 </table>
 </div>
 </li>
@@ -1121,9 +1147,9 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 </div>
 </div>
 <div class="sect3">
-<h4 id="flavour-setup-liquibase-in-spring-boot">Flavour: Setup Liquibase in Spring Boot</h4>
+<h4 id="setup-liquibase-using-spring-boot">Setup Liquibase using Spring Boot</h4>
 <div class="paragraph">
-<p>All you have is add the necessary liquibase dependency and Spring Boot will do the rest.</p>
+<p>All you have to do is add the necessary liquibase dependency and Spring Boot will do the rest.</p>
 </div>
 <div class="sect4">
 <h5 id="steps-5">Steps</h5>
@@ -1174,16 +1200,69 @@ More information can be found at <a href="http://www.liquibase.org/" class="bare
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="recipe-setup-jpa-java-persistence-architecture">Recipe: Setup JPA (Java Persistence Architecture)</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="setup-jpa-java-persistence-architecture">Setup JPA (Java Persistence Architecture)</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The Java Persistence API (JPA) is a Java application programming interface specification that describes the management of relational data in applications using Java Platform, Standard Edition and Java Platform, Enterprise Edition.
 Follow the next steps to start the JPA setup for your project.</p>
 </div>
+<div class="sect2">
+<h3 id="general-jpa-setup">General JPA setup</h3>
 <div class="sect3">
 <h4 id="steps-6">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
+<li>
+<p>Add a JPA object in the package <em>com.mycompany.app.module.domain</em></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java" data-lang="java">@Entity
+@Table(name = "EMPLOYEE", schema = "MYAPP", uniqueConstraints = {@UniqueConstraint(columnNames = {"EMPLOYEE_ID"})})
+public class Employee {
+
+    @Id
+    @Column(name = "EMPLOYEE_ID", unique = true, nullable = false)
+    private Long id;
+
+    private String name;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Adding domain objects will require certain JPA dependencies on the classpath.
+You can add them using Gradle or Maven. Specific details are found in the next sections e.g. JPA with Spring Boot</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
 <li>
 <p>Create a orm.xml file in the META-INF directory</p>
 <div class="paragraph">
@@ -1215,13 +1294,14 @@ Follow the next steps to start the JPA setup for your project.</p>
 </ol>
 </div>
 </div>
-<div class="sect3">
-<h4 id="flavour-setup-jpa-using-spring-boot">Flavour: Setup JPA using Spring Boot</h4>
+</div>
+<div class="sect2">
+<h3 id="setup-jpa-using-spring-boot">Setup JPA using Spring Boot</h3>
 <div class="paragraph">
 <p>Spring Boot offers an easy and way to setup Java Persistence Architecture simply by adding the necessary dependency</p>
 </div>
-<div class="sect4">
-<h5 id="steps-7">Steps</h5>
+<div class="sect3">
+<h4 id="steps-7">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1257,10 +1337,11 @@ Follow the next steps to start the JPA setup for your project.</p>
 </div>
 </div>
 </div>
-</div>
 <div class="sect1">
-<h2 id="recipe-setup-logging-with-logback">Recipe: Setup logging with Logback</h2>
+<h2 id="setup-logback-logging">Setup Logback logging</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="general-logback-setup">General Logback setup</h3>
 <div class="paragraph">
 <p><a href="http://logback.qos.ch" target="_blank">Logback</a> is the successor of the popular log4j project and generally provided all required logging functionalities.
 The logback project also implements the <a href="http://www.slf4j.org">SLF4J</a> façade that enables logging using an API instead of a specific implementation.</p>
@@ -1281,8 +1362,8 @@ The logback project also implements the <a href="http://www.slf4j.org">SLF4J</a>
 </li>
 </ol>
 </div>
-<div class="sect2">
-<h3 id="steps-8">Steps</h3>
+<div class="sect3">
+<h4 id="steps-8">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1341,16 +1422,8 @@ The logback project also implements the <a href="http://www.slf4j.org">SLF4J</a>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>"org.springframework.boot:spring-boot-starter-data-jpa" <i class="conum" data-value="1"></i><b>(1)</b></pre>
+<pre></pre>
 </div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>No version is required for Spring Boot</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
@@ -1372,13 +1445,6 @@ If you have a project with two web modules, a logback file is required for <stro
 </tr>
 </table>
 </div>
-<div class="sect3">
-<h4 id="flavour">Flavour:</h4>
-
-</div>
-<div class="sect3">
-<h4 id="flavour-logback-with-spring-boot">Flavour: Logback with Spring Boot</h4>
-
 </div>
 </div>
 </div>
@@ -1386,7 +1452,7 @@ If you have a project with two web modules, a logback file is required for <stro
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-04 20:12:06 +02:00
+Last updated 2016-09-04 22:59:10 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css">

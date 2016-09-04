@@ -499,9 +499,9 @@ $(addBlockSwitches);
 <ul class="sectlevel1">
 <li><a href="#persistence-layer">Persistence layer</a>
 <ul class="sectlevel2">
-<li><a href="#recipe-write-a-repository-interface">Recipe: Write a repository interface</a></li>
-<li><a href="#flavour-write-a-jdbc-repository-using-spring">Flavour: Write a Jdbc repository using Spring</a></li>
-<li><a href="#flavour-write-a-jpa-repository">Flavour: Write a JPA repository</a></li>
+<li><a href="#write-a-repository-interface">Write a repository interface</a></li>
+<li><a href="#write-a-jdbc-repository-using-spring">Write a Jdbc repository using Spring</a></li>
+<li><a href="#write-a-jpa-repository">Write a JPA repository</a></li>
 </ul>
 </li>
 </ul>
@@ -512,7 +512,23 @@ $(addBlockSwitches);
 <h2 id="persistence-layer">Persistence layer</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="recipe-write-a-repository-interface">Recipe: Write a repository interface</h3>
+<h3 id="write-a-repository-interface">Write a repository interface</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This section talks about repositories described in the Application Architecture section.
+A repository will be centered around one persitent entity.
+Usually a repository will be mapped to a JPA entity or a plain Java domain object.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The repository interface contains all methods to manipulate persistent data.
 It is scoped for a specific domain e.g. Employee and should be the only way to manipulate that domain data.
@@ -534,18 +550,19 @@ Repository interfaces are placed in the <em>com.mycompany.module.repository</em>
 <li>
 <p><strong>find(One)</strong>: Use the <em>findByParameter</em> syntax to name methods that will return one or more employees.
 E.g. an EmployeeRepository may have a <em>findByName</em> and <em>findByNameAndAddress</em> to retrieve employees
-based on the name or the combination of the employee name and its address.</p>
+based on the name or the combination of the employee name and his address.</p>
 </li>
 <li>
 <p><strong>find(and process result)</strong>: In some case we do some processing or have some logic E.g. the EmployeeRepository has a find method that returns a map of the departments with
-the employees in that department. The return object is <em>Map&lt;Department, List&lt;Employee&gt;&gt;</em>.
+the employees in that department.
+The returned object is <em>Map&lt;Department, List&lt;Employee&gt;&gt;</em>.
 In this case we name the method <em>findAndGroupByDepartment</em></p>
 </li>
 <li>
-<p><strong>count</strong>: Count methods follow the same naming conventions as find methods.</p>
+<p><strong>count</strong>: Count methods follow the same naming conventions as find methods. Examples are countByName, countAll</p>
 </li>
 <li>
-<p><strong>update</strong>: Use <em>updateByParameter</em> methods for methods that change data in the repository. E.g. the EmployeeRepository
+<p><strong>update</strong>: Use <em>updateByParameter</em> methods for operations that change data in the repository. E.g. the EmployeeRepository
 has the methods <em>updateByName</em> and <em>updateByNameAndAddress</em></p>
 </li>
 <li>
@@ -604,19 +621,19 @@ and <em>deleteByNameAndAddress</em> methods</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="flavour-write-a-jdbc-repository-using-spring">Flavour: Write a Jdbc repository using Spring</h3>
+<h3 id="write-a-jdbc-repository-using-spring">Write a Jdbc repository using Spring</h3>
 <div class="sect3">
 <h4 id="steps-2">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Create a .sql</strong> file and place it in the sql folder within resources folder</p>
+<p><strong>Create a .sql</strong> file and place it in the sql folder within the resources folder</p>
 <div class="paragraph">
 <p><span class="image"><a class="image" href="images/sql-file.png"><img src="images/sql-file.png" alt="Sql file in resources folder" width="200"></a></span></p>
 </div>
 </li>
 <li>
-<p><strong>Write your queries</strong> in the file</p>
+<p><strong>Write your queries</strong> in the file to use them later on as parameters for the Jdbc queries.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-sql" data-lang="sql">findEmployeeById=SELECT employee.NAME, employee.ID \ <i class="conum" data-value="1"></i><b>(1)</b>
@@ -635,7 +652,7 @@ findEmployeeByNameAndId=SELECT employee.NAME, employee.ID \ <i class="conum" dat
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Write multiple queries in one file</td>
+<td>Write multiple queries in one file corresponding to one domain object</td>
 </tr>
 </table>
 </div>
@@ -739,7 +756,8 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 <td class="content">
 <div class="title">Use NamedParameterJdbcTemplate instead of JdbcTemplate</div>
 <div class="paragraph">
-<p>It is preferred to use the <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/namedparam/NamedParameterJdbcTemplate.html">NamedParameterJdbcTemplate</a> over the standard <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html">JdbcTemplate</a> because you are able to name SQL parameters instead of using ?.</p>
+<p>It is preferred to use the <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/namedparam/NamedParameterJdbcTemplate.html">NamedParameterJdbcTemplate</a> over the standard <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html">JdbcTemplate</a> because you are able to name SQL parameters instead of using ?.
+This way of working is less ambiguous and error prone.</p>
 </div>
 </td>
 </tr>
@@ -748,18 +766,19 @@ public class EmployeeRepositoryJdbc implements EmployeeRepository {
 </div>
 </div>
 <div class="sect2">
-<h3 id="flavour-write-a-jpa-repository">Flavour: Write a JPA repository</h3>
+<h3 id="write-a-jpa-repository">Write a JPA repository</h3>
 <div class="sect3">
 <h4 id="steps-3">Steps</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Write a new JPA implementation of the repository interface e.g. EmployeeRepositoryJPA and place it in the <em>com.mycompany.project.module.repository.impl</em> package</p>
+<p>Write a new JPA implementation of the repository interface e.g. EmployeeJPARepository and place it in the <em>com.mycompany.project.module.repository.impl</em> package</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">@Repository  <i class="conum" data-value="1"></i><b>(1)</b>
 public class EmployeeRepositoryJPA implements EmployeeRepository{
 
+    @Autowired
     private EntityManager entityManager; <i class="conum" data-value="2"></i><b>(2)</b>
 
     @Override
@@ -799,7 +818,7 @@ public class EmployeeRepositoryJPA implements EmployeeRepository{
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-04 20:12:06 +02:00
+Last updated 2016-09-05 00:00:56 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css">

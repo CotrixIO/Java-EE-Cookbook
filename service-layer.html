@@ -499,8 +499,8 @@ $(addBlockSwitches);
 <ul class="sectlevel1">
 <li><a href="#service-layer">Service layer</a>
 <ul class="sectlevel2">
-<li><a href="#recipe-write-a-service">Recipe: Write a service</a></li>
-<li><a href="#recipe-write-a-service-using-spring-framework-or-spring-boot">Recipe: Write a service using Spring Framework or Spring Boot</a></li>
+<li><a href="#write-a-service-interface">Write a service interface</a></li>
+<li><a href="#write-a-service-using-spring">Write a service using Spring</a></li>
 </ul>
 </li>
 </ul>
@@ -510,8 +510,22 @@ $(addBlockSwitches);
 <div class="sect1">
 <h2 id="service-layer">Service layer</h2>
 <div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The services in this section match with the services defined in the application architecture section.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
-<h3 id="recipe-write-a-service">Recipe: Write a service</h3>
+<h3 id="write-a-service-interface">Write a service interface</h3>
 <div class="sect3">
 <h4 id="steps">Steps</h4>
 <div class="olist arabic">
@@ -531,7 +545,7 @@ $(addBlockSwitches);
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This example uses the CQRS approach that creates and employee using a specific employee command</td>
+<td>This example uses the CQRS approach that creates an employee using a specific employee command</td>
 </tr>
 </table>
 </div>
@@ -541,7 +555,7 @@ $(addBlockSwitches);
 </div>
 </div>
 <div class="sect2">
-<h3 id="recipe-write-a-service-using-spring-framework-or-spring-boot">Recipe: Write a service using Spring Framework or Spring Boot</h3>
+<h3 id="write-a-service-using-spring">Write a service using Spring</h3>
 <div class="sect3">
 <h4 id="steps-2">Steps</h4>
 <div class="olist arabic">
@@ -552,7 +566,7 @@ $(addBlockSwitches);
 <ol class="loweralpha" type="a">
 <li>
 <p>Name the service using the specific implementation.
-For default implementations use the keyword Default e.g Employee*Default*Service</p>
+For default implementations use the keyword Default e.g Employee <strong>Default</strong> Service</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java" data-lang="java">@Service <i class="conum" data-value="1"></i><b>(1)</b>
@@ -570,7 +584,7 @@ public class EmployeeDefaultService implements EmployeeService {
         Employee employee = new Employee();
         employee.setName(command.getName());
         Long employeeId =  employeeRepository.insert(employee);
-        logger.info("Create employee with primary key {} for command {}",employeeId, command); <i class="conum" data-value="6"></i><b>(6)</b>
+        logger.info("Create an employee with primary key {} for command {}",employeeId, command); <i class="conum" data-value="6"></i><b>(6)</b>
         return employeeId;
     }
 
@@ -580,7 +594,7 @@ public class EmployeeDefaultService implements EmployeeService {
         }
 
         if (StringUtils.isNotEmpty(command.getName())) {
-            throw new BusinessException(EmployeeServiceError.EMPLOYEE_NAME_MADATORY,
+            throw new BusinessException(EmployeeServiceError.EMPLOYEE_NAME_MANDATORY,
                     "No employee name was given for create employee command {}",command);
         }
 
@@ -608,7 +622,7 @@ public class EmployeeDefaultService implements EmployeeService {
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html">@Autowired</a> private repositories and use <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Qualifier.html">@Qualifier</a> when multiple implementations exists and you need to specify a specific one</td>
+<td>Use <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html">@Autowired</a> for private repositories and use <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Qualifier.html">@Qualifier</a> when multiple implementations exists and you need to specify a specific one</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -633,7 +647,7 @@ public class EmployeeDefaultService implements EmployeeService {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-04 20:12:06 +02:00
+Last updated 2016-09-05 00:04:39 +02:00
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/rainbow.min.css">
