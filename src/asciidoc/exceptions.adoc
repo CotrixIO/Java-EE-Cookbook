@@ -1,17 +1,24 @@
 == Exception Handling
 
 Every applications needs to handle cases where normal program execution cannot continue due to some reason.
-This may be related to a number of cases such as invalid business rules, a service or database is down etc.
+This may be related to invalid business rules, a service or database is down etc.
 The standard way to handle these special cases is by using the the exception mechanism already provided by the Java language.
 
-IMPORTANT: Custom exceptions must be *unchecked* or extend *RuntimeException*
+[NOTE]
+====
+The Java language allows *unchecked* or *checked* exceptions.
+The exception handling in cookbook assumes all exceptions are *unchecked* because of the easy of writing code.
+Using *checked* exceptions will force you to always write a try - catch block which leads to unnecessary clutter.
+====
 
 === Business and Technical Exceptions
 
+This cookbook uses custom made exceptions.
+They are free to use in your projects.
+You can find the source on the Github project.
 
-TIP: Each exception contains a specific id used to uniquely find the exception in e.g. a logging file
 
-=== Recipe: Throw an exception
+=== Throw an exception
 
 In its basic form, the exception contains a message. You can throw an exception using the following code:
 
@@ -22,7 +29,9 @@ public void businessExceptionWithEnum(){
 }
 ----
 
-The next examples show you possiblities on how you can throw exception by for example combining an enum with a message.
+TIP: Each exception contains a specific id used to uniquely find the error details in e.g. a logging file or the database
+
+The following examples illustrate the different options you have in throwing exceptions:
 
 .Throw BusinessException with an error code
 [source,java,indent=0]
@@ -71,9 +80,12 @@ public void technicalExceptionWithThrowable(){
 
 NOTE: Technical exceptions only accept one message compared to BusinessException that keep track of multiple messages
 
-==== All combinations
-
-All combinatinos can be found in the sample source code
+[TIP]
+====
+*Never loose* the *original exception*.
+If you throw a new exception based on an old one, make sure you pass the old one in the constructor as a parameter to keep track of the full stacktrace.
+ You'll thank me later.
+====
 
 
 

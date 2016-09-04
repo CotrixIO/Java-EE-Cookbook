@@ -8,10 +8,13 @@ include::application-architecture.adoc[]
 
 include::exceptions.adoc[]
 
+include::conventions.adoc[]
+
 include::persistence-layer.adoc[]
 
 include::service-layer.adoc[]
 
-include::controller-layer.adoc[]
 
 include::view-layer.adoc[]
+
+

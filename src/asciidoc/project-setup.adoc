@@ -33,7 +33,7 @@ Todo
 ====
 Congratulations!
 You now have a blank project!
-To completely finish the setup, choose one of the flavours to complete the project setup e.g. setup a Sprong Boot project.
+To completely finish the setup, choose one of the flavours to complete the project setup e.g. setup a Spring Boot project.
 
 === Setup a Spring Boot project
 
@@ -179,7 +179,7 @@ server:
   session:
     timeout: 1800
 ----
-<1> Specify a specific port number for the Spring web container
+<1> Specify a specific port number for the Spring web container. The application will start at http://localhost:8080/spring.application.name
 <2> The context path for the web application is in this case the same as the name of the Spring application
 
 . *Launch the application*
@@ -261,7 +261,7 @@ More information can be found at http://www.liquibase.org/
 
 ==== Steps
 
-. *Create* a new *db./changelog folder* in the /resources folder
+. *Create* a new *db/changelog folder* in the /resources folder
 +
 image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/liquibase-folder.png"]
 
@@ -280,7 +280,7 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
     <property name="environment" value="ACC" context="acc"/>
     <property name="environment" value="PRD" context="prd"/>
 
-    <changeSet id="8AAA05A8542E32E901542E392DF10004" // <2>
+    <changeSet id="4a0675bf-4bc8-4686-abe3-ca4d6882904c" // <2>
                author="Stijn De Mulder"
                 dbms="h2"> // <3>
         <comment>Creation of the EMPLOYEE table</comment>
@@ -297,8 +297,8 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
 </databaseChangeLog>
 ----
 <1> Optionally you can specify environment properties for use later on
-<2> Always use a unique changeSet id since Liquibase uses it to know if a change exists in the database
-<3> Indicate the type of database the changeSet should be used for
+<2> Always use a unique changeSet id since Liquibase uses it to know if a change exists in the database. You can use https://www.uuidgenerator.net/version4 as a handy tool to generate a unique uuid
+<3> Indicate the type of database the changeSet should be used for e.g. h2, oracle
 <4> Don't forget to indicate the correct tablespace
 
 . Add a db.changelog.grants.xml in the resources folder
@@ -316,7 +316,7 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
     <changeSet id="fc4e4dc2-8907-4a1d-a579-a38db9cc1819" author="Stijn De Mulder">
         <comment>grant users</comment>
         <sql dbms="h2">
-            GRANT SELECT, UPDATE, INSERT, DELETE ON MYAPP.ENQUETE_TYPE TO EMPLOYEEAPPUSER{environment}; // <1>
+            GRANT SELECT, UPDATE, INSERT, DELETE ON MYAPP.EMPLOYEE TO EMPLOYEEAPPUSER{environment}; // <1>
         </sql>
     </changeSet>
 </databaseChangeLog>
@@ -325,10 +325,10 @@ image:liquibase-folder.png["Liquibase resources folder",width=350, link="images/
 
 [NOTE]
 ====
-You can use the _environment_ property to add grants to a user in the current environment. e.g. the EMPLOYEEAPPUSER*PRD* for the production environment
+You can use the _environment_ property to add grants to a user in the current environment. e.g. the EMPLOYEEAPPUSER *PRD* for the production environment
 ====
 
-. Add a db.changelog.views.xml in the resources folder
+. Add a db.changelog.views.xml in the resources folder even if you don't have views, it is still a handy placeholder so you can easily add views later
 +
 [source,xml,indent=0]
 ----
@@ -367,16 +367,17 @@ You can use the _environment_ property to add grants to a user in the current en
     <include file="v0.0.2/db.changelog-0.0.2.schema.xml" relativeToChangelogFile="true"/> // <1>
 
     <!-- always saveOrUpdate views & grants at the end-->
-    <include file="db.db.changelog.views.xml" relativeToChangelogFile="true"/>
-    <include file="db.db.changelog.grants.xml" relativeToChangelogFile="true"/>
+    <include file="db.changelog.views.xml" relativeToChangelogFile="true"/>
+    <include file="db.changelog.grants.xml" relativeToChangelogFile="true"/> // <2>
 
 </databaseChangeLog>
 ----
 <1> Multiple versions of your applications will be bundled in multiple xml files for liquibase.
+<2> relativeToChangelogFile says the grants file or the view file must be located using a path that originates from the current file path
 
 ==== Setup Liquibase using Spring Boot
 
-All you have is add the necessary liquibase dependency and Spring Boot will do the rest.
+All you have to do is add the necessary liquibase dependency and Spring Boot will do the rest.
 
 ===== Steps
 
@@ -408,6 +409,43 @@ Follow the next steps to start the JPA setup for your project.
 
 ==== Steps
 
+. Add a JPA object in the package _com.mycompany.app.module.domain_
++
+[source,java,indent=0]
+----
+@Entity
+@Table(name = "EMPLOYEE", schema = "MYAPP", uniqueConstraints = {@UniqueConstraint(columnNames = {"EMPLOYEE_ID"})})
+public class Employee {
+
+    @Id
+    @Column(name = "EMPLOYEE_ID", unique = true, nullable = false)
+    private Long id;
+
+    private String name;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+----
++
+[NOTE]
+====
+Adding domain objects will require certain JPA dependencies on the classpath.
+You can add them using Gradle or Maven. Specific details are found in the next sections e.g. JPA with Spring Boot
+====
 . Create a orm.xml file in the META-INF directory
 +
 image:orm-setup.png["Setup orm.xml",width=150, link="images/orm-setup.png"]
@@ -433,11 +471,11 @@ image:orm-setup.png["Setup orm.xml",width=150, link="images/orm-setup.png"]
 </entity-mappings>
 ----
 
-==== Flavour: Setup JPA using Spring Boot
+=== Setup JPA using Spring Boot
 
 Spring Boot offers an easy and way to setup Java Persistence Architecture simply by adding the necessary dependency
 
-===== Steps
+==== Steps
 
 . Add the dependency to org.springframework.boot:spring-boot-starter-data-jpa
 +
@@ -522,11 +560,6 @@ When Logback starts, it looks for a file called logback.groovy or logback.xml:
 .logback.groovy
 ----
 
-"org.springframework.boot:spring-boot-starter-data-jpa" // <1>
-
-----
-<1> No version is required for Spring Boot
-
 ====
 
 
@@ -538,6 +571,3 @@ If you have a project with two web modules, a logback file is required for *each
 
 ====
 
-==== Flavour:
-
-==== Flavour: Logback with Spring Boot

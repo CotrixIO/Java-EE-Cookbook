@@ -7,33 +7,34 @@ In this section you'll find the most commonly used architectures to build EE app
 
 [NOTE]
 ====
-The application architecture defines a way on how you will structure your application implement the necessary functionality.
+The application architecture defines a way on how you will structure your application to implement the necessary functionality.
 A typical architecture defines the set of used technologies, transaction management (if any), important patterns like the https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller[MVC Pattern] and much more
 ====
 
 
 === Application layers
 
-A typical applicatin e.g. a web application that connects to a database has these layers:
+A typical application e.g. a web application that connects to a database has these layers:
 
 * *View layer*: This layer visualizes the data in an attractive and user friendly way.
-It is the place where users can interact with the applications e.g. click on buttons, fill in data in forms etc.
+It is the place where users can interact with the application e.g. click on buttons, fill in data in forms etc.
 * *Controller layer*: The controller layer will recieve user actions and handle any navigation.
 * *Service layer*: The service layer wil actually perform the business validations rules and execute business logic.
 E.g. to create a user, you must first check if the user doesn't already exist.
-* *Persistence layer*: This is de _gateway_ to the actually persisted data.
+* *Persistence layer*: This is de _gateway_ to the persisted data.
 Typically this is a database or a file system.
 
 
 .Write down your own architecture
 [TIP]
 ====
-This section introduces some of the commonly used architecture flavours.
-Since these examples probably won't be an exact fit, you can create your own by taking on of the examples and change the layers and/or technologies.
+This section introduces some of the commonly used architectural flavours.
+Since these examples probably won't be an exact fit, you can create your own by taking one of the examples and change the layers and/or technologies.
 When you work in a team, its important that everyone understands and uses the same architecture.
+I would advise you to make your own architecture drawing and see if it fits one the pre-defined ones in this cookbook.
 ====
 
-=== Flavour: Command Query Responsibility Segregation Architecture (CQRS)
+=== Command Query Responsibility Segregation Architecture (CQRS)
 
 image:cqrs.png["Application Architecture with CQRS",width=700, link="images/cqrs.png"]
 
@@ -42,39 +43,75 @@ CQRS stands for *Command Query Resonsibility Segregation* and Martin Flow has a 
 You can find it http://martinfowler.com/bliki/CQRS.html[here].
 The application architecture works like this:
 
-. The first layer is the *view layer* and uses *technologies* like JSP, xhtml, thymeleaf etc.
-.. The view layer uses ViewDTO models specifically programmed for the that view
+. The first layer is the *view layer*  uses *technologies* like JSP, xhtml, thymeleaf etc.
+. The view layer uses ViewDTO models specifically programmed for the that view
 . The *controller* will be able to receive objects from the view as input params e.g. a save or update method.
-.. The *controller* will also map specific objects from the *service* layer if necessary.
+The *controller* will also map specific objects from the *service* layer if necessary.
  E.g. the service might return an object that is perfectly suitable for handling in the view
-. The *service* layer itself is seperated into *query* services and *write* or *command* services
-.. The *QueryService* directly retrieves objects from the persistence e.g. the database and transforms it using a Row mapper to a Data Transfer Object (short DTO).
-It takes a *QueryCommand* or simple input parameters to retrieve the data.
-... Accessing data from the database is done using *JDBC*
-.. The *CommandService* takes different command objects as input to perform a data change.
-E.g. the UpdateEmployeeCommand will change the data of an employee.
-... The service usually returns no or a limited set of data.
+. The *repository* acts a a *gateway* to the *persisted data* in the database.
+It typically performs Create Read Update Delete functionalities.
+A repisitory will typically works with JPA or JDBC.
+JPA is the preferred technology since it abstract the direct access to database.
+. The *CommandService* takes different command objects as input to perform a data change e.g. the UpdateEmployeeCommand will change the data of an employee.
+The service usually returns no or a limited set of data.
 The most logical return object is the generated primary key when an object was created.
 
-=== Flavour: Domain Driven Architecture (DD)
+
+. The *QueryService* directly retrieves objects from the persistence e.g. the database and transforms it using a Row mapper to a Data Transfer Object (short DTO).
+It takes a *QueryCommand* or simple input parameters to retrieve the data.
+. Accessing data from the database is done using *JDBC* and typically a row mapper to convert from rows to objects.
+
+
+[NOTE]
+====
+*Benefits* of using this patterns are:
+
+. The application is optimized for reading and writing.
+This will result in highly performant application by default.
+ Reading is done via JDBC, so very lightweight and only the data required is retrieved (this is something you can't do with JPA).
+. Writing is done using JPA which the benefits of re-use objects and the lack of writing custom SQL logic.
+Changing the database is easier using JPA since you don't have to re-write all the sql comamnds.
+
+*Cons* are:
+
+. Query services are nothing more than optimized repositories
+. There is no re-use of JPA entities for reading, so this will lead to duplicate code.
+
+====
+
+
+=== Domain Driven Architecture (DD)
 
 image:dd.png["Application Architecture Domain Driven",width=700, link="images/dd.png"]
 
 This architecture assumes that the persisted entities will be managed using a *Create, Read, Update, Delete* pattern.
-E.g. when you're working with an _Employee_, you'll have an _EmployeeService_ that has the methods _create(Employee), update(Employee), find(Employee), delete(Employee).
-However when you want to retrieve the department name with the names of the employees in it, you'll have to call services from the _EmployeeService_ plus the DepartmentService_ and merge the data yourself in the controller.
-If you were only department names and employee names, you'd be retrieving too much information e.g. departments with all their data and employees with all the data.
-
-. The first two layers are similar to the CQRS architecture
-. The architecture has *DomainServices* focussed on providing functionality for one entity in the domain e.g. Employee
-.. These services can accept input commands like with CQRS or more likely domain objects.
-.. The domain objects are *Plain Old Java Objects*. They are not linked to any specific technology like JPA.
-.. The service has the choice of working with JPA or JDBC.
-When working with JPA, the domain objects are transformed into JPA entities using a mapper.
-. The persistence layer is similar to the one described in the CQRS architecture
+E.g. when you're working with an _Employee_, you'll have an _EmployeeService_ that has the methods _create(Employee)_, _update(Employee)_, _find(Employee)_, _delete(Employee)_.
 
 
-=== Flavour Full JPA or JDBC Architecture
+. The first layer is the *view layer*  uses *technologies* like JSP, xhtml, thymeleaf etc.
+. The view layer uses ViewDTO models specifically programmed for the that view
+. The architecture has *DomainServices* focused on providing functionality for one entity in the domain e.g. Employee
+These services can accept input commands like with CQRS or more likely domain objects.
+The domain objects are *Plain Old Java Objects*. They are not linked to any specific technology like JPA.
+The service has the choice of working with JPA or JDBC.
+. A *Domain to JPA object mapper* is used to convert Java Objects in JPA objects and vica versa.
+. The domain services can choose to work with *JPA or JDBC repositories*.
+. The domain services can choose to work with *JPA or JDBC repositories*.
+
+[NOTE]
+====
+*Benefits* of using this patterns are:
+
+. Excellent for applications that use the CRUD pattern
+. Promotes re-use of exisitng domain services
+
+*Cons* are:
+
+. Changes are you'll need more complex data when your application grows.
+Combining multiple domain service calls into one object is an expensive operation.s
+====
+
+=== A minimal JDBC or JPA Architecture
 
 image:jpa.png["Application Architecture full JPA or JDBC",width=700, link="images/jpa.png"]
 
@@ -83,16 +120,18 @@ These applications use one common domain model (optionally linked to JPA) and pa
 Whilst this is the easiest architecture, it is also the least flexible. The problem occurs when the view contains data not present in the domain model.
 In this case you are forced to make another call to the database or in the worst case adapt your model.
 
-==== Where do transactions start?
+==== Database transactions start at the service level
 Any architecture requires you to think about transaction management.
-Transactions allow a number of actions to be grouped on one logical unit of work.
+Transactions allow a number of actions to be grouped into one logical unit of work.
 If one action in the transactions fails, all other actions must be reverted.
 
 Transaction mangement really is important when working with SQL databases.
-In all the provided architectures, the transaction starts when entering a service and commits or rollbacks when leaving the service.
+In all the provided architectures, the transaction starts when entering a service and it commits or rollbacks when leaving the service.
 
 [NOTE]
 ====
-When you work with the https://en.wikipedia.org/wiki/Java_Persistence_API[Java Persistence Archicture] e.g. hibernate or eclipselink, you'll have access to the entity manager during the transaction.
-Any https://docs.jboss.org/hibernate/orm/3.5/api/org/hibernate/LazyInitializationException.html[LazyInitializationException]s will not occur inside the service layer.
+Working with JPA requires that you always have an active transactions to retrieve data from the database.
+When you retrieve and _Employee_ and you want to get the departments of that employee via the _getDepartments()_ method, JPA will use the entitymanager and the current transaction to execute a new sql query to fetch the departments.
+When you don't have a transaction you'll get a ttps://docs.jboss.org/hibernate/orm/3.5/api/org/hibernate/LazyInitializationException.html[LazyInitializationException].
+Therefor it is important to keep your JPA objects withing the service and return normal, non JPA, objects outside the service.
 ====
