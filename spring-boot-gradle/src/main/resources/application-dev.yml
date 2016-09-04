@@ -1,5 +1,0 @@
-server:
-  port: 6316
-  contextPath: /${spring.application.name}
-  session:
-    timeout: 1800

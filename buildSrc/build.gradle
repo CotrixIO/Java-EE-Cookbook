@@ -1,7 +1,0 @@
-repositories {
-    jcenter()
-}
-
-dependencies {
-    compile 'org.asciidoctor:asciidoctorj:1.5.3'
-}
