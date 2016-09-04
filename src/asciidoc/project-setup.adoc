@@ -1,6 +1,8 @@
-== Recipe: Setup a new project
+== Setup a new project
 
-=== Steps
+=== Setup a blank project
+
+==== Steps
 
 . *Create root project folder* with the name of the project
 . *Add* the *project folder structure*
@@ -33,7 +35,7 @@ Congratulations!
 You now have a blank project!
 To completely finish the setup, choose one of the flavours to complete the project setup e.g. setup a Sprong Boot project.
 
-=== Flavour: Setup Spring Boot
+=== Setup a Spring Boot project
 
 Spring Boot offers a way to quickly create production ready Spring applications.
 "Spring Boot favors convention over configuration and is designed to get you up and running as quickly as possible."
@@ -195,12 +197,12 @@ root project> gradlew bootRun
 ----
 ====
 
-=== Recipe: Setup a DataSource
+== Setup a DataSource
 
 A https://docs.oracle.com/javase/7/docs/api/javax/sql/DataSource.html[DataSource^] is the preferred way of
 connection to a database in Java. Setting up a DataSource really depends on the technology you use, so in the next section you'll find the different flavours of the actual setup.
 
-=== Flavour: Setup a database in Spring Boot
+=== Setup a DataSource using Spring Boot
 
 Spring Boot wil automatically setup a DataSource when it finds a jdbc dependency and the right config properties.
 
@@ -245,7 +247,7 @@ Make sure you also specify the datasource config in the application-unittest.yml
 
 Spring Boot will automatically create the DataSource for you based on the given properties.
 
-=== Recipe: Setup Liquibase
+== Setup Liquibase
 
 [IMPORTANT]
 ====
@@ -254,6 +256,8 @@ Liquibase relies on a DataSource before you can use it. So make sure you have fo
 
 Liquibase is a great tool for creating and maintaining a relational SQL database.
 More information can be found at http://www.liquibase.org/
+
+=== General Liquibase setup
 
 ==== Steps
 
@@ -370,7 +374,7 @@ You can use the _environment_ property to add grants to a user in the current en
 ----
 <1> Multiple versions of your applications will be bundled in multiple xml files for liquibase.
 
-==== Flavour: Setup Liquibase in Spring Boot
+==== Setup Liquibase using Spring Boot
 
 All you have is add the necessary liquibase dependency and Spring Boot will do the rest.
 
@@ -395,10 +399,12 @@ def liquibaseVersion = '3.4.2' // <1>
 <2> Add the necessary *main* dependency
 ====
 
-=== Recipe: Setup JPA (Java Persistence Architecture)
+== Setup JPA (Java Persistence Architecture)
 
 The Java Persistence API (JPA) is a Java application programming interface specification that describes the management of relational data in applications using Java Platform, Standard Edition and Java Platform, Enterprise Edition.
 Follow the next steps to start the JPA setup for your project.
+
+=== General JPA setup
 
 ==== Steps
 
@@ -452,7 +458,9 @@ Todo
 
 ====
 
-== Recipe: Setup logging with Logback
+== Setup Logback logging
+
+=== General Logback setup
 
 http://logback.qos.ch[Logback^] is the successor of the popular log4j project and generally provided all required logging functionalities.
 The logback project also implements the http://www.slf4j.org[SLF4J] façade that enables logging using an API instead of a specific implementation.
@@ -463,7 +471,7 @@ When Logback starts, it looks for a file called logback.groovy or logback.xml:
 . If no such file is found, logback tries to find a file called logback-test.xml in the classpath.
 . If no such file is found, it checks for the file logback.xml in the classpath..
 
-=== Steps
+==== Steps
 
 . Add a logback.xml or logback.groovy in the _src/main/resources_ folder of the module
 +
