@@ -11,7 +11,7 @@ class CodeBlockSwitchPostProcessor extends Postprocessor {
         def replacement = """<style>
 $css
 </style>
-<script src=\"http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.min.js\"></script>
+<script src=\"https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.min.js\"></script>
 <script type="text/javascript">
 $javascript
 </script>
